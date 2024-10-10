@@ -3,7 +3,7 @@
   "description": "A scalable and maintainable React web application codebase, featuring reusable components, optimized state management, and modular architecture following best practices for modern web development",
   "version": "0.0.1",
   "license": "MIT",
-  "private": true,
+  "main": "src/index.js",
   "author": {
     "name": "Harry",
     "email": "harrydng1209@gmail.com",
