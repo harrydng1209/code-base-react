@@ -1,0 +1,18 @@
+:root {
+  --ant-header-height: 75px;
+  --ant-header-padding: 0 20px;
+  --ant-aside-width: 270px;
+  --ant-main-padding: 20px;
+}
+
+.ant-layout {
+  background: unset;
+
+  &-header {
+    padding: var(--ant-header-padding);
+  }
+
+  &-content {
+    color: unset;
+  }
+}
