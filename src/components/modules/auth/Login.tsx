@@ -4,6 +4,7 @@ import BaseIconSvg from '@/components/base/BaseIconSvg';
 import BaseInput from '@/components/base/BaseInput';
 import { ILogin } from '@/models/interfaces/auth.interface';
 import useAuthStore from '@/stores/auth.store';
+import useThemeStore from '@/stores/theme.store';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'antd';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -13,6 +14,7 @@ import { object as yupObject, string as yupString } from 'yup';
 const { MODULES, SHARED } = constants.iconPaths;
 
 const Login: React.FC = () => {
+  useThemeStore();
   const { t } = useTranslation();
   const authStore = useAuthStore();
   const navigate = useNavigate();
@@ -92,7 +94,11 @@ const Login: React.FC = () => {
             />
           </FormItem>
 
-          <BaseButton className="tw-w-full" htmlType="submit">
+          <BaseButton
+            className="tw-w-full"
+            htmlType="submit"
+            id={constants.shared.SELECTOR_IDS.LOGIN_BUTTON_ID}
+          >
             {t('auth.login')}
           </BaseButton>
         </Form>

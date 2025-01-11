@@ -1,7 +1,7 @@
 import styles from '@/assets/styles/layouts/the-topbar.module.scss';
 import BaseDropdown from '@/components/base/BaseDropdown';
 import BaseIconSvg from '@/components/base/BaseIconSvg';
-import BaseInput from '@/components/base/BaseInput';
+import TheBreadcrumb from '@/components/layouts/TheBreadcrumb';
 import { notifications } from '@/mocks/the-topbar.mock';
 import { ELanguageCode } from '@/models/enums/shared.enum';
 import useLanguageStore from '@/stores/language.store';
@@ -12,10 +12,8 @@ const { BLACK, WHITE } = constants.shared.COLORS;
 const { LAYOUTS, SHARED } = constants.iconPaths;
 
 const TheTopBar: React.FC = () => {
-  const { t } = useTranslation();
   const { changeTheme, isDark } = useThemeStore();
   const { changeLanguage, currentLanguage } = useLanguageStore();
-  const [searchInput, setSearchInput] = useState('');
 
   const i18nOptions = Object.entries(ELanguageCode).map(([key, value]) => ({
     label: key,
@@ -65,14 +63,7 @@ const TheTopBar: React.FC = () => {
   return (
     <div className={styles['the-topbar']}>
       <section className="tw-flex-center">
-        <BaseInput
-          allowClear
-          className="!tw-w-[300px]"
-          onChange={(e) => setSearchInput(e.target.value)}
-          placeholder={`${t('shared.search')}...`}
-          type="search"
-          value={searchInput}
-        />
+        <TheBreadcrumb />
       </section>
 
       <section className={styles['the-topbar__profile']}>

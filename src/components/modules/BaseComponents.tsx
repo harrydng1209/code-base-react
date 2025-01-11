@@ -21,6 +21,7 @@ import {
   tableData
 } from '@/mocks/base-components.mock';
 import { EToast } from '@/models/enums/shared.enum';
+import useLoadingStore from '@/stores/loading.store';
 import useThemeStore from '@/stores/theme.store';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDebounceFn } from '@reactuses/core';
@@ -59,6 +60,7 @@ const { BLACK, WHITE } = constants.shared.COLORS;
 const BaseComponents: React.FC = () => {
   const { t } = useTranslation();
   const { isDark } = useThemeStore();
+  const loadingStore = useLoadingStore();
 
   const [baseCheckbox, setBaseCheckbox] = useState<boolean>(false);
   const [baseCheckboxAll, setBaseCheckboxAll] = useState<boolean>(false);
@@ -72,6 +74,7 @@ const BaseComponents: React.FC = () => {
   const [baseDatePicker, setBaseDatePicker] = useState<Dayjs | null>();
   const [baseTimePicker, setBaseTimePicker] = useState<Dayjs | null>(null);
   const [baseModal, setBaseModal] = useState<boolean>(false);
+  const [searchInput, setSearchInput] = useState<string>('');
   const [pagination, setPagination] = useState({ current: 1, pageSize: 10, total: 1 });
 
   const schema = yupObject({
@@ -173,6 +176,12 @@ const BaseComponents: React.FC = () => {
     utils.shared.showToast('onSubmit: check console');
   };
 
+  const handleLoadingFullscreen = async () => {
+    loadingStore.actions.showLoading();
+    await utils.shared.sleep(3);
+    loadingStore.actions.hideLoading();
+  };
+
   return (
     <div className={styles['base-components']}>
       <section>
@@ -182,9 +191,14 @@ const BaseComponents: React.FC = () => {
         </div>
       </section>
 
-      <section>
+      <section id={constants.shared.SELECTOR_IDS.TEST_BUTTON_ID}>
         <h4>-- Apis --</h4>
         <BaseButton onClick={handleGetHealthCheck}>Health Check</BaseButton>
+      </section>
+
+      <section>
+        <h4>-- The Loading --</h4>
+        <BaseButton onClick={handleLoadingFullscreen}>Fullscreen</BaseButton>
       </section>
 
       <section>
@@ -356,25 +370,36 @@ const BaseComponents: React.FC = () => {
 
       <section>
         <h4>-- Base Inputs --</h4>
-        <BaseInput
-          onChange={(event) => {
-            setBaseInput(event.target.value);
-            handleChangeInput(event.target.value);
-          }}
-          placeholder="Please input"
-          style={{ width: 200 }}
-          value={baseInput}
-        />
+        <div className="tw-flex tw-gap-2">
+          <BaseInput
+            className="!tw-w-[200px]"
+            onChange={(event) => {
+              setBaseInput(event.target.value);
+              handleChangeInput(event.target.value);
+            }}
+            placeholder="Please input"
+            value={baseInput}
+          />
 
-        <BaseInputNumber
-          onChange={(value) => {
-            setBaseInputNumber(value as number | string);
-            handleChangeInput(value as number | string);
-          }}
-          placeholder="Please input number"
-          style={{ marginLeft: 16, width: 200 }}
-          value={baseInputNumber}
-        />
+          <BaseInputNumber
+            className="!tw-w-[200px]"
+            onChange={(value) => {
+              setBaseInputNumber(value as number | string);
+              handleChangeInput(value as number | string);
+            }}
+            placeholder="Please input number"
+            value={baseInputNumber}
+          />
+
+          <BaseInput
+            allowClear
+            className="!tw-w-[300px]"
+            onChange={(event) => setSearchInput(event.target.value)}
+            placeholder={`${t('shared.search')}...`}
+            type="search"
+            value={searchInput}
+          />
+        </div>
       </section>
 
       <section>

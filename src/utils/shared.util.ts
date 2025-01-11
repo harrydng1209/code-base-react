@@ -2,12 +2,10 @@ import type { IFailureResponse } from '@/models/interfaces/shared.interface';
 import type { TDate, TObjectUnknown, TSuccessResponse } from '@/models/types/shared.type';
 
 import { EDataType, EResponseStatus, EToast } from '@/models/enums/shared.enum';
-// import { EToast } from '@/models/enums/shared.enum';
 import storeService from '@/services/store.service';
 import { notification } from 'antd';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-// import { ElLoading, ElNotification } from 'element-plus';
 import { capitalize } from 'lodash-es';
 import qs from 'qs';
 import stringTemplate from 'string-template';
@@ -41,15 +39,6 @@ const shared = {
     });
     return newObject as T;
   },
-
-  // hideLoading: (loadingInstance: null | ReturnType<typeof ElLoading.service>) => {
-  //   if (loadingInstance) {
-  //     loadingInstance.close();
-  //     const element = loadingInstance.target.value;
-  //     if (element && element instanceof HTMLElement)
-  //       element.classList.remove('tw-pointer-events-none');
-  //   }
-  // },
 
   convertToSnakeCase: <T>(data: TObjectUnknown | TObjectUnknown[]): T => {
     if (Array.isArray(data)) return data.map((item) => shared.convertToSnakeCase(item)) as T;
@@ -89,24 +78,6 @@ const shared = {
   formatString: (template: string, values: TObjectUnknown | unknown[]): string => {
     return stringTemplate(template, values);
   },
-
-  // showLoading: (target: TLoadingTarget) => {
-  //   if (target === false) return null;
-
-  //   if (target === 'full-screen')
-  //     return ElLoading.service({ background: 'rgba(0, 0, 0, 0.7)', lock: true, text: 'Loading' });
-
-  //   const element = document.getElementById(target);
-  //   if (element) {
-  //     element.classList.add('tw-pointer-events-none');
-  //     return ElLoading.service({
-  //       lock: true,
-  //       target: element as HTMLElement
-  //     });
-  //   }
-
-  //   return null;
-  // },
 
   isSuccessResponse<T, M>(
     response: IFailureResponse | TSuccessResponse<T, M>

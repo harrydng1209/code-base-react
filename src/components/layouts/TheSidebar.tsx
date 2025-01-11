@@ -11,6 +11,7 @@ const TheSidebar: React.FC = () => {
   const { t } = useTranslation();
   const { isDark } = useThemeStore();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const menuItems = [
     {
@@ -21,9 +22,10 @@ const TheSidebar: React.FC = () => {
     {
       icon: <BaseIconSvg fill={isDark ? WHITE : BLACK} path={LAYOUTS.FOLDER_SHARED} />,
       key: constants.routePages.BASE_COMPONENTS,
-      label: t('shared.navigator.baseComponents')
+      label: t('shared.navigator.base-components')
     }
   ];
+  const selectedKey = menuItems.find((item) => item.key === location.pathname)?.key || '';
 
   return (
     <div className={styles['the-sidebar']}>
@@ -34,7 +36,6 @@ const TheSidebar: React.FC = () => {
       </div>
 
       <Menu
-        defaultSelectedKeys={['1']}
         items={menuItems.map((item) => ({
           icon: item.icon,
           key: item.key,
@@ -42,6 +43,7 @@ const TheSidebar: React.FC = () => {
         }))}
         mode="inline"
         onClick={({ key }) => navigate(key)}
+        selectedKeys={[selectedKey]}
         theme={isDark ? 'dark' : 'light'}
       />
     </div>
