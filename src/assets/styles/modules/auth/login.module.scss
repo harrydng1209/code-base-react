@@ -18,12 +18,5 @@
       margin-bottom: 8px;
       @include text-style(20px, 700, 30px);
     }
-
-    :deep(.el-form-item--label-top .el-form-item__label) {
-      display: flex !important;
-      justify-content: flex-start;
-      align-items: center;
-      gap: 4px;
-    }
   }
 }

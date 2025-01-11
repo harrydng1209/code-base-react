@@ -8,6 +8,9 @@ import useLanguageStore from '@/stores/language.store';
 import useThemeStore from '@/stores/theme.store';
 import { Avatar, Badge, MenuProps } from 'antd';
 
+const { BLACK, WHITE } = constants.shared.COLORS;
+const { LAYOUTS, SHARED } = constants.iconPaths;
+
 const TheTopBar: React.FC = () => {
   const { t } = useTranslation();
   const { changeTheme, isDark } = useThemeStore();
@@ -39,9 +42,9 @@ const TheTopBar: React.FC = () => {
 
   const getIconPathForLanguage = (lang: ELanguageCode) => {
     const iconPaths = {
-      [ELanguageCode.English]: constants.iconPaths.LAYOUTS.ENGLISH,
-      [ELanguageCode.Japanese]: constants.iconPaths.LAYOUTS.JAPANESE,
-      [ELanguageCode.Vietnamese]: constants.iconPaths.LAYOUTS.VIETNAMESE
+      [ELanguageCode.English]: LAYOUTS.ENGLISH,
+      [ELanguageCode.Japanese]: LAYOUTS.JAPANESE,
+      [ELanguageCode.Vietnamese]: LAYOUTS.VIETNAMESE
     };
     return iconPaths[lang];
   };
@@ -61,23 +64,22 @@ const TheTopBar: React.FC = () => {
 
   return (
     <div className={styles['the-topbar']}>
-      <section>
+      <section className="tw-flex-center">
         <BaseInput
           allowClear
           className="!tw-w-[300px]"
           onChange={(e) => setSearchInput(e.target.value)}
           placeholder={`${t('shared.search')}...`}
+          type="search"
           value={searchInput}
         />
       </section>
 
       <section className={styles['the-topbar__profile']}>
         <BaseIconSvg
-          fill={isDark ? constants.shared.COLORS.WHITE : constants.shared.COLORS.BLACK}
+          fill={isDark ? WHITE : BLACK}
           onClick={changeTheme}
-          path={
-            isDark ? constants.iconPaths.SHARED.LIGHT_MODE : constants.iconPaths.SHARED.DARK_MODE
-          }
+          path={isDark ? SHARED.LIGHT_MODE : SHARED.DARK_MODE}
         />
 
         <BaseDropdown menu={languageMenu}>
@@ -88,10 +90,7 @@ const TheTopBar: React.FC = () => {
 
         <BaseDropdown menu={notificationMenu}>
           <Badge count={notifications.length}>
-            <BaseIconSvg
-              fill={isDark ? constants.shared.COLORS.WHITE : constants.shared.COLORS.BLACK}
-              path={constants.iconPaths.LAYOUTS.NOTIFICATION}
-            />
+            <BaseIconSvg fill={isDark ? WHITE : BLACK} path={LAYOUTS.NOTIFICATION} />
           </Badge>
         </BaseDropdown>
 
@@ -100,6 +99,7 @@ const TheTopBar: React.FC = () => {
             items: [
               { key: 'profile', label: 'Profile' },
               { key: 'settings', label: 'Settings' },
+              { type: 'divider' },
               { key: 'logout', label: 'Logout' }
             ]
           }}

@@ -1,0 +1,19 @@
+// light theme
+:root {
+  --ant-color-primary: #{$color-primary};
+  --ant-color-bg-container: #{$color-white};
+  --ant-color-bg-elevated: #{$color-white};
+  --ant-color-border: '#d9d9d9';
+  --ant-color-text: #{$color-black};
+  --ant-color-text-placeholder: 'rgba(0,0,0,0.25)';
+}
+
+// dark theme
+html.dark {
+  --ant-color-primary: #{$color-primary};
+  --ant-color-bg-container: '#111c2d';
+  --ant-color-bg-elevated: '#111c2d';
+  --ant-color-border: '#4a4a4a';
+  --ant-color-text: #{$color-white};
+  --ant-color-text-placeholder: 'rgba(255, 255, 255, 0.5)';
+}

@@ -1,15 +1,14 @@
 import styles from '@/assets/styles/layouts/default-layout.module.scss';
 import TheSidebar from '@/components/layouts/TheSidebar';
 import TheTopbar from '@/components/layouts/TheTopbar';
-import { useScroll } from '@reactuses/core';
+import { useWindowScroll } from '@reactuses/core';
 import { Layout } from 'antd';
 import { Outlet } from 'react-router';
 
 const { Content, Header, Sider } = Layout;
 
 const DefaultLayout: React.FC = () => {
-  const elementRef = useRef<HTMLElement | null>(null);
-  const [y] = useScroll(elementRef);
+  const { y } = useWindowScroll();
 
   const headerStyle = {
     marginTop: y > 50 ? '-20px' : '0',
@@ -23,11 +22,11 @@ const DefaultLayout: React.FC = () => {
       </Sider>
 
       <Layout className={styles['default-layout__main']}>
-        <Header className={styles['default-layout__main-header']} style={headerStyle}>
+        <Header className={styles['default-layout__main--header']} style={headerStyle}>
           <TheTopbar />
         </Header>
 
-        <Content className={styles['default-layout__main-view']} ref={elementRef}>
+        <Content className={styles['default-layout__main--view']}>
           <Outlet />
         </Content>
       </Layout>

@@ -1,15 +1,27 @@
 import type { IFailureResponse } from '@/models/interfaces/shared.interface';
-import type { TObjectUnknown, TSuccessResponse } from '@/models/types/shared.type';
+import type { TDate, TObjectUnknown, TSuccessResponse } from '@/models/types/shared.type';
 
-import { EDataType, EResponseStatus } from '@/models/enums/shared.enum';
+import { EDataType, EResponseStatus, EToast } from '@/models/enums/shared.enum';
 // import { EToast } from '@/models/enums/shared.enum';
 import storeService from '@/services/store.service';
+import { notification } from 'antd';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 // import { ElLoading, ElNotification } from 'element-plus';
-// import { capitalize } from 'lodash-es';
+import { capitalize } from 'lodash-es';
 import qs from 'qs';
-import stringFormat from 'string-template';
+import stringTemplate from 'string-template';
+
+dayjs.extend(utc);
 
 const shared = {
+  cleanQuery: <T>(query: TObjectUnknown): T => {
+    const cleanedQuery = Object.fromEntries(
+      Object.entries(query).filter(([_, value]) => value !== undefined && value !== '')
+    );
+    return cleanedQuery as T;
+  },
+
   convertToCamelCase: <T>(data: TObjectUnknown | TObjectUnknown[]): T => {
     if (Array.isArray(data)) return data.map((item) => shared.convertToCamelCase(item)) as T;
     if (data === null || typeof data !== EDataType.Object) return data as T;
@@ -30,6 +42,15 @@ const shared = {
     return newObject as T;
   },
 
+  // hideLoading: (loadingInstance: null | ReturnType<typeof ElLoading.service>) => {
+  //   if (loadingInstance) {
+  //     loadingInstance.close();
+  //     const element = loadingInstance.target.value;
+  //     if (element && element instanceof HTMLElement)
+  //       element.classList.remove('tw-pointer-events-none');
+  //   }
+  // },
+
   convertToSnakeCase: <T>(data: TObjectUnknown | TObjectUnknown[]): T => {
     if (Array.isArray(data)) return data.map((item) => shared.convertToSnakeCase(item)) as T;
     if (!data || typeof data !== EDataType.Object) return data as T;
@@ -48,30 +69,11 @@ const shared = {
     return newObject as T;
   },
 
-  // hideLoading: (loadingInstance: null | ReturnType<typeof ElLoading.service>) => {
-  //   if (loadingInstance) {
-  //     loadingInstance.close();
-  //     const element = loadingInstance.target.value;
-  //     if (element && element instanceof HTMLElement)
-  //       element.classList.remove('tw-pointer-events-none');
-  //   }
-  // },
-
-  isSuccessResponse<T, M>(
-    response: IFailureResponse | TSuccessResponse<T, M>
-  ): response is TSuccessResponse<T, M> {
-    return response.status === EResponseStatus.Success;
+  formatDateUTC: (date: TDate) => {
+    return dayjs(date).utc().toISOString();
   },
 
-  queryClean: <T>(query: TObjectUnknown): T => {
-    const cleanedQuery = Object.fromEntries(
-      Object.entries(query).filter(([_, value]) => value !== undefined && value !== '')
-    );
-
-    return cleanedQuery as T;
-  },
-
-  queryStringFormat: (baseUrl: string, query: string | string[] | TObjectUnknown): string => {
+  formatQueryString: (baseUrl: string, query: string | string[] | TObjectUnknown): string => {
     if (
       !query ||
       (Array.isArray(query) && query.length === 0) ||
@@ -82,6 +84,10 @@ const shared = {
     const queryString =
       typeof query === EDataType.String ? query : qs.stringify(query, { arrayFormat: 'brackets' });
     return `${baseUrl}?${queryString}`;
+  },
+
+  formatString: (template: string, values: TObjectUnknown | unknown[]): string => {
+    return stringTemplate(template, values);
   },
 
   // showLoading: (target: TLoadingTarget) => {
@@ -102,14 +108,19 @@ const shared = {
   //   return null;
   // },
 
-  // showToast: (message: string, type: EToast = EToast.Success, title: string = capitalize(type)) => {
-  //   ElNotification({
-  //     duration: 3000,
-  //     message,
-  //     title,
-  //     type
-  //   });
-  // },
+  isSuccessResponse<T, M>(
+    response: IFailureResponse | TSuccessResponse<T, M>
+  ): response is TSuccessResponse<T, M> {
+    return response.status === EResponseStatus.Success;
+  },
+
+  showToast: (description: string, type = EToast.Success, message: string = capitalize(type)) => {
+    notification[type]({
+      description,
+      duration: 3,
+      message
+    });
+  },
 
   sleep: (second: number) => {
     return new Promise<void>((resolve) => {
@@ -121,10 +132,6 @@ const shared = {
 
   storeResetAll: () => {
     storeService.resetAll();
-  },
-
-  stringFormat: (template: string, values: TObjectUnknown | unknown[]): string => {
-    return stringFormat(template, values);
   }
 };
 

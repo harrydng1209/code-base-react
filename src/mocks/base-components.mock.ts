@@ -49,6 +49,7 @@ export const tableData = [
     date: '2016-05-03',
     department: 'Development',
     email: 'tom@example.com',
+    id: 1,
     name: 'Tom',
     occupation: 'Engineer',
     phone: '(123) 456-7890',
@@ -64,6 +65,7 @@ export const tableData = [
     date: '2016-05-02',
     department: 'Design',
     email: 'john@example.com',
+    id: 2,
     name: 'John',
     occupation: 'Designer',
     phone: '(234) 567-8901',
@@ -79,6 +81,7 @@ export const tableData = [
     date: '2016-05-04',
     department: 'IT',
     email: 'alice@example.com',
+    id: 3,
     name: 'Alice',
     occupation: 'Developer',
     phone: '(345) 678-9012',
@@ -94,6 +97,7 @@ export const tableData = [
     date: '2016-05-01',
     department: 'Operations',
     email: 'jane@example.com',
+    id: 4,
     name: 'Jane',
     occupation: 'Manager',
     phone: '(456) 789-0123',
@@ -109,6 +113,7 @@ export const tableData = [
     date: '2016-06-10',
     department: 'Executive',
     email: 'mike@example.com',
+    id: 5,
     name: 'Mike',
     occupation: 'Director',
     phone: '(567) 890-1234',
@@ -124,6 +129,7 @@ export const tableData = [
     date: '2016-07-15',
     department: 'Research',
     email: 'emma@example.com',
+    id: 6,
     name: 'Emma',
     occupation: 'Analyst',
     phone: '(678) 901-2345',
@@ -139,6 +145,7 @@ export const tableData = [
     date: '2016-05-03',
     department: 'Development',
     email: 'tom@example.com',
+    id: 7,
     name: 'Tom',
     occupation: 'Engineer',
     phone: '(123) 456-7890',
@@ -154,6 +161,7 @@ export const tableData = [
     date: '2016-05-02',
     department: 'Design',
     email: 'john@example.com',
+    id: 8,
     name: 'John',
     occupation: 'Designer',
     phone: '(234) 567-8901',
@@ -169,6 +177,7 @@ export const tableData = [
     date: '2016-05-04',
     department: 'IT',
     email: 'alice@example.com',
+    id: 9,
     name: 'Alice',
     occupation: 'Developer',
     phone: '(345) 678-9012',
@@ -184,6 +193,7 @@ export const tableData = [
     date: '2016-05-01',
     department: 'Operations',
     email: 'jane@example.com',
+    id: 10,
     name: 'Jane',
     occupation: 'Manager',
     phone: '(456) 789-0123',
@@ -199,6 +209,7 @@ export const tableData = [
     date: '2016-06-10',
     department: 'Executive',
     email: 'mike@example.com',
+    id: 11,
     name: 'Mike',
     occupation: 'Director',
     phone: '(567) 890-1234',
@@ -214,10 +225,85 @@ export const tableData = [
     date: '2016-07-15',
     department: 'Research',
     email: 'emma@example.com',
+    id: 12,
     name: 'Emma',
     occupation: 'Analyst',
     phone: '(678) 901-2345',
     salary: 70000,
     zipCode: '98101'
+  }
+];
+
+export const tableColumns = [
+  {
+    dataIndex: 'index',
+    render: (_text: unknown, _record: unknown, index: number) => index + 1,
+    title: '#',
+    width: 50
+  },
+  {
+    dataIndex: 'date',
+    title: 'Date',
+    width: 120
+  },
+  {
+    dataIndex: 'name',
+    title: 'Name',
+    width: 150
+  },
+  {
+    dataIndex: 'address',
+    title: 'Address',
+    width: 200
+  },
+  {
+    dataIndex: 'email',
+    title: 'Email',
+    width: 180
+  },
+  {
+    dataIndex: 'phone',
+    title: 'Phone',
+    width: 150
+  },
+  {
+    dataIndex: 'age',
+    title: 'Age',
+    width: 80
+  },
+  {
+    dataIndex: 'occupation',
+    title: 'Occupation',
+    width: 150
+  },
+  {
+    dataIndex: 'company',
+    title: 'Company',
+    width: 150
+  },
+  {
+    dataIndex: 'salary',
+    title: 'Salary',
+    width: 120
+  },
+  {
+    dataIndex: 'department',
+    title: 'Department',
+    width: 150
+  },
+  {
+    dataIndex: 'city',
+    title: 'City',
+    width: 120
+  },
+  {
+    dataIndex: 'country',
+    title: 'Country',
+    width: 120
+  },
+  {
+    dataIndex: 'zipCode',
+    title: 'Zip Code',
+    width: 120
   }
 ];

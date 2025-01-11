@@ -7,17 +7,19 @@ interface IProps extends Omit<CheckboxGroupProps, 'options'> {
   options: TOptions[];
 }
 
+const { Group } = Checkbox;
+
 const CheckboxGroup: React.FC<IProps> = (props) => {
   const { options, ...otherProps } = props;
 
   return (
-    <Checkbox.Group {...otherProps}>
+    <Group {...otherProps}>
       {options.map((item, index) => (
         <Checkbox key={item.id || index} value={item.value}>
           {item.label}
         </Checkbox>
       ))}
-    </Checkbox.Group>
+    </Group>
   );
 };
 

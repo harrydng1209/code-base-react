@@ -1,15 +1,17 @@
 import { Button, ButtonProps } from 'antd';
+import { ButtonColorType, ButtonShape, ButtonVariantType } from 'antd/es/button';
 
-interface IProps extends ButtonProps, React.PropsWithChildren {
-  shape?: 'circle' | 'default' | 'round';
-  type?: 'dashed' | 'default' | 'link' | 'primary' | 'text';
+interface IProps extends Omit<ButtonProps, 'color' | 'type'>, React.PropsWithChildren {
+  color?: ButtonColorType;
+  shape?: ButtonShape;
+  variant?: ButtonVariantType;
 }
 
 const BaseButton: React.FC<IProps> = (props) => {
-  const { children, shape = 'round', type = 'primary', ...otherProps } = props;
+  const { children, color = 'primary', shape = 'round', variant = 'solid', ...otherProps } = props;
 
   return (
-    <Button shape={shape} type={type} {...otherProps}>
+    <Button color={color} shape={shape} variant={variant} {...otherProps}>
       {children}
     </Button>
   );

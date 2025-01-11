@@ -22,7 +22,7 @@ export default defineConfig({
     react(),
     svgr(),
     autoImport({
-      dirs: ['src/hooks/shared/**', 'src/components/base/**'],
+      dirs: ['src/hooks/shared/**'],
       dts: 'src/@types/auto-imports.d.ts',
       imports: [
         'react',

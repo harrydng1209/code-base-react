@@ -1,23 +1,25 @@
 import { TOptions } from '@/models/types/shared.type';
-import { Select, SelectProps } from 'antd';
+import { RefSelectProps, Select, SelectProps } from 'antd';
 
 interface IProps extends Omit<SelectProps, 'options'>, React.PropsWithChildren {
   options: TOptions[];
 }
 
-const BaseSelect: React.FC<IProps> = (props) => {
+const { Option } = Select;
+
+const BaseSelect = forwardRef<RefSelectProps, IProps>((props, ref) => {
   const { children, options, ...otherProps } = props;
 
   return (
-    <Select {...otherProps}>
+    <Select ref={ref} {...otherProps}>
       {options.map((item, index) => (
-        <Select.Option key={item.id || index} value={item.value}>
+        <Option key={item.id || index} value={item.value}>
           {item.label}
-        </Select.Option>
+        </Option>
       ))}
       {children}
     </Select>
   );
-};
+});
 
 export default BaseSelect;
