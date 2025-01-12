@@ -8,8 +8,8 @@ import useLanguageStore from '@/stores/language.store';
 import useThemeStore from '@/stores/theme.store';
 import { Avatar, Badge, MenuProps } from 'antd';
 
-const { BLACK, WHITE } = constants.shared.COLORS;
 const { LAYOUTS, SHARED } = constants.iconPaths;
+const { BLACK, WHITE } = constants.shared.COLORS;
 
 const TheTopBar: React.FC = () => {
   const { changeTheme, isDark } = useThemeStore();

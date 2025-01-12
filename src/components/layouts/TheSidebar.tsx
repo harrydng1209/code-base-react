@@ -4,8 +4,9 @@ import useThemeStore from '@/stores/theme.store';
 import { Menu } from 'antd';
 import { Link } from 'react-router';
 
-const { BLACK, WHITE } = constants.shared.COLORS;
 const { LAYOUTS, SHARED } = constants.iconPaths;
+const { BLACK, WHITE } = constants.shared.COLORS;
+const { AUTH, BASE_COMPONENTS, HOME } = constants.routePages;
 
 const TheSidebar: React.FC = () => {
   const { t } = useTranslation();
@@ -16,12 +17,12 @@ const TheSidebar: React.FC = () => {
   const menuItems = [
     {
       icon: <BaseIconSvg fill={isDark ? WHITE : BLACK} path={LAYOUTS.DASHBOARD} />,
-      key: constants.routePages.AUTH.LOGIN,
+      key: AUTH.LOGIN,
       label: t('shared.navigator.login')
     },
     {
       icon: <BaseIconSvg fill={isDark ? WHITE : BLACK} path={LAYOUTS.FOLDER_SHARED} />,
-      key: constants.routePages.BASE_COMPONENTS,
+      key: BASE_COMPONENTS,
       label: t('shared.navigator.base-components')
     }
   ];
@@ -30,7 +31,7 @@ const TheSidebar: React.FC = () => {
   return (
     <div className={styles['the-sidebar']}>
       <div className={styles['the-sidebar__logo']}>
-        <Link to={constants.routePages.HOME}>
+        <Link to={HOME}>
           <BaseIconSvg path={SHARED.LOGO} />
         </Link>
       </div>

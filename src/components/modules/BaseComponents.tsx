@@ -58,25 +58,6 @@ const { LAYOUTS, SHARED } = constants.iconPaths;
 const { BLACK, WHITE } = constants.shared.COLORS;
 
 const BaseComponents: React.FC = () => {
-  const { t } = useTranslation();
-  const { isDark } = useThemeStore();
-  const loadingStore = useLoadingStore();
-
-  const [baseCheckbox, setBaseCheckbox] = useState<boolean>(false);
-  const [baseCheckboxAll, setBaseCheckboxAll] = useState<boolean>(false);
-  const [isIndeterminate, setIsIndeterminate] = useState<boolean>(false);
-  const [baseCheckboxGroup, setBaseCheckboxGroup] = useState<unknown[]>([]);
-  const [baseSwitch, setBaseSwitch] = useState<boolean>(true);
-  const [baseAutocomplete, setBaseAutocomplete] = useState<string>('');
-  const [options, setOptions] = useState<DefaultOptionType[]>([]);
-  const [baseInput, setBaseInput] = useState<number | string>();
-  const [baseInputNumber, setBaseInputNumber] = useState<number | string>();
-  const [baseDatePicker, setBaseDatePicker] = useState<Dayjs | null>();
-  const [baseTimePicker, setBaseTimePicker] = useState<Dayjs | null>(null);
-  const [baseModal, setBaseModal] = useState<boolean>(false);
-  const [searchInput, setSearchInput] = useState<string>('');
-  const [pagination, setPagination] = useState({ current: 1, pageSize: 10, total: 1 });
-
   const schema = yupObject({
     email: yupString()
       .required('Email is required')
@@ -98,6 +79,24 @@ const BaseComponents: React.FC = () => {
     defaultValues: {},
     resolver: yupResolver(schema)
   });
+  const { t } = useTranslation();
+  const { isDark } = useThemeStore();
+  const loadingStore = useLoadingStore();
+
+  const [baseCheckbox, setBaseCheckbox] = useState<boolean>(false);
+  const [baseCheckboxAll, setBaseCheckboxAll] = useState<boolean>(false);
+  const [isIndeterminate, setIsIndeterminate] = useState<boolean>(false);
+  const [baseCheckboxGroup, setBaseCheckboxGroup] = useState<unknown[]>([]);
+  const [baseSwitch, setBaseSwitch] = useState<boolean>(true);
+  const [baseAutocomplete, setBaseAutocomplete] = useState<string>('');
+  const [options, setOptions] = useState<DefaultOptionType[]>([]);
+  const [baseInput, setBaseInput] = useState<number | string>();
+  const [baseInputNumber, setBaseInputNumber] = useState<number | string>();
+  const [baseDatePicker, setBaseDatePicker] = useState<Dayjs | null>();
+  const [baseTimePicker, setBaseTimePicker] = useState<Dayjs | null>(null);
+  const [baseModal, setBaseModal] = useState<boolean>(false);
+  const [searchInput, setSearchInput] = useState<string>('');
+  const [pagination, setPagination] = useState({ current: 1, pageSize: 10, total: 1 });
 
   const { run: handleGetHealthCheck } = useDebounceFn(async () => {
     await apis.shared.healthCheck();

@@ -2,7 +2,7 @@ import type { IFailureResponse } from '@/models/interfaces/shared.interface';
 import type { TLoadingTarget, TSuccessResponse } from '@/models/types/shared.type';
 // import type { ElLoading } from 'element-plus';
 
-import { EResponseStatus } from '@/models/enums/shared.enum';
+import { EResponseStatus, EToast } from '@/models/enums/shared.enum';
 import httpService from '@/services/http.service';
 import useAuthStore from '@/stores/auth.store';
 import { useLocalStorage } from '@reactuses/core';
@@ -21,7 +21,7 @@ const request = async <T = unknown, M = unknown>(
   data: unknown,
   config?: AxiosRequestConfig,
   _loadingTarget?: TLoadingTarget,
-  _toastMessage?: string
+  toastMessage?: string
 ): Promise<IFailureResponse | TSuccessResponse<T, M>> => {
   // let loadingInstance: null | ReturnType<typeof ElLoading.service> = null;
 
@@ -33,7 +33,7 @@ const request = async <T = unknown, M = unknown>(
       data,
       config
     );
-    // if (toastMessage) utils.shared.showToast(toastMessage);
+    if (toastMessage) utils.shared.showToast(toastMessage);
 
     return {
       data: response.data.data,
@@ -49,7 +49,7 @@ const request = async <T = unknown, M = unknown>(
       errorCode = error.response?.data?.error?.code || errorCode;
     }
 
-    // if (toastMessage) utils.shared.showToast(errorMessage, EToast.Error);
+    if (toastMessage) utils.shared.showToast(errorMessage, EToast.Error);
 
     throw {
       error: {

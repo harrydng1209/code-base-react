@@ -14,11 +14,6 @@ import { object as yupObject, string as yupString } from 'yup';
 const { MODULES, SHARED } = constants.iconPaths;
 
 const Login: React.FC = () => {
-  useThemeStore();
-  const { t } = useTranslation();
-  const authStore = useAuthStore();
-  const navigate = useNavigate();
-
   const schema = yupObject({
     email: yupString()
       .required('Email is required')
@@ -32,6 +27,10 @@ const Login: React.FC = () => {
     defaultValues: {},
     resolver: yupResolver(schema)
   });
+  useThemeStore();
+  const { t } = useTranslation();
+  const authStore = useAuthStore();
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
