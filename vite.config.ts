@@ -18,9 +18,11 @@ export default defineConfig({
       }
     }
   },
+
   plugins: [
     react(),
     svgr(),
+
     autoImport({
       dirs: ['src/hooks/shared/**'],
       dts: 'src/@types/auto-imports.d.ts',
@@ -36,15 +38,18 @@ export default defineConfig({
       ]
     })
   ],
+
   preview: {
     host: '0.0.0.0',
     port: Number(process.env.VITE_PORT_PREVIEW) || 3030
   },
+
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
+
   server: {
     host: '0.0.0.0',
     port: Number(process.env.VITE_PORT) || 3000
