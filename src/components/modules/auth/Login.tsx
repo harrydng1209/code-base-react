@@ -96,7 +96,7 @@ const Login: React.FC = () => {
           <BaseButton
             className="tw-w-full"
             htmlType="submit"
-            id={constants.shared.SELECTOR_IDS.LOGIN_BUTTON_ID}
+            id={constants.shared.SELECTORS.LOGIN_BUTTON}
           >
             {t('auth.login')}
           </BaseButton>

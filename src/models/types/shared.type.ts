@@ -3,8 +3,8 @@ import type { EResponseStatus } from '@/models/enums/shared.enum';
 export type TDate = Date | number | string;
 
 export type TLoadingTarget =
-  | 'full-screen'
-  | (typeof constants.shared.SELECTOR_IDS)[keyof typeof constants.shared.SELECTOR_IDS]
+  | 'fullscreen'
+  | (typeof constants.shared.SELECTORS)[keyof typeof constants.shared.SELECTORS]
   | false;
 
 export type TObjectBoolean = Record<string, boolean>;

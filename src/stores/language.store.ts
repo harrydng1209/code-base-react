@@ -19,7 +19,7 @@ const languageStore = create<ILanguageStore>((set) => ({
 const useLanguageStore = () => {
   const { i18n } = useTranslation();
   const [language, changeLanguage] = useLocalStorage<ELanguageCode>(
-    constants.shared.LOCAL_STORAGE_KEYS.LANGUAGE,
+    constants.shared.STORAGE_KEYS.LANGUAGE,
     ELanguageCode.English
   );
 

@@ -23,7 +23,7 @@ const useThemeStore = () => {
   const [isDarkMode, changeTheme] = useDarkMode({
     classNameDark: 'dark',
     classNameLight: 'light',
-    storageKey: constants.shared.LOCAL_STORAGE_KEYS.THEME
+    storageKey: constants.shared.STORAGE_KEYS.THEME
   });
 
   const actions = themeStore((state) => state.actions);

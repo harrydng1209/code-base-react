@@ -190,7 +190,7 @@ const BaseComponents: React.FC = () => {
         </div>
       </section>
 
-      <section id={constants.shared.SELECTOR_IDS.TEST_BUTTON_ID}>
+      <section id={constants.shared.SELECTORS.TEST_BUTTON}>
         <h4>-- Apis --</h4>
         <BaseButton onClick={handleGetHealthCheck}>Health Check</BaseButton>
       </section>
