@@ -56,11 +56,11 @@ const authStore = create<IAuthStore>((set, get) => ({
 
     setToken: (token: string) => set({ accessToken: token }),
 
-    setUser: (data: IUserInfo) => set({ isAuthenticated: true, userInfo: data })
+    setUser: (data: IUserInfo) => set({ isAuthenticated: true, userInfo: data }),
   },
 
   isAuthenticated: false,
-  userInfo: undefined
+  userInfo: undefined,
 }));
 
 const useAuthStore = () => {

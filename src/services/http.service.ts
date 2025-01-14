@@ -7,9 +7,9 @@ const httpService = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   headers: {
     Accept: 'application/json',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   },
-  paramsSerializer: (params) => qs.stringify(params, { indices: true })
+  paramsSerializer: (params) => qs.stringify(params, { indices: true }),
 });
 
 httpService.interceptors.request.use(
@@ -22,7 +22,7 @@ httpService.interceptors.request.use(
     if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 httpService.interceptors.response.use(
@@ -46,7 +46,7 @@ httpService.interceptors.response.use(
 
       case constants.shared.STATUS_CODES.FORBIDDEN:
         throw new Error(
-          errorData.error.message || 'You do not have permission to access this resource'
+          errorData.error.message || 'You do not have permission to access this resource',
         );
 
       case constants.shared.STATUS_CODES.NOT_FOUND:
@@ -55,7 +55,7 @@ httpService.interceptors.response.use(
       default:
         throw new Error(errorData.error.message || 'An unexpected error occurred');
     }
-  }
+  },
 );
 
 export default httpService;

@@ -11,9 +11,9 @@ interface ILoadingStore {
 const loadingStore = create<ILoadingStore>((set) => ({
   actions: {
     hideLoading: () => set({ isLoading: false }),
-    showLoading: () => set({ isLoading: true })
+    showLoading: () => set({ isLoading: true }),
   },
-  isLoading: false
+  isLoading: false,
 }));
 
 const useLoadingStore = () => {

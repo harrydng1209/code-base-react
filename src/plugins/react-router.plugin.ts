@@ -4,7 +4,7 @@ type TModules = Record<string, { default: RouteObject }>;
 
 const routes: Array<RouteObject> = [];
 const modules: TModules = import.meta.glob('@/routes/*.tsx', {
-  eager: true
+  eager: true,
 });
 
 Object.keys(modules).forEach((key) => {

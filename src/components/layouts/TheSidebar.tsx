@@ -18,13 +18,13 @@ const TheSidebar: React.FC = () => {
     {
       icon: <BaseIconSvg fill={isDark ? WHITE : BLACK} path={LAYOUTS.DASHBOARD} />,
       key: AUTH.LOGIN,
-      label: t('shared.navigator.login')
+      label: t('shared.navigator.login'),
     },
     {
       icon: <BaseIconSvg fill={isDark ? WHITE : BLACK} path={LAYOUTS.FOLDER_SHARED} />,
       key: BASE_COMPONENTS,
-      label: t('shared.navigator.base-components')
-    }
+      label: t('shared.navigator.base-components'),
+    },
   ];
   const selectedKey = menuItems.find((item) => item.key === location.pathname)?.key || '';
 
@@ -40,7 +40,7 @@ const TheSidebar: React.FC = () => {
         items={menuItems.map((item) => ({
           icon: item.icon,
           key: item.key,
-          label: item.label
+          label: item.label,
         }))}
         mode="inline"
         onClick={({ key }) => navigate(key)}

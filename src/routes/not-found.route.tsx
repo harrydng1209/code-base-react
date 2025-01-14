@@ -5,7 +5,7 @@ export default {
   meta: {
     requiresAuth: false,
     roles: [],
-    title: 'Page Not Found'
+    title: 'Page Not Found',
   },
-  path: '*'
+  path: '*',
 };

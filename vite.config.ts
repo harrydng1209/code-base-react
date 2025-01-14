@@ -14,9 +14,9 @@ export default defineConfig({
         additionalData: `
           @import "@/assets/styles/root/variables";
           @import "@/assets/styles/root/mixins";
-        `
-      }
-    }
+        `,
+      },
+    },
   },
 
   plugins: [
@@ -26,6 +26,13 @@ export default defineConfig({
     autoImport({
       dirs: ['src/hooks/shared/**'],
       dts: 'src/@types/auto-imports.d.ts',
+
+      eslintrc: {
+        enabled: true,
+        filepath: './.globalsrc.json',
+        globalsPropValue: true,
+      },
+
       imports: [
         'react',
         'react-router',
@@ -33,25 +40,25 @@ export default defineConfig({
         {
           '@/apis': [['default', 'apis']],
           '@/constants': [['default', 'constants']],
-          '@/utils': [['default', 'utils']]
-        }
-      ]
-    })
+          '@/utils': [['default', 'utils']],
+        },
+      ],
+    }),
   ],
 
   preview: {
     host: '0.0.0.0',
-    port: Number(process.env.VITE_PORT_PREVIEW) || 3030
+    port: Number(process.env.VITE_PORT_PREVIEW) || 3030,
   },
 
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
   },
 
   server: {
     host: '0.0.0.0',
-    port: Number(process.env.VITE_PORT) || 3000
-  }
+    port: Number(process.env.VITE_PORT) || 3000,
+  },
 });

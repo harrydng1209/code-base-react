@@ -11,16 +11,16 @@ interface ILanguageStore {
 
 const languageStore = create<ILanguageStore>((set) => ({
   actions: {
-    setCurrentLanguage: (newLang: ELanguageCode) => set(() => ({ currentLanguage: newLang }))
+    setCurrentLanguage: (newLang: ELanguageCode) => set(() => ({ currentLanguage: newLang })),
   },
-  currentLanguage: ELanguageCode.English
+  currentLanguage: ELanguageCode.English,
 }));
 
 const useLanguageStore = () => {
   const { i18n } = useTranslation();
   const [language, changeLanguage] = useLocalStorage<ELanguageCode>(
     constants.shared.STORAGE_KEYS.LANGUAGE,
-    ELanguageCode.English
+    ELanguageCode.English,
   );
 
   const actions = languageStore((state) => state.actions);

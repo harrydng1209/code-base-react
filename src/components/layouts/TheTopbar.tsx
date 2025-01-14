@@ -17,7 +17,7 @@ const TheTopBar: React.FC = () => {
 
   const i18nOptions = Object.entries(ELanguageCode).map(([key, value]) => ({
     label: key,
-    value
+    value,
   }));
 
   const notificationMenu: MenuProps = {
@@ -29,20 +29,20 @@ const TheTopBar: React.FC = () => {
             <p>{notification.message}</p>
             <p>{notification.time}</p>
           </div>
-        )
+        ),
       })),
       {
         key: 'clear-all',
-        label: <p>Clear All</p>
-      }
-    ]
+        label: <p>Clear All</p>,
+      },
+    ],
   };
 
   const getIconPathForLanguage = (lang: ELanguageCode) => {
     const iconPaths = {
       [ELanguageCode.English]: LAYOUTS.ENGLISH,
       [ELanguageCode.Japanese]: LAYOUTS.JAPANESE,
-      [ELanguageCode.Vietnamese]: LAYOUTS.VIETNAMESE
+      [ELanguageCode.Vietnamese]: LAYOUTS.VIETNAMESE,
     };
     return iconPaths[lang];
   };
@@ -56,8 +56,8 @@ const TheTopBar: React.FC = () => {
           <p>{item.label}</p>
         </div>
       ),
-      onClick: () => changeLanguage(item.value)
-    }))
+      onClick: () => changeLanguage(item.value),
+    })),
   };
 
   return (
@@ -91,8 +91,8 @@ const TheTopBar: React.FC = () => {
               { key: 'profile', label: 'Profile' },
               { key: 'settings', label: 'Settings' },
               { type: 'divider' },
-              { key: 'logout', label: 'Logout' }
-            ]
+              { key: 'logout', label: 'Logout' },
+            ],
           }}
         >
           <Avatar className="tw-cursor-pointer">H</Avatar>

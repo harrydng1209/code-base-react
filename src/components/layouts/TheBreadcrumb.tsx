@@ -10,20 +10,20 @@ const TheBreadcrumb: React.FC = () => {
 
   if (pathNames.length > 0) {
     items.push({
-      title: <Link to={constants.routePages.HOME}>{t('shared.navigator.home')}</Link>
+      title: <Link to={constants.routePages.HOME}>{t('shared.navigator.home')}</Link>,
     });
   }
 
   pathNames.forEach((path, index) => {
     if (index === pathNames.length - 1) {
       items.push({
-        title: <span>{t(`shared.navigator.${path}`)}</span>
+        title: <span>{t(`shared.navigator.${path}`)}</span>,
       });
       return;
     }
 
     items.push({
-      title: <Link to={`/${path}`}>{t(`shared.navigator.${path}`)}</Link>
+      title: <Link to={`/${path}`}>{t(`shared.navigator.${path}`)}</Link>,
     });
   });
 

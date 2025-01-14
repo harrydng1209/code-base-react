@@ -20,7 +20,7 @@ const request = async <T = unknown, M = unknown>(
   data: unknown,
   config?: AxiosRequestConfig,
   _loadingTarget?: TLoadingTarget,
-  toastMessage?: string
+  toastMessage?: string,
 ): Promise<IFailureResponse | TSuccessResponse<T, M>> => {
   // let loadingInstance: null | ReturnType<typeof ElLoading.service> = null;
 
@@ -30,14 +30,14 @@ const request = async <T = unknown, M = unknown>(
     const response: AxiosResponse<TSuccessResponse<T, M>> = await httpService[method](
       url,
       data,
-      config
+      config,
     );
     if (toastMessage) utils.shared.showToast(toastMessage);
 
     return {
       data: response.data.data,
       meta: response.data.meta,
-      status: EResponseStatus.Success
+      status: EResponseStatus.Success,
     } as TSuccessResponse<T, M>;
   } catch (error) {
     let errorMessage = 'An error occurred';
@@ -53,9 +53,9 @@ const request = async <T = unknown, M = unknown>(
     throw {
       error: {
         code: errorCode,
-        message: errorMessage
+        message: errorMessage,
       },
-      status: EResponseStatus.Failure
+      status: EResponseStatus.Failure,
     } as IFailureResponse;
   } finally {
     // utils.shared.hideLoading(loadingInstance);
@@ -67,7 +67,7 @@ const http = {
     url: string,
     config?: AxiosRequestConfig,
     loadingTarget?: TLoadingTarget,
-    toastMessage?: string
+    toastMessage?: string,
   ) => {
     return await request<T, M>(
       constants.shared.API_METHODS.DELETE,
@@ -75,7 +75,7 @@ const http = {
       undefined,
       config,
       loadingTarget,
-      toastMessage
+      toastMessage,
     );
   },
 
@@ -83,7 +83,7 @@ const http = {
     url: string,
     config?: AxiosRequestConfig,
     loadingTarget?: TLoadingTarget,
-    toastMessage?: string
+    toastMessage?: string,
   ) => {
     return await request<T, M>(
       constants.shared.API_METHODS.GET,
@@ -91,7 +91,7 @@ const http = {
       undefined,
       config,
       loadingTarget,
-      toastMessage
+      toastMessage,
     );
   },
 
@@ -120,7 +120,7 @@ const http = {
     data: unknown,
     config?: AxiosRequestConfig,
     loadingTarget?: TLoadingTarget,
-    toastMessage?: string
+    toastMessage?: string,
   ) => {
     return await request<T, M>(
       constants.shared.API_METHODS.PATCH,
@@ -128,7 +128,7 @@ const http = {
       data,
       config,
       loadingTarget,
-      toastMessage
+      toastMessage,
     );
   },
 
@@ -137,7 +137,7 @@ const http = {
     data: unknown,
     config?: AxiosRequestConfig,
     loadingTarget?: TLoadingTarget,
-    toastMessage?: string
+    toastMessage?: string,
   ) => {
     return await request<T, M>(
       constants.shared.API_METHODS.POST,
@@ -145,7 +145,7 @@ const http = {
       data,
       config,
       loadingTarget,
-      toastMessage
+      toastMessage,
     );
   },
 
@@ -154,7 +154,7 @@ const http = {
     data: unknown,
     config?: AxiosRequestConfig,
     loadingTarget?: TLoadingTarget,
-    toastMessage?: string
+    toastMessage?: string,
   ) => {
     return await request<T, M>(
       constants.shared.API_METHODS.PUT,
@@ -162,9 +162,9 @@ const http = {
       data,
       config,
       loadingTarget,
-      toastMessage
+      toastMessage,
     );
-  }
+  },
 };
 
 export default http;

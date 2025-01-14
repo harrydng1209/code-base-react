@@ -8,7 +8,7 @@ type TLocales = Record<string, { default: TObjectString }>;
 type TResources = Record<ELanguageCode, Record<string, TObjectString>>;
 
 const locales: TLocales = import.meta.glob('@/locales/**/*.json', {
-  eager: true
+  eager: true,
 });
 
 const resources: TResources = Object.values(ELanguageCode).reduce((acc, lang) => {
@@ -33,8 +33,8 @@ Object.keys(locales).forEach((path) => {
 
 export default i18n.use(initReactI18next).init({
   interpolation: {
-    escapeValue: false
+    escapeValue: false,
   },
   lng: ELanguageCode.English,
-  resources
+  resources,
 });

@@ -12,7 +12,7 @@ const DefaultLayout: React.FC = () => {
 
   const headerStyle = {
     marginTop: y > 50 ? '-20px' : '0',
-    transition: 'margin-top 0.3s ease'
+    transition: 'margin-top 0.3s ease',
   };
 
   return (

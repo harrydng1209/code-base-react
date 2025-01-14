@@ -14,17 +14,17 @@ const AntConfigProvider: React.FC<IProps> = (props) => {
     algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
     components: {
       Button: {
-        primaryShadow: ''
+        primaryShadow: '',
       },
       Layout: {
-        headerHeight: '75px'
+        headerHeight: '75px',
       },
       Menu: {
-        darkItemBg: '#111c2d'
+        darkItemBg: '#111c2d',
       },
       Table: {
-        borderColor: isDark ? '#4a4a4a' : '#d9d9d9'
-      }
+        borderColor: isDark ? '#4a4a4a' : '#d9d9d9',
+      },
     },
     cssVar: false,
     hashed: false,
@@ -34,8 +34,8 @@ const AntConfigProvider: React.FC<IProps> = (props) => {
       colorBorder: isDark ? '#4a4a4a' : '#d9d9d9',
       colorPrimary: PRIMARY,
       colorText: isDark ? WHITE : BLACK,
-      colorTextPlaceholder: isDark ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0,0,0,0.25)'
-    }
+      colorTextPlaceholder: isDark ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0,0,0,0.25)',
+    },
   };
 
   return <ConfigProvider theme={config}>{children}</ConfigProvider>;

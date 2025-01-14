@@ -5,7 +5,7 @@ export default {
   meta: {
     requiresAuth: false,
     roles: [],
-    title: 'Forbidden'
+    title: 'Forbidden',
   },
-  path: constants.routePages.FORBIDDEN
+  path: constants.routePages.FORBIDDEN,
 };

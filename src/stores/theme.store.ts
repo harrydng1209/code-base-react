@@ -14,16 +14,16 @@ const themeStore = create<IThemeStore>((set) => ({
       set(() => {
         return { isDark: isDarkMode };
       });
-    }
+    },
   },
-  isDark: false
+  isDark: false,
 }));
 
 const useThemeStore = () => {
   const [isDarkMode, changeTheme] = useDarkMode({
     classNameDark: 'dark',
     classNameLight: 'light',
-    storageKey: constants.shared.STORAGE_KEYS.THEME
+    storageKey: constants.shared.STORAGE_KEYS.THEME,
   });
 
   const actions = themeStore((state) => state.actions);

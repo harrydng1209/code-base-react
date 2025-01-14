@@ -18,9 +18,10 @@ import {
   baseSelectOptions,
   suggestions,
   tableColumns,
-  tableData
+  tableData,
 } from '@/mocks/base-components.mock';
 import { EToast } from '@/models/enums/shared.enum';
+import { IForm } from '@/models/interfaces/auth.interface';
 import useLoadingStore from '@/stores/loading.store';
 import useThemeStore from '@/stores/theme.store';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -31,7 +32,7 @@ import {
   Form,
   PaginationProps,
   TimePickerProps,
-  Tooltip
+  Tooltip,
 } from 'antd';
 import { DefaultOptionType } from 'antd/es/select';
 import { Dayjs } from 'dayjs';
@@ -42,17 +43,8 @@ import {
   boolean as yupBoolean,
   object as yupObject,
   ref as yupRef,
-  string as yupString
+  string as yupString,
 } from 'yup';
-
-interface IForm {
-  email: string;
-  fullName: string;
-  password: string;
-  passwordConfirm: string;
-  terms: boolean;
-  type: string;
-}
 
 const { LAYOUTS, SHARED } = constants.iconPaths;
 const { BLACK, WHITE } = constants.shared.COLORS;
@@ -72,12 +64,19 @@ const BaseComponents: React.FC = () => {
     passwordConfirm: yupString()
       .required('Password confirmation is required')
       .oneOf([yupRef('password')], 'Passwords must match'),
-    terms: yupBoolean().required('You must agree to the terms and conditions'),
-    type: yupString().required('Account type is required')
+    terms: yupBoolean().required().isTrue('You must agree to the terms and conditions'),
+    type: yupString().required('Account type is required'),
   });
   const { control, handleSubmit, reset } = useForm<IForm>({
-    defaultValues: {},
-    resolver: yupResolver(schema)
+    defaultValues: {
+      email: '',
+      fullName: '',
+      password: '',
+      passwordConfirm: '',
+      terms: false,
+      type: '',
+    },
+    resolver: yupResolver<IForm>(schema),
   });
   const { t } = useTranslation();
   const { isDark } = useThemeStore();
@@ -123,14 +122,14 @@ const BaseComponents: React.FC = () => {
     setBaseCheckboxAll(event.target.checked);
     setIsIndeterminate(false);
     setBaseCheckboxGroup(
-      event.target.checked ? baseCheckboxOptions.map((option) => option.value) : []
+      event.target.checked ? baseCheckboxOptions.map((option) => option.value) : [],
     );
   };
 
   const handleCheckboxGroupChange = (checkedValues: unknown[]) => {
     setBaseCheckboxGroup(checkedValues);
     setIsIndeterminate(
-      checkedValues.length > 0 && checkedValues.length < baseCheckboxOptions.length
+      checkedValues.length > 0 && checkedValues.length < baseCheckboxOptions.length,
     );
     setBaseCheckboxAll(checkedValues.length === baseCheckboxOptions.length);
   };
@@ -142,7 +141,7 @@ const BaseComponents: React.FC = () => {
 
   const handleSearch = (value: string) => {
     const results = suggestions.filter((suggestion) =>
-      suggestion.value.toLowerCase().includes(value.toLowerCase())
+      suggestion.value.toLowerCase().includes(value.toLowerCase()),
     );
     setBaseAutocomplete(value);
     setOptions(results);
@@ -206,7 +205,7 @@ const BaseComponents: React.FC = () => {
           {Object.entries(constants.iconPaths).map(([categoryName, category]) => (
             <React.Fragment key={categoryName}>
               {Object.entries(category).map(([iconName, iconPath]) => (
-                <Tooltip key={iconName} title={iconPath}>
+                <Tooltip className="tw-cursor-pointer" key={iconName} title={iconPath}>
                   <BaseIconSvg
                     fill={isDark ? '#FFFFFF' : '#000000'}
                     onClick={handleClickIconSvg}
@@ -426,7 +425,7 @@ const BaseComponents: React.FC = () => {
           footer={[
             <BaseButton key="ok" onClick={handleModal}>
               OK
-            </BaseButton>
+            </BaseButton>,
           ]}
           onCancel={() => setBaseModal(false)}
           open={baseModal}

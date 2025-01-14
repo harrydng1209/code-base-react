@@ -21,11 +21,14 @@ const Login: React.FC = () => {
       .matches(/^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Custom email regex validation failed'),
     password: yupString()
       .required('Password is required')
-      .min(6, 'Password must be at least 6 characters long')
+      .min(6, 'Password must be at least 6 characters long'),
   });
   const { control, handleSubmit } = useForm<ILogin>({
-    defaultValues: {},
-    resolver: yupResolver(schema)
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    resolver: yupResolver(schema),
   });
   useThemeStore();
   const { t } = useTranslation();

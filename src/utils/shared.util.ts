@@ -15,7 +15,7 @@ dayjs.extend(utc);
 const shared = {
   cleanQuery: <T>(query: TObjectUnknown): T => {
     const cleanedQuery = Object.fromEntries(
-      Object.entries(query).filter(([_, value]) => value !== undefined && value !== '')
+      Object.entries(query).filter(([_, value]) => value !== undefined && value !== ''),
     );
     return cleanedQuery as T;
   },
@@ -80,7 +80,7 @@ const shared = {
   },
 
   isSuccessResponse<T, M>(
-    response: IFailureResponse | TSuccessResponse<T, M>
+    response: IFailureResponse | TSuccessResponse<T, M>,
   ): response is TSuccessResponse<T, M> {
     return response.status === EResponseStatus.Success;
   },
@@ -89,7 +89,7 @@ const shared = {
     notification[type]({
       description,
       duration: 3,
-      message
+      message,
     });
   },
 
@@ -103,7 +103,7 @@ const shared = {
 
   storeResetAll: () => {
     storeService.resetAll();
-  }
+  },
 };
 
 export default shared;

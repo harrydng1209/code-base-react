@@ -21,7 +21,7 @@ const storeService = {
     storeResetFns.forEach((resetFn) => {
       resetFn();
     });
-  }
+  },
 };
 
 export default storeService;

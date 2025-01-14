@@ -5,14 +5,14 @@ export default {
   children: [
     {
       element: <Login />,
-      path: constants.routePages.AUTH.LOGIN
-    }
+      path: constants.routePages.AUTH.LOGIN,
+    },
   ],
   element: <GuestLayout />,
   meta: {
     requiresAuth: false,
     roles: [],
-    title: 'Authentication'
+    title: 'Authentication',
   },
-  path: constants.routePages.AUTH.ROOT
+  path: constants.routePages.AUTH.ROOT,
 };
