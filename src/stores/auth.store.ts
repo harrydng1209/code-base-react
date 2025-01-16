@@ -1,6 +1,8 @@
 import { IUserInfo } from '@/models/interfaces/auth.interface';
 import { create } from 'zustand';
 
+const { AUTH } = constants.routePages;
+
 interface IAuthStore {
   accessToken?: string;
   actions: {
@@ -14,6 +16,8 @@ interface IAuthStore {
   userInfo?: IUserInfo;
 }
 
+const { isSuccessResponse } = utils.shared;
+
 const authStore = create<IAuthStore>((set, get) => ({
   accessToken: undefined,
 
@@ -26,8 +30,8 @@ const authStore = create<IAuthStore>((set, get) => ({
       if (!isLoggedIn) return;
 
       try {
-        const response = await apis.auth.me();
-        if (!utils.shared.isSuccessResponse(response)) throw new Error(response.error.message);
+        const response = await apis.auth.profile();
+        if (!isSuccessResponse(response)) throw new Error(response.error.message);
 
         actions.setUser(response.data);
       } catch (error) {
@@ -43,13 +47,13 @@ const authStore = create<IAuthStore>((set, get) => ({
 
       try {
         const response = await apis.auth.refreshToken();
-        if (!utils.shared.isSuccessResponse(response)) throw new Error(response.error.message);
+        if (!isSuccessResponse(response)) throw new Error(response.error.message);
 
         set({ accessToken: response.data.accessToken });
       } catch (error) {
         result = false;
         console.error(error);
-        await navigate(constants.routePages.AUTH.LOGIN);
+        await navigate(AUTH.LOGIN);
       }
       return result;
     },

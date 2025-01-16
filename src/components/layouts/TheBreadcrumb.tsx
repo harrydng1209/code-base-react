@@ -1,6 +1,8 @@
 import { Breadcrumb } from 'antd';
 import { Link } from 'react-router';
 
+const { HOME } = constants.routePages;
+
 const TheBreadcrumb: React.FC = () => {
   const { t } = useTranslation();
   const location = useLocation();
@@ -10,7 +12,7 @@ const TheBreadcrumb: React.FC = () => {
 
   if (pathNames.length > 0) {
     items.push({
-      title: <Link to={constants.routePages.HOME}>{t('shared.navigator.home')}</Link>,
+      title: <Link to={HOME}>{t('shared.navigator.home')}</Link>,
     });
   }
 

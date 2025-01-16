@@ -2,6 +2,8 @@ import { ELanguageCode } from '@/models/enums/shared.enum';
 import { useLocalStorage } from '@reactuses/core';
 import { create } from 'zustand';
 
+const { LANGUAGE } = constants.shared.STORAGE_KEYS;
+
 interface ILanguageStore {
   actions: {
     setCurrentLanguage: (newLang: ELanguageCode) => void;
@@ -19,7 +21,7 @@ const languageStore = create<ILanguageStore>((set) => ({
 const useLanguageStore = () => {
   const { i18n } = useTranslation();
   const [language, changeLanguage] = useLocalStorage<ELanguageCode>(
-    constants.shared.STORAGE_KEYS.LANGUAGE,
+    LANGUAGE,
     ELanguageCode.English,
   );
 

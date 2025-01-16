@@ -48,6 +48,8 @@ import {
 
 const { LAYOUTS, SHARED } = constants.iconPaths;
 const { BLACK, WHITE } = constants.shared.COLORS;
+const { APIS_SECTION } = constants.shared.SELECTORS;
+const { showToast, sleep } = utils.shared;
 
 const BaseComponents: React.FC = () => {
   const schema = yupObject({
@@ -102,20 +104,20 @@ const BaseComponents: React.FC = () => {
   }, 200);
 
   const { run: handleClickIconSvg } = useDebounceFn(() => {
-    utils.shared.showToast('handleClickIconSvg');
+    showToast('handleClickIconSvg');
   }, 200);
 
   const { run: handleClickButton } = useDebounceFn(() => {
-    utils.shared.showToast('handleClickButton');
+    showToast('handleClickButton');
   }, 200);
 
   const handleChangeSelect = (value: string) => {
-    utils.shared.showToast(`handleChangeSelect: ${value}`);
+    showToast(`handleChangeSelect: ${value}`);
   };
 
   const handleChangeCheckbox: CheckboxProps['onChange'] = (event) => {
     setBaseCheckbox(event.target.checked);
-    utils.shared.showToast(`handleChangeCheckbox: ${event.target.checked}`);
+    showToast(`handleChangeCheckbox: ${event.target.checked}`);
   };
 
   const handleCheckAllChange: CheckboxProps['onChange'] = (event) => {
@@ -136,7 +138,7 @@ const BaseComponents: React.FC = () => {
 
   const handleChangeSwitch = (checked: boolean) => {
     setBaseSwitch(checked);
-    utils.shared.showToast(`handleChangeSwitch: ${checked}`);
+    showToast(`handleChangeSwitch: ${checked}`);
   };
 
   const handleSearch = (value: string) => {
@@ -148,22 +150,22 @@ const BaseComponents: React.FC = () => {
   };
 
   const { run: handleChangeInput } = useDebounceFn((value: number | string) => {
-    utils.shared.showToast(`handleChangeInput: ${value}`);
+    showToast(`handleChangeInput: ${value}`);
   }, 200);
 
   const handleChangeDatePicker: DatePickerProps['onChange'] = (date, dateString) => {
     setBaseDatePicker(date);
-    utils.shared.showToast(`handleChangeDatePicker: ${dateString}`);
+    showToast(`handleChangeDatePicker: ${dateString}`);
   };
 
   const handleChangeTimePicker: TimePickerProps['onChange'] = (time, timeString) => {
     setBaseTimePicker(time);
-    utils.shared.showToast(`handleChangeTimePicker: ${timeString}`);
+    showToast(`handleChangeTimePicker: ${timeString}`);
   };
 
   const handleModal = () => {
     setBaseModal(false);
-    utils.shared.showToast('handleConfirmDialog', EToast.Info);
+    showToast('handleConfirmDialog', EToast.Info);
   };
 
   const handleChangePagination: PaginationProps['onChange'] = (page, pageSize) => {
@@ -171,12 +173,12 @@ const BaseComponents: React.FC = () => {
   };
 
   const onSubmit: SubmitHandler<IForm> = async (_values) => {
-    utils.shared.showToast('onSubmit: check console');
+    showToast('onSubmit: check console');
   };
 
   const handleLoadingFullscreen = async () => {
     loadingStore.actions.showLoading();
-    await utils.shared.sleep(3);
+    await sleep(3);
     loadingStore.actions.hideLoading();
   };
 
@@ -189,7 +191,7 @@ const BaseComponents: React.FC = () => {
         </div>
       </section>
 
-      <section id={constants.shared.SELECTORS.TEST_BUTTON}>
+      <section id={APIS_SECTION}>
         <h4>-- Apis --</h4>
         <BaseButton onClick={handleGetHealthCheck}>Health Check</BaseButton>
       </section>

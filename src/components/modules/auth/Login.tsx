@@ -11,7 +11,10 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { FormItem } from 'react-hook-form-antd';
 import { object as yupObject, string as yupString } from 'yup';
 
+const { HOME } = constants.routePages;
 const { MODULES, SHARED } = constants.iconPaths;
+const { LOGIN_BUTTON } = constants.shared.SELECTORS;
+const { isSuccessResponse } = utils.shared;
 
 const Login: React.FC = () => {
   const schema = yupObject({
@@ -44,10 +47,10 @@ const Login: React.FC = () => {
   const onSubmit: SubmitHandler<ILogin> = async (values) => {
     try {
       const response = await apis.auth.login(values);
-      if (!utils.shared.isSuccessResponse(response)) throw new Error(response.error.message);
+      if (!isSuccessResponse(response)) throw new Error(response.error.message);
 
       authStore.actions.setToken(response.data.accessToken);
-      await navigate(constants.routePages.HOME);
+      await navigate(HOME);
     } catch (error) {
       console.error(error);
     }
@@ -96,11 +99,7 @@ const Login: React.FC = () => {
             />
           </FormItem>
 
-          <BaseButton
-            className="tw-w-full"
-            htmlType="submit"
-            id={constants.shared.SELECTORS.LOGIN_BUTTON}
-          >
+          <BaseButton className="tw-w-full" htmlType="submit" id={LOGIN_BUTTON}>
             {t('auth.login')}
           </BaseButton>
         </Form>

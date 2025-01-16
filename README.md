@@ -1,5 +1,7 @@
 # code-base-react
 
+This template should help get you started developing with React in Vite.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

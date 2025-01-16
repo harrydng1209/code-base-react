@@ -1,6 +1,8 @@
 import { useDarkMode } from '@reactuses/core';
 import { create } from 'zustand';
 
+const { THEME } = constants.shared.STORAGE_KEYS;
+
 interface IThemeStore {
   actions: {
     setDark: (isDarkMode: boolean) => void;
@@ -23,7 +25,7 @@ const useThemeStore = () => {
   const [isDarkMode, changeTheme] = useDarkMode({
     classNameDark: 'dark',
     classNameLight: 'light',
-    storageKey: constants.shared.STORAGE_KEYS.THEME,
+    storageKey: THEME,
   });
 
   const actions = themeStore((state) => state.actions);

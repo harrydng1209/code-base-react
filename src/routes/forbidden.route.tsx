@@ -1,5 +1,7 @@
 import ErrorLayout from '@/layouts/ErrorLayout';
 
+const { FORBIDDEN } = constants.routePages;
+
 export default {
   element: <ErrorLayout />,
   meta: {
@@ -7,5 +9,5 @@ export default {
     roles: [],
     title: 'Forbidden',
   },
-  path: constants.routePages.FORBIDDEN,
+  path: FORBIDDEN,
 };
