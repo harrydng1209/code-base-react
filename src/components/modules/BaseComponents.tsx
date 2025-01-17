@@ -21,7 +21,6 @@ import {
   tableData,
 } from '@/mocks/base-components.mock';
 import { EToast } from '@/models/enums/shared.enum';
-import { IForm } from '@/models/interfaces/auth.interface';
 import useLoadingStore from '@/stores/loading.store';
 import useThemeStore from '@/stores/theme.store';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -50,6 +49,15 @@ const { LAYOUTS, SHARED } = constants.iconPaths;
 const { BLACK, WHITE } = constants.shared.COLORS;
 const { APIS_SECTION } = constants.shared.SELECTORS;
 const { showToast, sleep } = utils.shared;
+
+interface IForm {
+  email: string;
+  fullName: string;
+  password: string;
+  passwordConfirm: string;
+  terms: boolean;
+  type: string;
+}
 
 const BaseComponents: React.FC = () => {
   const schema = yupObject({
@@ -172,7 +180,8 @@ const BaseComponents: React.FC = () => {
     setPagination({ current: page, pageSize, total: tableData.length });
   };
 
-  const onSubmit: SubmitHandler<IForm> = async (_values) => {
+  const onSubmit: SubmitHandler<IForm> = async (values) => {
+    console.info('onSubmit:', values);
     showToast('onSubmit: check console');
   };
 

@@ -1,8 +1,10 @@
-import type { IFailureResponse } from '@/models/interfaces/shared.interface';
-import type { TLoadingTarget, TSuccessResponse } from '@/models/types/shared.type';
+import type { TLoadingTarget } from '@/models/types/shared.type';
 // import type { ElLoading } from 'element-plus';
 
-import { EResponseStatus, EToast } from '@/models/enums/shared.enum';
+import { EResponseStatus } from '@/models/enums/auth.enum';
+import { EToast } from '@/models/enums/shared.enum';
+import { IFailureResponse } from '@/models/interfaces/auth.interface';
+import { TSuccessResponse } from '@/models/types/auth.type';
 import httpService from '@/services/http.service';
 import useAuthStore from '@/stores/auth.store';
 import { useLocalStorage } from '@reactuses/core';
@@ -10,6 +12,7 @@ import { AxiosError, type AxiosRequestConfig, type AxiosResponse, isAxiosError }
 
 const { DELETE, GET, PATCH, POST, PUT } = constants.shared.HTTP_METHODS;
 const { ACCESS_TOKEN } = constants.shared.STORAGE_KEYS;
+const { ERR_500 } = constants.shared.ERROR_CODES;
 
 interface IAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
@@ -17,8 +20,6 @@ interface IAxiosRequestConfig extends AxiosRequestConfig {
 
 type THttpMethods =
   (typeof constants.shared.HTTP_METHODS)[keyof typeof constants.shared.HTTP_METHODS];
-
-const { showToast } = utils.shared;
 
 const request = async <T = unknown, M = unknown>(
   method: THttpMethods,
@@ -38,7 +39,7 @@ const request = async <T = unknown, M = unknown>(
       data,
       config,
     );
-    if (toastMessage) showToast(toastMessage);
+    if (toastMessage) utils.shared.showToast(toastMessage);
 
     return {
       data: response.data.data,
@@ -47,14 +48,14 @@ const request = async <T = unknown, M = unknown>(
     } as TSuccessResponse<T, M>;
   } catch (error) {
     let errorMessage = 'An error occurred';
-    let errorCode = 500;
+    let errorCode = ERR_500;
 
-    if (isAxiosError(error)) {
-      errorMessage = error.response?.data?.error?.message || errorMessage;
-      errorCode = error.response?.data?.error?.code || errorCode;
+    if (isAxiosError<IFailureResponse>(error)) {
+      errorMessage = error.response?.data.error.message || errorMessage;
+      errorCode = error.response?.data.error.code || errorCode;
     }
 
-    if (toastMessage) showToast(errorMessage, EToast.Error);
+    if (toastMessage) utils.shared.showToast(errorMessage, EToast.Error);
 
     throw {
       error: {
@@ -87,7 +88,7 @@ const http = {
     return await request<T, M>(GET, url, undefined, config, loadingTarget, toastMessage);
   },
 
-  handleUnauthorizedError: async (error: AxiosError) => {
+  handleUnauthorizedError: async (error: AxiosError<IFailureResponse>) => {
     const authStore = useAuthStore();
     const isSuccess = await authStore.actions.refreshToken();
 

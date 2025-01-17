@@ -1,7 +1,9 @@
-import type { IFailureResponse } from '@/models/interfaces/shared.interface';
-import type { TDate, TObjectUnknown, TSuccessResponse } from '@/models/types/shared.type';
+import type { TDate, TObjectUnknown } from '@/models/types/shared.type';
 
-import { EResponseStatus, EToast } from '@/models/enums/shared.enum';
+import { EResponseStatus } from '@/models/enums/auth.enum';
+import { EToast } from '@/models/enums/shared.enum';
+import { IFailureResponse } from '@/models/interfaces/auth.interface';
+import { TSuccessResponse } from '@/models/types/auth.type';
 import storeService from '@/services/store.service';
 import { notification } from 'antd';
 import dayjs from 'dayjs';
@@ -77,6 +79,15 @@ const shared = {
 
   formatString: (template: string, values: TObjectUnknown | unknown[]): string => {
     return stringTemplate(template, values);
+  },
+
+  isFailureResponse(response: Error | IFailureResponse): response is IFailureResponse {
+    return (
+      typeof response === 'object' &&
+      response !== null &&
+      'status' in response &&
+      response.status === EResponseStatus.Failure
+    );
   },
 
   isSuccessResponse<T, M>(

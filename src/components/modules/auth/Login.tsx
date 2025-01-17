@@ -2,7 +2,7 @@ import styles from '@/assets/styles/modules/auth/login.module.scss';
 import BaseButton from '@/components/base/BaseButton';
 import BaseIconSvg from '@/components/base/BaseIconSvg';
 import BaseInput from '@/components/base/BaseInput';
-import { ILogin } from '@/models/interfaces/auth.interface';
+import { ILoginRequest } from '@/models/interfaces/auth.interface';
 import useAuthStore from '@/stores/auth.store';
 import useThemeStore from '@/stores/theme.store';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -26,7 +26,7 @@ const Login: React.FC = () => {
       .required('Password is required')
       .min(6, 'Password must be at least 6 characters long'),
   });
-  const { control, handleSubmit } = useForm<ILogin>({
+  const { control, handleSubmit } = useForm<ILoginRequest>({
     defaultValues: {
       email: '',
       password: '',
@@ -37,6 +37,7 @@ const Login: React.FC = () => {
   const { t } = useTranslation();
   const authStore = useAuthStore();
   const navigate = useNavigate();
+  const { handleCatchError } = useHandleCatchError();
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -44,15 +45,15 @@ const Login: React.FC = () => {
     setShowPassword(!showPassword);
   };
 
-  const onSubmit: SubmitHandler<ILogin> = async (values) => {
+  const onSubmit: SubmitHandler<ILoginRequest> = async (values) => {
     try {
       const response = await apis.auth.login(values);
-      if (!isSuccessResponse(response)) throw new Error(response.error.message);
+      if (!isSuccessResponse(response)) throw response;
 
       authStore.actions.setToken(response.data.accessToken);
       await navigate(HOME);
     } catch (error) {
-      console.error(error);
+      handleCatchError(error);
     }
   };
 

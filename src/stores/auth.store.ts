@@ -31,7 +31,7 @@ const authStore = create<IAuthStore>((set, get) => ({
 
       try {
         const response = await apis.auth.profile();
-        if (!isSuccessResponse(response)) throw new Error(response.error.message);
+        if (!isSuccessResponse(response)) throw response;
 
         actions.setUser(response.data);
       } catch (error) {
@@ -47,7 +47,7 @@ const authStore = create<IAuthStore>((set, get) => ({
 
       try {
         const response = await apis.auth.refreshToken();
-        if (!isSuccessResponse(response)) throw new Error(response.error.message);
+        if (!isSuccessResponse(response)) throw response;
 
         set({ accessToken: response.data.accessToken });
       } catch (error) {
