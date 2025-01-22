@@ -16,17 +16,32 @@ const TheSidebar: React.FC = () => {
 
   const menuItems = [
     {
-      icon: <BaseIconSvg fill={isDark ? WHITE : BLACK} path={LAYOUTS.DASHBOARD} />,
+      icon: (
+        <BaseIconSvg fill={isDark ? WHITE : BLACK} path={LAYOUTS.DASHBOARD} />
+      ),
       key: AUTH.LOGIN,
       label: t('shared.navigator.login'),
     },
     {
-      icon: <BaseIconSvg fill={isDark ? WHITE : BLACK} path={LAYOUTS.FOLDER_SHARED} />,
+      icon: (
+        <BaseIconSvg fill={isDark ? WHITE : BLACK} path={LAYOUTS.SETTINGS} />
+      ),
+      key: AUTH.REGISTER,
+      label: t('shared.navigator.register'),
+    },
+    {
+      icon: (
+        <BaseIconSvg
+          fill={isDark ? WHITE : BLACK}
+          path={LAYOUTS.FOLDER_SHARED}
+        />
+      ),
       key: BASE_COMPONENTS,
       label: t('shared.navigator.base-components'),
     },
   ];
-  const selectedKey = menuItems.find((item) => item.key === location.pathname)?.key || '';
+  const selectedKey =
+    menuItems.find((item) => item.key === location.pathname)?.key || '';
 
   return (
     <div className={styles['the-sidebar']}>

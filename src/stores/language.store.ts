@@ -13,7 +13,8 @@ interface ILanguageStore {
 
 const languageStore = create<ILanguageStore>((set) => ({
   actions: {
-    setCurrentLanguage: (newLang: ELanguageCode) => set(() => ({ currentLanguage: newLang })),
+    setCurrentLanguage: (newLang: ELanguageCode) =>
+      set(() => ({ currentLanguage: newLang })),
   },
   currentLanguage: ELanguageCode.English,
 }));

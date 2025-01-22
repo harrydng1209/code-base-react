@@ -11,10 +11,13 @@ const locales: TLocales = import.meta.glob('@/locales/**/*.json', {
   eager: true,
 });
 
-const resources: TResources = Object.values(ELanguageCode).reduce((acc, lang) => {
-  acc[lang] = { translation: {} };
-  return acc;
-}, {} as TResources);
+const resources: TResources = Object.values(ELanguageCode).reduce(
+  (acc, lang) => {
+    acc[lang] = { translation: {} };
+    return acc;
+  },
+  {} as TResources,
+);
 
 Object.keys(locales).forEach((path) => {
   const match = path.match(/\/src\/locales\/(.*?)\/(.*?)\.json$/);

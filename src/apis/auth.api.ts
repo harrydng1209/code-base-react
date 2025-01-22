@@ -28,7 +28,13 @@ const auth = {
 
   register: async (data: IRegister) => {
     const url = AUTH.REGISTER;
-    return await post<unknown>(url, data);
+    return await post<unknown>(
+      url,
+      data,
+      undefined,
+      undefined,
+      'Registration successful',
+    );
   },
 };
 

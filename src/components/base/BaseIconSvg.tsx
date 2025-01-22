@@ -2,13 +2,17 @@ interface IProps {
   path: string;
 }
 
-type TIcons = Record<string, () => Promise<{ ReactComponent: React.FC<TSvgProps> }>>;
+type TIcons = Record<
+  string,
+  () => Promise<{ ReactComponent: React.FC<TSvgProps> }>
+>;
 type TSvgProps = React.SVGProps<SVGSVGElement>;
 
 const BaseIconSvg: React.FC<IProps & TSvgProps> = (props) => {
   const { path, ...otherProps } = props;
 
-  const [IconComponent, setIconComponent] = useState<null | React.FC<TSvgProps>>(null);
+  const [IconComponent, setIconComponent] =
+    useState<null | React.FC<TSvgProps>>(null);
   const icons = import.meta.glob('../../assets/icons/**/*.svg') as TIcons;
 
   useEffect(() => {
@@ -29,7 +33,10 @@ const BaseIconSvg: React.FC<IProps & TSvgProps> = (props) => {
   return (
     <>
       {IconComponent && (
-        <IconComponent className="tw-cursor-pointer tw-outline-none" {...otherProps} />
+        <IconComponent
+          className="tw-cursor-pointer tw-outline-none"
+          {...otherProps}
+        />
       )}
     </>
   );

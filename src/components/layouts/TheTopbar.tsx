@@ -81,7 +81,10 @@ const TheTopBar: React.FC = () => {
 
         <BaseDropdown menu={notificationMenu}>
           <Badge count={notifications.length}>
-            <BaseIconSvg fill={isDark ? WHITE : BLACK} path={LAYOUTS.NOTIFICATION} />
+            <BaseIconSvg
+              fill={isDark ? WHITE : BLACK}
+              path={LAYOUTS.NOTIFICATION}
+            />
           </Badge>
         </BaseDropdown>
 

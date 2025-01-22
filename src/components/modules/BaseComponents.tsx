@@ -64,7 +64,10 @@ const BaseComponents: React.FC = () => {
     email: yupString()
       .required('Email is required')
       .email('Invalid email format')
-      .matches(/^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Custom email regex validation failed'),
+      .matches(
+        /^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+        'Custom email regex validation failed',
+      ),
     fullName: yupString()
       .required('Full name is required')
       .matches(/^[A-Za-z\s]+$/, 'Name can only contain letters and spaces'),
@@ -74,7 +77,9 @@ const BaseComponents: React.FC = () => {
     passwordConfirm: yupString()
       .required('Password confirmation is required')
       .oneOf([yupRef('password')], 'Passwords must match'),
-    terms: yupBoolean().required().isTrue('You must agree to the terms and conditions'),
+    terms: yupBoolean()
+      .required()
+      .isTrue('You must agree to the terms and conditions'),
     type: yupString().required('Account type is required'),
   });
   const { control, handleSubmit, reset } = useForm<IForm>({
@@ -86,6 +91,7 @@ const BaseComponents: React.FC = () => {
       terms: false,
       type: '',
     },
+    mode: 'onChange',
     resolver: yupResolver<IForm>(schema),
   });
   const { t } = useTranslation();
@@ -105,7 +111,11 @@ const BaseComponents: React.FC = () => {
   const [baseTimePicker, setBaseTimePicker] = useState<Dayjs | null>(null);
   const [baseModal, setBaseModal] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<string>('');
-  const [pagination, setPagination] = useState({ current: 1, pageSize: 10, total: 1 });
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    total: 1,
+  });
 
   const { run: handleGetHealthCheck } = useDebounceFn(async () => {
     await apis.shared.healthCheck();
@@ -132,14 +142,17 @@ const BaseComponents: React.FC = () => {
     setBaseCheckboxAll(event.target.checked);
     setIsIndeterminate(false);
     setBaseCheckboxGroup(
-      event.target.checked ? baseCheckboxOptions.map((option) => option.value) : [],
+      event.target.checked
+        ? baseCheckboxOptions.map((option) => option.value)
+        : [],
     );
   };
 
   const handleCheckboxGroupChange = (checkedValues: unknown[]) => {
     setBaseCheckboxGroup(checkedValues);
     setIsIndeterminate(
-      checkedValues.length > 0 && checkedValues.length < baseCheckboxOptions.length,
+      checkedValues.length > 0 &&
+        checkedValues.length < baseCheckboxOptions.length,
     );
     setBaseCheckboxAll(checkedValues.length === baseCheckboxOptions.length);
   };
@@ -161,12 +174,18 @@ const BaseComponents: React.FC = () => {
     showToast(`handleChangeInput: ${value}`);
   }, 200);
 
-  const handleChangeDatePicker: DatePickerProps['onChange'] = (date, dateString) => {
+  const handleChangeDatePicker: DatePickerProps['onChange'] = (
+    date,
+    dateString,
+  ) => {
     setBaseDatePicker(date);
     showToast(`handleChangeDatePicker: ${dateString}`);
   };
 
-  const handleChangeTimePicker: TimePickerProps['onChange'] = (time, timeString) => {
+  const handleChangeTimePicker: TimePickerProps['onChange'] = (
+    time,
+    timeString,
+  ) => {
     setBaseTimePicker(time);
     showToast(`handleChangeTimePicker: ${timeString}`);
   };
@@ -176,7 +195,10 @@ const BaseComponents: React.FC = () => {
     showToast('handleConfirmDialog', EToast.Info);
   };
 
-  const handleChangePagination: PaginationProps['onChange'] = (page, pageSize) => {
+  const handleChangePagination: PaginationProps['onChange'] = (
+    page,
+    pageSize,
+  ) => {
     setPagination({ current: page, pageSize, total: tableData.length });
   };
 
@@ -213,19 +235,25 @@ const BaseComponents: React.FC = () => {
       <section>
         <h4>-- Base Icons SVG --</h4>
         <div className="tw-flex tw-gap-2">
-          {Object.entries(constants.iconPaths).map(([categoryName, category]) => (
-            <React.Fragment key={categoryName}>
-              {Object.entries(category).map(([iconName, iconPath]) => (
-                <Tooltip className="tw-cursor-pointer" key={iconName} title={iconPath}>
-                  <BaseIconSvg
-                    fill={isDark ? '#FFFFFF' : '#000000'}
-                    onClick={handleClickIconSvg}
-                    path={String(iconPath)}
-                  />
-                </Tooltip>
-              ))}
-            </React.Fragment>
-          ))}
+          {Object.entries(constants.iconPaths).map(
+            ([categoryName, category]) => (
+              <React.Fragment key={categoryName}>
+                {Object.entries(category).map(([iconName, iconPath]) => (
+                  <Tooltip
+                    className="tw-cursor-pointer"
+                    key={iconName}
+                    title={iconPath}
+                  >
+                    <BaseIconSvg
+                      fill={isDark ? '#FFFFFF' : '#000000'}
+                      onClick={handleClickIconSvg}
+                      path={String(iconPath)}
+                    />
+                  </Tooltip>
+                ))}
+              </React.Fragment>
+            ),
+          )}
         </div>
       </section>
 
@@ -253,22 +281,46 @@ const BaseComponents: React.FC = () => {
         </div>
 
         <div className="tw-flex tw-gap-2 tw-mb-4">
-          <BaseButton color="primary" onClick={handleClickButton} variant="outlined">
+          <BaseButton
+            color="primary"
+            onClick={handleClickButton}
+            variant="outlined"
+          >
             Primary
           </BaseButton>
-          <BaseButton color="geekblue" onClick={handleClickButton} variant="outlined">
+          <BaseButton
+            color="geekblue"
+            onClick={handleClickButton}
+            variant="outlined"
+          >
             Geekblue
           </BaseButton>
-          <BaseButton color="green" onClick={handleClickButton} variant="outlined">
+          <BaseButton
+            color="green"
+            onClick={handleClickButton}
+            variant="outlined"
+          >
             Green
           </BaseButton>
-          <BaseButton color="orange" onClick={handleClickButton} variant="outlined">
+          <BaseButton
+            color="orange"
+            onClick={handleClickButton}
+            variant="outlined"
+          >
             Orange
           </BaseButton>
-          <BaseButton color="danger" onClick={handleClickButton} variant="outlined">
+          <BaseButton
+            color="danger"
+            onClick={handleClickButton}
+            variant="outlined"
+          >
             Danger
           </BaseButton>
-          <BaseButton color="default" onClick={handleClickButton} variant="outlined">
+          <BaseButton
+            color="default"
+            onClick={handleClickButton}
+            variant="outlined"
+          >
             Default
           </BaseButton>
         </div>
@@ -276,27 +328,62 @@ const BaseComponents: React.FC = () => {
         <div className="tw-flex tw-gap-2 tw-mb-4">
           <BaseButton
             color="primary"
-            icon={<BaseIconSvg fill={WHITE} height="14" path={LAYOUTS.SEARCH} width="14" />}
+            icon={
+              <BaseIconSvg
+                fill={WHITE}
+                height="14"
+                path={LAYOUTS.SEARCH}
+                width="14"
+              />
+            }
             onClick={handleClickButton}
           />
           <BaseButton
             color="geekblue"
-            icon={<BaseIconSvg fill={WHITE} height="14" path={LAYOUTS.SETTINGS} width="14" />}
+            icon={
+              <BaseIconSvg
+                fill={WHITE}
+                height="14"
+                path={LAYOUTS.SETTINGS}
+                width="14"
+              />
+            }
             onClick={handleClickButton}
           />
           <BaseButton
             color="green"
-            icon={<BaseIconSvg fill={WHITE} height="14" path={LAYOUTS.DASHBOARD} width="14" />}
+            icon={
+              <BaseIconSvg
+                fill={WHITE}
+                height="14"
+                path={LAYOUTS.DASHBOARD}
+                width="14"
+              />
+            }
             onClick={handleClickButton}
           />
           <BaseButton
             color="orange"
-            icon={<BaseIconSvg fill={WHITE} height="14" path={LAYOUTS.FOLDER_SHARED} width="14" />}
+            icon={
+              <BaseIconSvg
+                fill={WHITE}
+                height="14"
+                path={LAYOUTS.FOLDER_SHARED}
+                width="14"
+              />
+            }
             onClick={handleClickButton}
           />
           <BaseButton
             color="danger"
-            icon={<BaseIconSvg fill={WHITE} height="14" path={SHARED.DELETE} width="14" />}
+            icon={
+              <BaseIconSvg
+                fill={WHITE}
+                height="14"
+                path={SHARED.DELETE}
+                width="14"
+              />
+            }
             onClick={handleClickButton}
           />
           <BaseButton
@@ -449,7 +536,12 @@ const BaseComponents: React.FC = () => {
 
       <section>
         <h4>-- Base Tables --</h4>
-        <BaseTable columns={tableColumns} data={tableData} rowKey="id" scroll={{ y: 300 }} />
+        <BaseTable
+          columns={tableColumns}
+          data={tableData}
+          rowKey="id"
+          scroll={{ y: 300 }}
+        />
 
         <BasePagination
           className="tw-mt-4 tw-flex-center"
@@ -463,14 +555,26 @@ const BaseComponents: React.FC = () => {
 
       <section>
         <h4>-- Base Forms --</h4>
-        <Form layout="vertical" onFinish={handleSubmit(onSubmit)} style={{ maxWidth: '600px' }}>
+        <Form
+          layout="vertical"
+          onFinish={handleSubmit(onSubmit)}
+          style={{ maxWidth: '600px' }}
+        >
           <div className="tw-grid tw-grid-cols-2 tw-gap-4">
-            <FormItem control={control} label="Full Name" name="fullName" required>
+            <FormItem
+              control={control}
+              label="Full Name"
+              name="fullName"
+              required
+            >
               <BaseInput placeholder="Enter your full name" />
             </FormItem>
 
             <FormItem control={control} label="Type" name="type" required>
-              <BaseSelect options={baseSelectOptions} placeholder="Choose a type" />
+              <BaseSelect
+                options={baseSelectOptions}
+                placeholder="Choose a type"
+              />
             </FormItem>
           </div>
 
@@ -479,16 +583,31 @@ const BaseComponents: React.FC = () => {
               <BaseInput placeholder="Enter your email address" />
             </FormItem>
 
-            <FormItem control={control} label="Password" name="password" required>
+            <FormItem
+              control={control}
+              label="Password"
+              name="password"
+              required
+            >
               <BaseInput placeholder="Create a password" type="password" />
             </FormItem>
 
-            <FormItem control={control} label="Confirm Password" name="passwordConfirm" required>
+            <FormItem
+              control={control}
+              label="Confirm Password"
+              name="passwordConfirm"
+              required
+            >
               <BaseInput placeholder="Re-enter your password" type="password" />
             </FormItem>
           </div>
 
-          <FormItem control={control} name="terms" required valuePropName="checked">
+          <FormItem
+            control={control}
+            name="terms"
+            required
+            valuePropName="checked"
+          >
             <BaseCheckbox>Agree to terms and conditions</BaseCheckbox>
           </FormItem>
 

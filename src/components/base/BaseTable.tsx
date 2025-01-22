@@ -8,7 +8,15 @@ interface IProps extends TableProps {
 const BaseTable: React.FC<IProps> = (props) => {
   const { columns, data, ...otherProps } = props;
 
-  return <Table bordered columns={columns} dataSource={data} pagination={false} {...otherProps} />;
+  return (
+    <Table
+      bordered
+      columns={columns}
+      dataSource={data}
+      pagination={false}
+      {...otherProps}
+    />
+  );
 };
 
 export default BaseTable;

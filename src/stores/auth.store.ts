@@ -16,8 +16,6 @@ interface IAuthStore {
   userInfo?: IUserInfo;
 }
 
-const { isSuccessResponse } = utils.shared;
-
 const authStore = create<IAuthStore>((set, get) => ({
   accessToken: undefined,
 
@@ -26,20 +24,23 @@ const authStore = create<IAuthStore>((set, get) => ({
       const { accessToken, actions, isAuthenticated } = get();
       if (isAuthenticated) return;
 
-      const isLoggedIn = !!accessToken;
+      const isLoggedIn = Boolean(accessToken);
       if (!isLoggedIn) return;
 
       try {
         const response = await apis.auth.profile();
-        if (!isSuccessResponse(response)) throw response;
-
         actions.setUser(response.data);
       } catch (error) {
         console.error(error);
       }
     },
 
-    logout: () => set({ accessToken: undefined, isAuthenticated: false, userInfo: undefined }),
+    logout: () =>
+      set({
+        accessToken: undefined,
+        isAuthenticated: false,
+        userInfo: undefined,
+      }),
 
     refreshToken: async (): Promise<boolean> => {
       let result = true;
@@ -47,8 +48,6 @@ const authStore = create<IAuthStore>((set, get) => ({
 
       try {
         const response = await apis.auth.refreshToken();
-        if (!isSuccessResponse(response)) throw response;
-
         set({ accessToken: response.data.accessToken });
       } catch (error) {
         result = false;
@@ -60,7 +59,8 @@ const authStore = create<IAuthStore>((set, get) => ({
 
     setToken: (token: string) => set({ accessToken: token }),
 
-    setUser: (data: IUserInfo) => set({ isAuthenticated: true, userInfo: data }),
+    setUser: (data: IUserInfo) =>
+      set({ isAuthenticated: true, userInfo: data }),
   },
 
   isAuthenticated: false,

@@ -9,7 +9,14 @@ import globalsrc from './.globalsrc.json' assert { type: 'json' };
 
 export default [
   {
-    ignores: ['**/.git/', '**/dist/', '**/node_modules/', '**/pnpm-lock.yaml', 'src/@types/'],
+    ignores: [
+      '**/.git/',
+      '**/.husky/',
+      '**/dist/',
+      '**/node_modules/',
+      '**/pnpm-lock.yaml',
+      'src/@types/',
+    ],
   },
 
   jsLint.configs.recommended,

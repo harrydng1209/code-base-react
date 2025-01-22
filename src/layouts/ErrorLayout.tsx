@@ -1,6 +1,8 @@
 import BaseButton from '@/components/base/BaseButton';
+import useThemeStore from '@/stores/theme.store';
 
 const ErrorLayout: React.FC = () => {
+  useThemeStore();
   const navigate = useNavigate();
 
   const goBack = () => {

@@ -1,8 +1,7 @@
-import { IFailureResponse } from '@/models/interfaces/auth.interface';
-import axios, { AxiosError } from 'axios';
+import { TFailureResponse, TSuccessResponse } from '@/models/types/auth.type';
+import axios, { AxiosError, AxiosResponse, HttpStatusCode } from 'axios';
 import qs from 'qs';
 
-const { UNAUTHORIZED } = constants.shared.HTTP_CODES;
 const { ACCESS_TOKEN } = constants.shared.STORAGE_KEYS;
 
 const httpService = axios.create({
@@ -20,7 +19,8 @@ httpService.interceptors.request.use(
 
     if (config.data && !(config.data instanceof FormData))
       config.data = utils.shared.convertToSnakeCase(config.data);
-    if (config.params) config.params = utils.shared.convertToSnakeCase(config.params);
+    if (config.params)
+      config.params = utils.shared.convertToSnakeCase(config.params);
     if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
     return config;
   },
@@ -28,21 +28,18 @@ httpService.interceptors.request.use(
 );
 
 httpService.interceptors.response.use(
-  (response) => {
-    if (response.data) response.data = utils.shared.convertToCamelCase(response.data);
+  (response: AxiosResponse<TSuccessResponse>) => {
+    if (response.data)
+      response.data = utils.shared.convertToCamelCase(response.data);
     return response;
   },
-  (error: AxiosError<IFailureResponse>) => {
+  (error: AxiosError<TFailureResponse>) => {
     const status = error.response?.status;
 
-    switch (status) {
-      case UNAUTHORIZED:
-        utils.http.handleUnauthorizedError(error);
-        throw error;
+    if (status === HttpStatusCode.Unauthorized)
+      utils.http.handleUnauthorizedError(error);
 
-      default:
-        throw error;
-    }
+    return Promise.reject(error);
   },
 );
 

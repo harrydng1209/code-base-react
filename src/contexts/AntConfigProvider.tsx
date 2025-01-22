@@ -30,11 +30,13 @@ const AntConfigProvider: React.FC<IProps> = (props) => {
     hashed: false,
     token: {
       colorBgContainer: isDark ? '#111c2d' : WHITE,
-      colorBgElevated: isDark ? BLACK : WHITE,
+      colorBgElevated: isDark ? '#1d1e1f' : WHITE,
       colorBorder: isDark ? '#4a4a4a' : '#d9d9d9',
       colorPrimary: PRIMARY,
       colorText: isDark ? WHITE : BLACK,
-      colorTextPlaceholder: isDark ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0,0,0,0.25)',
+      colorTextPlaceholder: isDark
+        ? 'rgba(255, 255, 255, 0.5)'
+        : 'rgba(0,0,0,0.25)',
     },
   };
 

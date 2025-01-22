@@ -19,7 +19,9 @@
       background-color: var(--r-background-container-color);
       box-shadow: 0 2px 6px var(--r-box-shadow-color);
       border-radius: 18px;
-      width: calc(100vw - var(--ant-aside-width) - $layout-margin * 3 - $scrollbar-width);
+      width: calc(
+        100vw - var(--ant-aside-width) - $layout-margin * 3 - $scrollbar-width
+      );
       z-index: 999;
     }
 
