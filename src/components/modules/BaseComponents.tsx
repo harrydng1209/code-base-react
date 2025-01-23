@@ -46,8 +46,9 @@ import {
 } from 'yup';
 
 const { LAYOUTS, SHARED } = constants.iconPaths;
-const { BLACK, WHITE } = constants.shared.COLORS;
-const { APIS_SECTION } = constants.shared.SELECTORS;
+const { REGEXES, SELECTORS } = constants.shared;
+const { themeColors } = constants;
+const { DEFAULT } = constants.themeColors;
 const { showToast, sleep } = utils.shared;
 
 interface IForm {
@@ -64,13 +65,13 @@ const BaseComponents: React.FC = () => {
     email: yupString()
       .required('Email is required')
       .email('Invalid email format')
-      .matches(
-        /^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-        'Custom email regex validation failed',
-      ),
+      .matches(REGEXES.EMAIL, 'Custom email regex validation failed'),
     fullName: yupString()
       .required('Full name is required')
-      .matches(/^[A-Za-z\s]+$/, 'Name can only contain letters and spaces'),
+      .matches(
+        REGEXES.DISPLAY_NAME,
+        'Name can only contain letters and spaces',
+      ),
     password: yupString()
       .required('Password is required')
       .min(6, 'Password must be at least 6 characters long'),
@@ -95,7 +96,7 @@ const BaseComponents: React.FC = () => {
     resolver: yupResolver<IForm>(schema),
   });
   const { t } = useTranslation();
-  const { isDark } = useThemeStore();
+  const { theme } = useThemeStore();
   const loadingStore = useLoadingStore();
 
   const [baseCheckbox, setBaseCheckbox] = useState<boolean>(false);
@@ -222,7 +223,7 @@ const BaseComponents: React.FC = () => {
         </div>
       </section>
 
-      <section id={APIS_SECTION}>
+      <section id={SELECTORS.APIS_SECTION}>
         <h4>-- Apis --</h4>
         <BaseButton onClick={handleGetHealthCheck}>Health Check</BaseButton>
       </section>
@@ -245,7 +246,7 @@ const BaseComponents: React.FC = () => {
                     title={iconPath}
                   >
                     <BaseIconSvg
-                      fill={isDark ? '#FFFFFF' : '#000000'}
+                      fill={themeColors[theme].ICON_SVG}
                       onClick={handleClickIconSvg}
                       path={String(iconPath)}
                     />
@@ -330,7 +331,7 @@ const BaseComponents: React.FC = () => {
             color="primary"
             icon={
               <BaseIconSvg
-                fill={WHITE}
+                fill={DEFAULT.WHITE}
                 height="14"
                 path={LAYOUTS.SEARCH}
                 width="14"
@@ -342,7 +343,7 @@ const BaseComponents: React.FC = () => {
             color="geekblue"
             icon={
               <BaseIconSvg
-                fill={WHITE}
+                fill={DEFAULT.WHITE}
                 height="14"
                 path={LAYOUTS.SETTINGS}
                 width="14"
@@ -354,7 +355,7 @@ const BaseComponents: React.FC = () => {
             color="green"
             icon={
               <BaseIconSvg
-                fill={WHITE}
+                fill={DEFAULT.WHITE}
                 height="14"
                 path={LAYOUTS.DASHBOARD}
                 width="14"
@@ -366,7 +367,7 @@ const BaseComponents: React.FC = () => {
             color="orange"
             icon={
               <BaseIconSvg
-                fill={WHITE}
+                fill={DEFAULT.WHITE}
                 height="14"
                 path={LAYOUTS.FOLDER_SHARED}
                 width="14"
@@ -378,7 +379,7 @@ const BaseComponents: React.FC = () => {
             color="danger"
             icon={
               <BaseIconSvg
-                fill={WHITE}
+                fill={DEFAULT.WHITE}
                 height="14"
                 path={SHARED.DELETE}
                 width="14"
@@ -390,7 +391,7 @@ const BaseComponents: React.FC = () => {
             color="default"
             icon={
               <BaseIconSvg
-                fill={isDark ? BLACK : WHITE}
+                fill={themeColors[theme].ICON_SVG}
                 height="14"
                 path={LAYOUTS.NOTIFICATION}
                 width="14"

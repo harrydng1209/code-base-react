@@ -1,6 +1,6 @@
 import { Dropdown, DropdownProps } from 'antd';
 
-interface IProps extends DropdownProps, React.PropsWithChildren {}
+interface IProps extends DropdownProps {}
 
 const BaseDropdown: React.FC<IProps> = (props) => {
   const { children, ...otherProps } = props;

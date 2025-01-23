@@ -5,9 +5,7 @@ import {
   ButtonVariantType,
 } from 'antd/es/button';
 
-interface IProps
-  extends Omit<ButtonProps, 'color' | 'type'>,
-    React.PropsWithChildren {
+interface IProps extends Omit<ButtonProps, 'color' | 'type'> {
   color?: ButtonColorType;
   shape?: ButtonShape;
   variant?: ButtonVariantType;

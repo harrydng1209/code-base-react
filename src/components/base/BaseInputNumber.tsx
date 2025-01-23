@@ -1,6 +1,6 @@
 import { InputNumber, InputNumberProps } from 'antd';
 
-interface IProps extends InputNumberProps, React.PropsWithChildren {}
+interface IProps extends InputNumberProps {}
 
 const BaseInputNumber: React.FC<IProps> = (props) => {
   const { children, ...otherProps } = props;

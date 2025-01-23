@@ -1,7 +1,7 @@
 import { useDarkMode } from '@reactuses/core';
 import { create } from 'zustand';
 
-const { THEME } = constants.shared.STORAGE_KEYS;
+const { STORAGE_KEYS } = constants.shared;
 
 interface IThemeStore {
   actions: {
@@ -9,6 +9,8 @@ interface IThemeStore {
   };
   isDark: boolean;
 }
+
+type TTheme = 'DARK' | 'LIGHT';
 
 const themeStore = create<IThemeStore>((set) => ({
   actions: {
@@ -25,17 +27,19 @@ const useThemeStore = () => {
   const [isDarkMode, changeTheme] = useDarkMode({
     classNameDark: 'dark',
     classNameLight: 'light',
-    storageKey: THEME,
+    storageKey: STORAGE_KEYS.THEME,
   });
 
   const actions = themeStore((state) => state.actions);
   const isDark = themeStore((state) => state.isDark);
 
+  const theme: TTheme = useMemo(() => (isDark ? 'DARK' : 'LIGHT'), [isDark]);
+
   useEffect(() => {
     if (isDarkMode !== null) actions.setDark(isDarkMode);
   }, [isDarkMode]);
 
-  return { changeTheme, isDark };
+  return { changeTheme, isDark, theme };
 };
 
 export default useThemeStore;

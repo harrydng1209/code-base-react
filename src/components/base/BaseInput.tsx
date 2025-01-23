@@ -1,7 +1,7 @@
 import { Input, InputProps, InputRef } from 'antd';
 import { HTMLInputTypeAttribute } from 'react';
 
-interface IProps extends InputProps, React.PropsWithChildren {
+interface IProps extends InputProps {
   type?: HTMLInputTypeAttribute;
 }
 

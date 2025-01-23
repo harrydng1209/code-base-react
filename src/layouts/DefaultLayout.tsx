@@ -1,7 +1,6 @@
 import styles from '@/assets/styles/layouts/default-layout.module.scss';
 import TheSidebar from '@/components/layouts/TheSidebar';
 import TheTopbar from '@/components/layouts/TheTopbar';
-import useThemeStore from '@/stores/theme.store';
 import { useWindowScroll } from '@reactuses/core';
 import { Layout } from 'antd';
 import { Outlet } from 'react-router';
@@ -9,7 +8,6 @@ import { Outlet } from 'react-router';
 const { Content, Header, Sider } = Layout;
 
 const DefaultLayout: React.FC = () => {
-  useThemeStore();
   const { y } = useWindowScroll();
 
   const headerStyle = {

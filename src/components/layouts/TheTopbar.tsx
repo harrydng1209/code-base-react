@@ -9,11 +9,11 @@ import useThemeStore from '@/stores/theme.store';
 import { Avatar, Badge, MenuProps } from 'antd';
 
 const { LAYOUTS, SHARED } = constants.iconPaths;
-const { BLACK, WHITE } = constants.shared.COLORS;
+const { themeColors } = constants;
 
 const TheTopBar: React.FC = () => {
-  const { changeTheme, isDark } = useThemeStore();
-  const { changeLanguage, currentLanguage } = useLanguageStore();
+  const { changeTheme, isDark, theme } = useThemeStore();
+  const { language, setLanguage } = useLanguageStore();
 
   const i18nOptions = Object.entries(ELanguageCode).map(([key, value]) => ({
     label: key,
@@ -56,7 +56,7 @@ const TheTopBar: React.FC = () => {
           <p>{item.label}</p>
         </div>
       ),
-      onClick: () => changeLanguage(item.value),
+      onClick: () => setLanguage(item.value),
     })),
   };
 
@@ -68,21 +68,21 @@ const TheTopBar: React.FC = () => {
 
       <section className={styles['the-topbar__profile']}>
         <BaseIconSvg
-          fill={isDark ? WHITE : BLACK}
+          fill={themeColors[theme].ICON_SVG}
           onClick={changeTheme}
           path={isDark ? SHARED.LIGHT_MODE : SHARED.DARK_MODE}
         />
 
         <BaseDropdown menu={languageMenu}>
           <span>
-            <BaseIconSvg path={getIconPathForLanguage(currentLanguage)} />
+            <BaseIconSvg path={getIconPathForLanguage(language)} />
           </span>
         </BaseDropdown>
 
         <BaseDropdown menu={notificationMenu}>
           <Badge count={notifications.length}>
             <BaseIconSvg
-              fill={isDark ? WHITE : BLACK}
+              fill={themeColors[theme].ICON_SVG}
               path={LAYOUTS.NOTIFICATION}
             />
           </Badge>

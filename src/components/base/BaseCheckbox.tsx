@@ -1,6 +1,6 @@
 import { Checkbox, CheckboxProps, CheckboxRef } from 'antd';
 
-interface IProps extends CheckboxProps, React.PropsWithChildren {}
+interface IProps extends CheckboxProps {}
 
 const BaseCheckbox = forwardRef<CheckboxRef, IProps>((props, ref) => {
   const { children, ...otherProps } = props;

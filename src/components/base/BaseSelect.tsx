@@ -1,7 +1,7 @@
 import { TOptions } from '@/models/types/shared.type';
 import { RefSelectProps, Select, SelectProps } from 'antd';
 
-interface IProps extends Omit<SelectProps, 'options'>, React.PropsWithChildren {
+interface IProps extends Omit<SelectProps, 'options'> {
   options: TOptions[];
 }
 

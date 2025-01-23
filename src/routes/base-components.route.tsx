@@ -3,8 +3,8 @@ import DefaultLayout from '@/layouts/DefaultLayout.tsx';
 import ErrorLayout from '@/layouts/ErrorLayout.tsx';
 
 const { BASE_COMPONENTS } = constants.routePages;
-const { DEVELOP } = constants.shared.NODE_ENVS;
-const isDevelopment = import.meta.env.VITE_NODE_ENV === DEVELOP;
+const { NODE_ENVS } = constants.shared;
+const isDevelopment = import.meta.env.VITE_NODE_ENV === NODE_ENVS.DEVELOP;
 
 export default {
   children: [

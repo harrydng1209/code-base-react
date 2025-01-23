@@ -9,6 +9,7 @@ This template should help you get started developing with React in Vite.
 - **Version**: 0.1.0
 - **License**: MIT
 - **Type**: Module
+- **Main**: src/main.tsx
 
 ## Author
 

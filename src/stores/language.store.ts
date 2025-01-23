@@ -2,41 +2,41 @@ import { ELanguageCode } from '@/models/enums/shared.enum';
 import { useLocalStorage } from '@reactuses/core';
 import { create } from 'zustand';
 
-const { LANGUAGE } = constants.shared.STORAGE_KEYS;
+const { STORAGE_KEYS } = constants.shared;
 
 interface ILanguageStore {
   actions: {
     setCurrentLanguage: (newLang: ELanguageCode) => void;
   };
-  currentLanguage: ELanguageCode;
+  language: ELanguageCode;
 }
 
 const languageStore = create<ILanguageStore>((set) => ({
   actions: {
     setCurrentLanguage: (newLang: ELanguageCode) =>
-      set(() => ({ currentLanguage: newLang })),
+      set(() => ({ language: newLang })),
   },
-  currentLanguage: ELanguageCode.English,
+  language: ELanguageCode.English,
 }));
 
 const useLanguageStore = () => {
   const { i18n } = useTranslation();
-  const [language, changeLanguage] = useLocalStorage<ELanguageCode>(
-    LANGUAGE,
+  const [languageStorage, setLanguage] = useLocalStorage<ELanguageCode>(
+    STORAGE_KEYS.LANGUAGE,
     ELanguageCode.English,
   );
 
   const actions = languageStore((state) => state.actions);
-  const currentLanguage = languageStore((state) => state.currentLanguage);
+  const language = languageStore((state) => state.language);
 
   useEffect(() => {
-    if (language) {
-      i18n.changeLanguage(language);
-      actions.setCurrentLanguage(language);
+    if (languageStorage) {
+      i18n.changeLanguage(languageStorage);
+      actions.setCurrentLanguage(languageStorage);
     }
-  }, [language, i18n]);
+  }, [languageStorage, i18n]);
 
-  return { changeLanguage, currentLanguage };
+  return { language, setLanguage };
 };
 
 export default useLanguageStore;

@@ -5,26 +5,32 @@ import { Menu } from 'antd';
 import { Link } from 'react-router';
 
 const { LAYOUTS, SHARED } = constants.iconPaths;
-const { BLACK, WHITE } = constants.shared.COLORS;
 const { AUTH, BASE_COMPONENTS, HOME } = constants.routePages;
+const { themeColors } = constants;
 
 const TheSidebar: React.FC = () => {
   const { t } = useTranslation();
-  const { isDark } = useThemeStore();
+  const { isDark, theme } = useThemeStore();
   const navigate = useNavigate();
   const location = useLocation();
 
   const menuItems = [
     {
       icon: (
-        <BaseIconSvg fill={isDark ? WHITE : BLACK} path={LAYOUTS.DASHBOARD} />
+        <BaseIconSvg
+          fill={themeColors[theme].ICON_SVG}
+          path={LAYOUTS.DASHBOARD}
+        />
       ),
       key: AUTH.LOGIN,
       label: t('shared.navigator.login'),
     },
     {
       icon: (
-        <BaseIconSvg fill={isDark ? WHITE : BLACK} path={LAYOUTS.SETTINGS} />
+        <BaseIconSvg
+          fill={themeColors[theme].ICON_SVG}
+          path={LAYOUTS.SETTINGS}
+        />
       ),
       key: AUTH.REGISTER,
       label: t('shared.navigator.register'),
@@ -32,7 +38,7 @@ const TheSidebar: React.FC = () => {
     {
       icon: (
         <BaseIconSvg
-          fill={isDark ? WHITE : BLACK}
+          fill={themeColors[theme].ICON_SVG}
           path={LAYOUTS.FOLDER_SHARED}
         />
       ),

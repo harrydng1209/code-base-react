@@ -1,17 +1,18 @@
 import useThemeStore from '@/stores/theme.store';
-import { ConfigProvider, theme, type ThemeConfig } from 'antd';
+import { theme as antTheme, ConfigProvider, type ThemeConfig } from 'antd';
+
+const { DEFAULT } = constants.themeColors;
+const { themeColors } = constants;
 
 interface IProps extends React.PropsWithChildren {}
-
-const { BLACK, PRIMARY, WHITE } = constants.shared.COLORS;
 
 const AntConfigProvider: React.FC<IProps> = (props) => {
   const { children } = props;
 
-  const { isDark } = useThemeStore();
+  const { isDark, theme } = useThemeStore();
 
   const config: ThemeConfig = {
-    algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
+    algorithm: isDark ? antTheme.darkAlgorithm : antTheme.defaultAlgorithm,
     components: {
       Button: {
         primaryShadow: '',
@@ -23,20 +24,18 @@ const AntConfigProvider: React.FC<IProps> = (props) => {
         darkItemBg: '#111c2d',
       },
       Table: {
-        borderColor: isDark ? '#4a4a4a' : '#d9d9d9',
+        borderColor: themeColors[theme].BORDER,
       },
     },
     cssVar: false,
     hashed: false,
     token: {
-      colorBgContainer: isDark ? '#111c2d' : WHITE,
-      colorBgElevated: isDark ? '#1d1e1f' : WHITE,
-      colorBorder: isDark ? '#4a4a4a' : '#d9d9d9',
-      colorPrimary: PRIMARY,
-      colorText: isDark ? WHITE : BLACK,
-      colorTextPlaceholder: isDark
-        ? 'rgba(255, 255, 255, 0.5)'
-        : 'rgba(0,0,0,0.25)',
+      colorBgContainer: themeColors[theme].BACKGROUND_CONTAINER,
+      colorBgElevated: themeColors[theme].BACKGROUND_ELEVATED,
+      colorBorder: themeColors[theme].BORDER,
+      colorPrimary: DEFAULT.PRIMARY,
+      colorText: themeColors[theme].TEXT,
+      colorTextPlaceholder: themeColors[theme].TEXT_PLACEHOLDER,
     },
   };
 

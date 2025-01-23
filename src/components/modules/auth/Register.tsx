@@ -12,17 +12,20 @@ import { object as yupObject, ref as yupRef, string as yupString } from 'yup';
 
 const { AUTH } = constants.routePages;
 const { MODULES, SHARED } = constants.iconPaths;
-const { REGISTER_SECTION } = constants.shared.SELECTORS;
+const { REGEXES, SELECTORS } = constants.shared;
 
 const Register: React.FC = () => {
   const schema = yupObject({
     displayName: yupString()
       .required('Display name is required')
-      .matches(/^[A-Za-z\s]+$/, 'Name can only contain letters and spaces'),
+      .matches(
+        REGEXES.DISPLAY_NAME,
+        'Name can only contain letters and spaces',
+      ),
     email: yupString()
       .required('Email is required')
       .email('Invalid email format')
-      .matches(/^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Invalid email format'),
+      .matches(REGEXES.EMAIL, 'Invalid email format'),
     password: yupString()
       .required('Password is required')
       .min(6, 'Password must be at least 6 characters long'),
@@ -32,7 +35,7 @@ const Register: React.FC = () => {
     username: yupString()
       .required('Username is required')
       .matches(
-        /^[A-Za-z0-9]+$/,
+        REGEXES.USERNAME,
         'Username can only contain letters and numbers',
       ),
   });
@@ -82,7 +85,7 @@ const Register: React.FC = () => {
 
   return (
     <div className={styles['register']}>
-      <section id={REGISTER_SECTION}>
+      <section id={SELECTORS.REGISTER_SECTION}>
         <h4>{t('auth.register')}</h4>
 
         <Form layout="vertical" onFinish={handleSubmit(onSubmit)}>
