@@ -1,6 +1,5 @@
 import svgr from '@svgr/rollup';
 import react from '@vitejs/plugin-react-swc';
-import 'dotenv/config';
 import { fileURLToPath, URL } from 'node:url';
 import autoImport from 'unplugin-auto-import/vite';
 import { defineConfig } from 'vite';

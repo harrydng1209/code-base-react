@@ -4,16 +4,20 @@ import BaseIconSvg from '@/components/base/BaseIconSvg';
 import TheBreadcrumb from '@/components/layouts/TheBreadcrumb';
 import { notifications } from '@/mocks/the-topbar.mock';
 import { ELanguageCode } from '@/models/enums/shared.enum';
+import useAuthStore from '@/stores/auth.store';
 import useLanguageStore from '@/stores/language.store';
 import useThemeStore from '@/stores/theme.store';
 import { Avatar, Badge, MenuProps } from 'antd';
 
 const { LAYOUTS, SHARED } = constants.iconPaths;
+const { AUTH } = constants.routePages;
 const { themeColors } = constants;
 
 const TheTopBar: React.FC = () => {
   const { changeTheme, isDark, theme } = useThemeStore();
   const { language, setLanguage } = useLanguageStore();
+  const authStore = useAuthStore();
+  const navigate = useNavigate();
 
   const i18nOptions = Object.entries(ELanguageCode).map(([key, value]) => ({
     label: key,
@@ -60,6 +64,11 @@ const TheTopBar: React.FC = () => {
     })),
   };
 
+  const handleLogout = async () => {
+    authStore.actions.logout();
+    await navigate(AUTH.LOGIN);
+  };
+
   return (
     <div className={styles['the-topbar']}>
       <section className="tw-flex-center">
@@ -94,7 +103,7 @@ const TheTopBar: React.FC = () => {
               { key: 'profile', label: 'Profile' },
               { key: 'settings', label: 'Settings' },
               { type: 'divider' },
-              { key: 'logout', label: 'Logout' },
+              { key: 'logout', label: 'Logout', onClick: () => handleLogout() },
             ],
           }}
         >
