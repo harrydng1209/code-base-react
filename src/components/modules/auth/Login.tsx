@@ -1,6 +1,8 @@
-import styles from '@/assets/styles/modules/auth/login.module.scss';
+import IconEye from '@/assets/icons/modules/auth/IconEye';
+import IconEyeClosed from '@/assets/icons/modules/auth/IconEyeClosed';
+import IconRequired from '@/assets/icons/shared/IconRequired';
+import styles from '@/assets/styles/components/auth/login.module.scss';
 import BaseButton from '@/components/base/BaseButton';
-import BaseIconSvg from '@/components/base/BaseIconSvg';
 import BaseInput from '@/components/base/BaseInput';
 import { ILoginRequest } from '@/models/interfaces/auth.interface';
 import useAuthStore from '@/stores/auth.store';
@@ -12,7 +14,6 @@ import { Link } from 'react-router';
 import { object as yupObject, string as yupString } from 'yup';
 
 const { AUTH, HOME } = constants.routePages;
-const { MODULES, SHARED } = constants.iconPaths;
 const { REGEXES, SELECTORS } = constants.shared;
 
 const Login: React.FC = () => {
@@ -54,8 +55,13 @@ const Login: React.FC = () => {
     }
   };
 
+  const renderIcon = (onClick: () => void) => {
+    const IconComponent = showPassword ? IconEye : IconEyeClosed;
+    return <IconComponent height="22" onClick={onClick} width="22" />;
+  };
+
   return (
-    <div className={styles['login']}>
+    <div className={styles['container']}>
       <section id={SELECTORS.LOGIN_SECTION}>
         <h4>{t('auth.login')}</h4>
 
@@ -65,12 +71,7 @@ const Login: React.FC = () => {
             label={
               <>
                 <span>{t('auth.email')}</span>
-                <BaseIconSvg
-                  className="tw-ml-1"
-                  height="10"
-                  path={SHARED.REQUIRED}
-                  width="5"
-                />
+                <IconRequired className="tw-ml-1" height="10" width="5" />
               </>
             }
             name="email"
@@ -83,28 +84,14 @@ const Login: React.FC = () => {
             label={
               <>
                 <span>{t('auth.password')}</span>
-                <BaseIconSvg
-                  className="tw-ml-1"
-                  height="10"
-                  path={SHARED.REQUIRED}
-                  width="5"
-                />
+                <IconRequired className="tw-ml-1" height="10" width="5" />
               </>
             }
             name="password"
           >
             <BaseInput
               placeholder={t('auth.inputPassword')}
-              suffix={
-                <BaseIconSvg
-                  height={22}
-                  onClick={togglePasswordVisibility}
-                  path={
-                    showPassword ? MODULES.AUTH.EYE : MODULES.AUTH.EYE_CLOSED
-                  }
-                  width={22}
-                />
-              }
+              suffix={renderIcon(togglePasswordVisibility)}
               type={showPassword ? 'text' : 'password'}
             />
           </FormItem>
@@ -114,7 +101,7 @@ const Login: React.FC = () => {
           </BaseButton>
         </Form>
 
-        <div className={styles['login__register-now']}>
+        <div className={styles['container__register-now']}>
           <p>{t('auth.noAccount')}</p>
           <Link to={AUTH.REGISTER}>{t('auth.registerNow')}</Link>
         </div>

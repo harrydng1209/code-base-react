@@ -4,10 +4,9 @@
 @tailwind utilities;
 
 // ant-design
-@import '../custom/ant-themes.scss';
 @import '../custom/ant-shared.scss';
 
 // main
 @import './fonts';
 @import './themes';
-@import './shared';
+@import './shared.scss';

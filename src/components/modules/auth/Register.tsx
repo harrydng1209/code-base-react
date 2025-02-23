@@ -1,6 +1,8 @@
-import styles from '@/assets/styles/modules/auth/register.module.scss';
+import IconEye from '@/assets/icons/modules/auth/IconEye';
+import IconEyeClosed from '@/assets/icons/modules/auth/IconEyeClosed';
+import IconRequired from '@/assets/icons/shared/IconRequired';
+import styles from '@/assets/styles/components/auth/register.module.scss';
 import BaseButton from '@/components/base/BaseButton';
-import BaseIconSvg from '@/components/base/BaseIconSvg';
 import BaseInput from '@/components/base/BaseInput';
 import { IRegister } from '@/models/interfaces/auth.interface';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,7 +13,6 @@ import { Link } from 'react-router';
 import { object as yupObject, ref as yupRef, string as yupString } from 'yup';
 
 const { AUTH } = constants.routePages;
-const { MODULES, SHARED } = constants.iconPaths;
 const { REGEXES, SELECTORS } = constants.shared;
 
 const Register: React.FC = () => {
@@ -83,8 +84,13 @@ const Register: React.FC = () => {
     }
   };
 
+  const renderIcon = (onClick: () => void) => {
+    const IconComponent = showPassword ? IconEye : IconEyeClosed;
+    return <IconComponent height="22" onClick={onClick} width="22" />;
+  };
+
   return (
-    <div className={styles['register']}>
+    <div className={styles['container']}>
       <section id={SELECTORS.REGISTER_SECTION}>
         <h4>{t('auth.register')}</h4>
 
@@ -94,12 +100,7 @@ const Register: React.FC = () => {
             label={
               <>
                 <span>{t('auth.email')}</span>
-                <BaseIconSvg
-                  className="tw-ml-1"
-                  height="10"
-                  path={SHARED.REQUIRED}
-                  width="5"
-                />
+                <IconRequired className="tw-ml-1" height="10" width="5" />
               </>
             }
             name="email"
@@ -112,28 +113,14 @@ const Register: React.FC = () => {
             label={
               <>
                 <span>{t('auth.password')}</span>
-                <BaseIconSvg
-                  className="tw-ml-1"
-                  height="10"
-                  path={SHARED.REQUIRED}
-                  width="5"
-                />
+                <IconRequired className="tw-ml-1" height="10" width="5" />
               </>
             }
             name="password"
           >
             <BaseInput
               placeholder={t('auth.inputPassword')}
-              suffix={
-                <BaseIconSvg
-                  height={22}
-                  onClick={togglePasswordVisibility}
-                  path={
-                    showPassword ? MODULES.AUTH.EYE : MODULES.AUTH.EYE_CLOSED
-                  }
-                  width={22}
-                />
-              }
+              suffix={renderIcon(togglePasswordVisibility)}
               type={showPassword ? 'text' : 'password'}
             />
           </FormItem>
@@ -143,28 +130,14 @@ const Register: React.FC = () => {
             label={
               <>
                 <span>{t('auth.passwordConfirm')}</span>
-                <BaseIconSvg
-                  className="tw-ml-1"
-                  height="10"
-                  path={SHARED.REQUIRED}
-                  width="5"
-                />
+                <IconRequired className="tw-ml-1" height="10" width="5" />
               </>
             }
             name="passwordConfirm"
           >
             <BaseInput
               placeholder={t('auth.inputPassword')}
-              suffix={
-                <BaseIconSvg
-                  height={22}
-                  onClick={togglePasswordConfirmVisibility}
-                  path={
-                    showPassword ? MODULES.AUTH.EYE : MODULES.AUTH.EYE_CLOSED
-                  }
-                  width={22}
-                />
-              }
+              suffix={renderIcon(togglePasswordConfirmVisibility)}
               type={showPassword ? 'text' : 'password'}
             />
           </FormItem>
@@ -174,12 +147,7 @@ const Register: React.FC = () => {
             label={
               <>
                 <span>{t('auth.username')}</span>
-                <BaseIconSvg
-                  className="tw-ml-1"
-                  height="10"
-                  path={SHARED.REQUIRED}
-                  width="5"
-                />
+                <IconRequired className="tw-ml-1" height="10" width="5" />
               </>
             }
             name="username"
@@ -192,12 +160,7 @@ const Register: React.FC = () => {
             label={
               <>
                 <span>{t('auth.displayName')}</span>
-                <BaseIconSvg
-                  className="tw-ml-1"
-                  height="10"
-                  path={SHARED.REQUIRED}
-                  width="5"
-                />
+                <IconRequired className="tw-ml-1" height="10" width="5" />
               </>
             }
             name="displayName"
@@ -210,7 +173,7 @@ const Register: React.FC = () => {
           </BaseButton>
         </Form>
 
-        <div className={styles['register__login-now']}>
+        <div className={styles['container__login-now']}>
           <p>{t('auth.hasAccount')}</p>
           <Link to={AUTH.LOGIN}>{t('auth.loginNow')}</Link>
         </div>

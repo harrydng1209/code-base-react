@@ -1,13 +1,17 @@
-import TheLoading from '@/components/layouts/TheLoading';
+import TheLoading from '@/components/shared/TheLoading';
 import AntConfigProvider from '@/contexts/AntConfigProvider';
-import reactRouterPlugin from '@/plugins/react-router.plugin';
-import { RouterProvider } from 'react-router';
+import { BrowserRouter } from 'react-router';
 
-const App = () => {
+import AppRoutes from './AppRoutes';
+
+const App: React.FC = () => {
   return (
     <AntConfigProvider>
       <TheLoading />
-      <RouterProvider router={reactRouterPlugin} />
+
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
     </AntConfigProvider>
   );
 };

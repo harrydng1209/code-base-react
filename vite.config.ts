@@ -1,4 +1,3 @@
-import svgr from '@svgr/rollup';
 import react from '@vitejs/plugin-react-swc';
 import { fileURLToPath, URL } from 'node:url';
 import autoImport from 'unplugin-auto-import/vite';
@@ -18,7 +17,6 @@ export default defineConfig({
 
   plugins: [
     react(),
-    svgr(),
 
     autoImport({
       dirs: ['src/hooks/shared/**'],

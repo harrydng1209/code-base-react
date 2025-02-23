@@ -13,7 +13,7 @@ export default {
   ],
   element: <DefaultLayout />,
   meta: {
-    requiresAuth: false,
+    requiresAuth: true,
     roles: [
       ERole.Admin,
       ERole.Guest,

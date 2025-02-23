@@ -1,19 +1,14 @@
 import BaseButton from '@/components/base/BaseButton';
-import useThemeStore from '@/stores/theme.store';
+
+const { HOME } = constants.routePages;
 
 const ErrorLayout: React.FC = () => {
-  useThemeStore();
   const navigate = useNavigate();
 
-  const goBack = () => {
-    navigate(-1);
-  };
-
   return (
-    <div className="tw-w-screen tw-h-screen tw-flex-center tw-gap-[12px] tw-flex-col">
-      <h1>Oops! Something went wrong</h1>
-      <h5>An unexpected error has occurred</h5>
-      <BaseButton onClick={goBack}>Go Back</BaseButton>
+    <div className="tw-fixed-center">
+      <h6 className="tw-mb-[16px]">This screen does not exist</h6>
+      <BaseButton onClick={() => navigate(HOME)}>Go to home screen</BaseButton>
     </div>
   );
 };

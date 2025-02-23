@@ -1,7 +1,7 @@
-import styles from '@/assets/styles/layouts/default-layout.module.scss';
-import TheSidebar from '@/components/layouts/TheSidebar';
-import TheTopbar from '@/components/layouts/TheTopbar';
-import { useWindowScroll } from '@reactuses/core';
+import styles from '@/assets/styles/components/default-layout.module.scss';
+import TheSidebar from '@/components/shared/TheSidebar';
+import TheTopbar from '@/components/shared/TheTopbar';
+import useWindowScroll from '@/hooks/shared/use-window-scroll';
 import { Layout } from 'antd';
 import { Outlet } from 'react-router';
 
@@ -16,20 +16,20 @@ const DefaultLayout: React.FC = () => {
   };
 
   return (
-    <Layout className={styles['default-layout']}>
-      <Sider className={styles['default-layout__sidebar']} width={270}>
+    <Layout className={styles['container']}>
+      <Sider className={styles['container__sidebar']} width={270}>
         <TheSidebar />
       </Sider>
 
-      <Layout className={styles['default-layout__main']}>
+      <Layout className={styles['container__main']}>
         <Header
-          className={styles['default-layout__main--header']}
+          className={styles['container__main--header']}
           style={headerStyle}
         >
           <TheTopbar />
         </Header>
 
-        <Content className={styles['default-layout__main--view']}>
+        <Content className={styles['container__main--content']}>
           <Outlet />
         </Content>
       </Layout>

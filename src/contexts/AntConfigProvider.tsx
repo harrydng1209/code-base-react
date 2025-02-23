@@ -1,4 +1,4 @@
-import useThemeStore from '@/stores/theme.store';
+import useTheme from '@/hooks/shared/use-theme';
 import { theme as antTheme, ConfigProvider, type ThemeConfig } from 'antd';
 
 const { DEFAULT } = constants.themeColors;
@@ -9,7 +9,7 @@ interface IProps extends React.PropsWithChildren {}
 const AntConfigProvider: React.FC<IProps> = (props) => {
   const { children } = props;
 
-  const { isDark, theme } = useThemeStore();
+  const { isDark, theme } = useTheme();
 
   const config: ThemeConfig = {
     algorithm: isDark ? antTheme.darkAlgorithm : antTheme.defaultAlgorithm,

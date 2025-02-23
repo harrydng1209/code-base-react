@@ -5,7 +5,7 @@ import reactLint from 'eslint-plugin-react';
 import globals from 'globals';
 import tsLint from 'typescript-eslint';
 
-import globalsrc from './.globalsrc.json' assert { type: 'json' };
+import globalsrc from './.globalsrc.json' with { type: 'json' };
 
 export default [
   {

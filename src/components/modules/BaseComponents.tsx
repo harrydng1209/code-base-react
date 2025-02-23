@@ -1,10 +1,15 @@
-import styles from '@/assets/styles/modules/base-components.module.scss';
+import IconDashboard from '@/assets/icons/shared/IconDashboard';
+import IconDelete from '@/assets/icons/shared/IconDelete';
+import IconFolderShared from '@/assets/icons/shared/IconFolderShared';
+import IconNotification from '@/assets/icons/shared/IconNotification';
+import IconSearch from '@/assets/icons/shared/IconSearch';
+import IconSettings from '@/assets/icons/shared/IconSettings';
+import styles from '@/assets/styles/components/base-components.module.scss';
 import BaseAutocomplete from '@/components/base/BaseAutocomplete';
 import BaseButton from '@/components/base/BaseButton';
 import BaseCheckbox from '@/components/base/BaseCheckbox';
 import BaseCheckboxGroup from '@/components/base/BaseCheckboxGroup';
 import BaseDatePicker from '@/components/base/BaseDatePicker';
-import BaseIconSvg from '@/components/base/BaseIconSvg';
 import BaseInput from '@/components/base/BaseInput';
 import BaseInputNumber from '@/components/base/BaseInputNumber';
 import BaseModal from '@/components/base/BaseModal';
@@ -13,6 +18,7 @@ import BaseSelect from '@/components/base/BaseSelect';
 import BaseSwitch from '@/components/base/BaseSwitch';
 import BaseTable from '@/components/base/BaseTable';
 import BaseTimePicker from '@/components/base/BaseTimePicker';
+import useTheme from '@/hooks/shared/use-theme';
 import {
   baseCheckboxOptions,
   baseSelectOptions,
@@ -22,9 +28,7 @@ import {
 } from '@/mocks/base-components.mock';
 import { EToast } from '@/models/enums/shared.enum';
 import useLoadingStore from '@/stores/loading.store';
-import useThemeStore from '@/stores/theme.store';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useDebounceFn } from '@reactuses/core';
 import {
   CheckboxProps,
   DatePickerProps,
@@ -35,9 +39,10 @@ import {
 } from 'antd';
 import { DefaultOptionType } from 'antd/es/select';
 import { Dayjs } from 'dayjs';
-import React from 'react';
+import React, { SVGProps } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FormItem } from 'react-hook-form-antd';
+import { useDebounceCallback } from 'usehooks-ts';
 import {
   boolean as yupBoolean,
   object as yupObject,
@@ -45,7 +50,6 @@ import {
   string as yupString,
 } from 'yup';
 
-const { LAYOUTS, SHARED } = constants.iconPaths;
 const { REGEXES, SELECTORS } = constants.shared;
 const { themeColors } = constants;
 const { DEFAULT } = constants.themeColors;
@@ -59,6 +63,9 @@ interface IForm {
   terms: boolean;
   type: string;
 }
+
+type TIcons = Record<string, () => Promise<{ default: TSvgComponent }>>;
+type TSvgComponent = React.FC<SVGProps<SVGSVGElement>>;
 
 const BaseComponents: React.FC = () => {
   const schema = yupObject({
@@ -96,7 +103,7 @@ const BaseComponents: React.FC = () => {
     resolver: yupResolver<IForm>(schema),
   });
   const { t } = useTranslation();
-  const { theme } = useThemeStore();
+  const { theme } = useTheme();
   const loadingStore = useLoadingStore();
 
   const [baseCheckbox, setBaseCheckbox] = useState<boolean>(false);
@@ -115,18 +122,19 @@ const BaseComponents: React.FC = () => {
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
-    total: 1,
+    total: 1000,
   });
+  const [svgIcons, setSvgIcons] = useState<Record<string, TSvgComponent>>({});
 
-  const { run: handleGetHealthCheck } = useDebounceFn(async () => {
+  const handleGetHealthCheck = useDebounceCallback(async () => {
     await apis.shared.healthCheck();
   }, 200);
 
-  const { run: handleClickIconSvg } = useDebounceFn(() => {
+  const handleClickIconSvg = useDebounceCallback(() => {
     showToast('handleClickIconSvg');
   }, 200);
 
-  const { run: handleClickButton } = useDebounceFn(() => {
+  const handleClickButton = useDebounceCallback(() => {
     showToast('handleClickButton');
   }, 200);
 
@@ -171,7 +179,7 @@ const BaseComponents: React.FC = () => {
     setOptions(results);
   };
 
-  const { run: handleChangeInput } = useDebounceFn((value: number | string) => {
+  const handleChangeInput = useDebounceCallback((value: number | string) => {
     showToast(`handleChangeInput: ${value}`);
   }, 200);
 
@@ -214,8 +222,31 @@ const BaseComponents: React.FC = () => {
     loadingStore.actions.hideLoading();
   };
 
+  const loadSvgIcons = async () => {
+    const icons = import.meta.glob('@/assets/icons/**/*.tsx') as TIcons;
+    const newIcons: Record<string, TSvgComponent> = {};
+
+    for (const path in icons) {
+      const iconName = path.split('/').pop();
+
+      if (iconName) {
+        const iconComponent = await icons[path]();
+        newIcons[iconName] = iconComponent.default;
+      }
+    }
+
+    setSvgIcons((prevIcons) => ({
+      ...prevIcons,
+      ...newIcons,
+    }));
+  };
+
+  useEffect(() => {
+    loadSvgIcons();
+  }, []);
+
   return (
-    <div className={styles['base-components']}>
+    <div className={styles['container']}>
       <section>
         <h4>-- i18n --</h4>
         <div className="tw-flex tw-items-center tw-gap-4">
@@ -224,7 +255,7 @@ const BaseComponents: React.FC = () => {
       </section>
 
       <section id={SELECTORS.APIS_SECTION}>
-        <h4>-- Apis --</h4>
+        <h4>-- APIs --</h4>
         <BaseButton onClick={handleGetHealthCheck}>Health Check</BaseButton>
       </section>
 
@@ -234,27 +265,17 @@ const BaseComponents: React.FC = () => {
       </section>
 
       <section>
-        <h4>-- Base Icons SVG --</h4>
+        <h4>-- SVG Icons --</h4>
         <div className="tw-flex tw-gap-2">
-          {Object.entries(constants.iconPaths).map(
-            ([categoryName, category]) => (
-              <React.Fragment key={categoryName}>
-                {Object.entries(category).map(([iconName, iconPath]) => (
-                  <Tooltip
-                    className="tw-cursor-pointer"
-                    key={iconName}
-                    title={iconPath}
-                  >
-                    <BaseIconSvg
-                      fill={themeColors[theme].ICON_SVG}
-                      onClick={handleClickIconSvg}
-                      path={String(iconPath)}
-                    />
-                  </Tooltip>
-                ))}
-              </React.Fragment>
-            ),
-          )}
+          {Object.entries(svgIcons).map(([iconName, IconComponent]) => (
+            <Tooltip
+              className="tw-cursor-pointer"
+              key={iconName}
+              title={iconName}
+            >
+              <IconComponent onClick={handleClickIconSvg} />
+            </Tooltip>
+          ))}
         </div>
       </section>
 
@@ -276,7 +297,11 @@ const BaseComponents: React.FC = () => {
           <BaseButton color="danger" onClick={handleClickButton}>
             Danger
           </BaseButton>
-          <BaseButton color="default" onClick={handleClickButton}>
+          <BaseButton
+            color="default"
+            onClick={handleClickButton}
+            variant="outlined"
+          >
             Default
           </BaseButton>
         </div>
@@ -329,75 +354,48 @@ const BaseComponents: React.FC = () => {
         <div className="tw-flex tw-gap-2 tw-mb-4">
           <BaseButton
             color="primary"
-            icon={
-              <BaseIconSvg
-                fill={DEFAULT.WHITE}
-                height="14"
-                path={LAYOUTS.SEARCH}
-                width="14"
-              />
-            }
+            icon={<IconSearch fill={DEFAULT.WHITE} height="14" width="14" />}
             onClick={handleClickButton}
+            shape="circle"
           />
           <BaseButton
             color="geekblue"
-            icon={
-              <BaseIconSvg
-                fill={DEFAULT.WHITE}
-                height="14"
-                path={LAYOUTS.SETTINGS}
-                width="14"
-              />
-            }
+            icon={<IconSettings fill={DEFAULT.WHITE} height="14" width="14" />}
             onClick={handleClickButton}
+            shape="circle"
           />
           <BaseButton
             color="green"
-            icon={
-              <BaseIconSvg
-                fill={DEFAULT.WHITE}
-                height="14"
-                path={LAYOUTS.DASHBOARD}
-                width="14"
-              />
-            }
+            icon={<IconDashboard fill={DEFAULT.WHITE} height="14" width="14" />}
             onClick={handleClickButton}
+            shape="circle"
           />
           <BaseButton
             color="orange"
             icon={
-              <BaseIconSvg
-                fill={DEFAULT.WHITE}
-                height="14"
-                path={LAYOUTS.FOLDER_SHARED}
-                width="14"
-              />
+              <IconFolderShared fill={DEFAULT.WHITE} height="14" width="14" />
             }
             onClick={handleClickButton}
+            shape="circle"
           />
           <BaseButton
             color="danger"
-            icon={
-              <BaseIconSvg
-                fill={DEFAULT.WHITE}
-                height="14"
-                path={SHARED.DELETE}
-                width="14"
-              />
-            }
+            icon={<IconDelete fill={DEFAULT.WHITE} height="14" width="14" />}
             onClick={handleClickButton}
+            shape="circle"
           />
           <BaseButton
             color="default"
             icon={
-              <BaseIconSvg
+              <IconNotification
                 fill={themeColors[theme].ICON_SVG}
                 height="14"
-                path={LAYOUTS.NOTIFICATION}
                 width="14"
               />
             }
             onClick={handleClickButton}
+            shape="circle"
+            variant="outlined"
           />
         </div>
       </section>
@@ -614,7 +612,6 @@ const BaseComponents: React.FC = () => {
 
           <div className="tw-flex tw-gap-2">
             <BaseButton htmlType="submit">Submit</BaseButton>
-
             <BaseButton color="default" onClick={() => reset()}>
               Reset
             </BaseButton>

@@ -123,10 +123,11 @@ const shared = {
     });
   },
 
-  sleep: (second: number) => {
-    return new Promise<void>((resolve) => {
-      setTimeout(() => {
+  sleep: async (second: number) => {
+    return await new Promise<void>((resolve) => {
+      const timer = setTimeout(() => {
         resolve();
+        clearTimeout(timer);
       }, 1000 * second);
     });
   },

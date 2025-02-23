@@ -15,7 +15,7 @@ export default {
   ],
   element: isDevelop ? <DefaultLayout /> : <ErrorLayout />,
   meta: {
-    requiresAuth: false,
+    requiresAuth: true,
     roles: [],
     title: 'Base Components',
   },
