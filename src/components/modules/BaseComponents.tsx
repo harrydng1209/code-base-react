@@ -1,9 +1,9 @@
-import IconDashboard from '@/assets/icons/shared/IconDashboard';
-import IconDelete from '@/assets/icons/shared/IconDelete';
-import IconFolderShared from '@/assets/icons/shared/IconFolderShared';
-import IconNotification from '@/assets/icons/shared/IconNotification';
-import IconSearch from '@/assets/icons/shared/IconSearch';
-import IconSettings from '@/assets/icons/shared/IconSettings';
+import IconDashboard from '@/assets/icons/shared/IconDashboard.svg?react';
+import IconDelete from '@/assets/icons/shared/IconDelete.svg?react';
+import IconFolderShared from '@/assets/icons/shared/IconFolderShared.svg?react';
+import IconNotification from '@/assets/icons/shared/IconNotification.svg?react';
+import IconSearch from '@/assets/icons/shared/IconSearch.svg?react';
+import IconSettings from '@/assets/icons/shared/IconSettings.svg?react';
 import styles from '@/assets/styles/components/base-components.module.scss';
 import BaseAutocomplete from '@/components/base/BaseAutocomplete';
 import BaseButton from '@/components/base/BaseButton';
@@ -39,7 +39,6 @@ import {
 } from 'antd';
 import { DefaultOptionType } from 'antd/es/select';
 import { Dayjs } from 'dayjs';
-import React, { SVGProps } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FormItem } from 'react-hook-form-antd';
 import { useDebounceCallback } from 'usehooks-ts';
@@ -64,8 +63,10 @@ interface IForm {
   type: string;
 }
 
-type TIcons = Record<string, () => Promise<{ default: TSvgComponent }>>;
-type TSvgComponent = React.FC<SVGProps<SVGSVGElement>>;
+type TIcons = Record<
+  string,
+  { default: React.FC<React.SVGProps<SVGSVGElement>> }
+>;
 
 const BaseComponents: React.FC = () => {
   const schema = yupObject({
@@ -124,7 +125,7 @@ const BaseComponents: React.FC = () => {
     pageSize: 10,
     total: 1000,
   });
-  const [svgIcons, setSvgIcons] = useState<Record<string, TSvgComponent>>({});
+  const [svgIcons, setSvgIcons] = useState<Record<string, React.FC>>({});
 
   const handleGetHealthCheck = useDebounceCallback(async () => {
     await apis.shared.healthCheck();
@@ -223,22 +224,17 @@ const BaseComponents: React.FC = () => {
   };
 
   const loadSvgIcons = async () => {
-    const icons = import.meta.glob('@/assets/icons/**/*.tsx') as TIcons;
-    const newIcons: Record<string, TSvgComponent> = {};
+    const icons: TIcons = import.meta.glob('@/assets/icons/**/*.svg', {
+      eager: true,
+      query: '?react',
+    });
+    const newIcons: Record<string, React.FC> = {};
 
-    for (const path in icons) {
-      const iconName = path.split('/').pop();
-
-      if (iconName) {
-        const iconComponent = await icons[path]();
-        newIcons[iconName] = iconComponent.default;
-      }
-    }
-
-    setSvgIcons((prevIcons) => ({
-      ...prevIcons,
-      ...newIcons,
-    }));
+    Object.entries(icons).forEach(([path, module]) => {
+      const iconName = path.split('/').pop()?.replace('.svg', '');
+      if (iconName) newIcons[iconName] = module.default;
+    });
+    setSvgIcons(newIcons);
   };
 
   useEffect(() => {
@@ -268,12 +264,10 @@ const BaseComponents: React.FC = () => {
         <h4>-- SVG Icons --</h4>
         <div className="tw-flex tw-gap-2">
           {Object.entries(svgIcons).map(([iconName, IconComponent]) => (
-            <Tooltip
-              className="tw-cursor-pointer"
-              key={iconName}
-              title={iconName}
-            >
-              <IconComponent onClick={handleClickIconSvg} />
+            <Tooltip key={iconName} title={iconName}>
+              <span onClick={handleClickIconSvg}>
+                <IconComponent />
+              </span>
             </Tooltip>
           ))}
         </div>

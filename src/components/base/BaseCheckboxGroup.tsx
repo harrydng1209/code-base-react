@@ -15,7 +15,7 @@ const CheckboxGroup: React.FC<IProps> = (props) => {
   return (
     <Group {...otherProps}>
       {options.map((item, index) => (
-        <Checkbox key={item.id || index} value={item.value}>
+        <Checkbox key={item.key || index} value={item.value}>
           {item.label}
         </Checkbox>
       ))}

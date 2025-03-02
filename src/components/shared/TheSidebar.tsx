@@ -1,7 +1,7 @@
-import IconDashboard from '@/assets/icons/shared/IconDashboard';
-import IconFolderShared from '@/assets/icons/shared/IconFolderShared';
-import IconLogo from '@/assets/icons/shared/IconLogo';
-import IconSettings from '@/assets/icons/shared/IconSettings';
+import IconDashboard from '@/assets/icons/shared/IconDashboard.svg?react';
+import IconFolderShared from '@/assets/icons/shared/IconFolderShared.svg?react';
+import IconLogo from '@/assets/icons/shared/IconLogo.svg?react';
+import IconSettings from '@/assets/icons/shared/IconSettings.svg?react';
 import styles from '@/assets/styles/components/the-sidebar.module.scss';
 import useTheme from '@/hooks/shared/use-theme';
 import { Menu } from 'antd';

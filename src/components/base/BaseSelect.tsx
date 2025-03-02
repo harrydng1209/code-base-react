@@ -13,7 +13,7 @@ const BaseSelect = forwardRef<RefSelectProps, IProps>((props, ref) => {
   return (
     <Select ref={ref} {...otherProps}>
       {options.map((item, index) => (
-        <Option key={item.id || index} value={item.value}>
+        <Option key={item.key || index} value={item.value}>
           {item.label}
         </Option>
       ))}

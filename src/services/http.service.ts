@@ -15,12 +15,12 @@ const httpService = axios.create({
 
 httpService.interceptors.request.use(
   (config) => {
+    const { convertToSnakeCase } = utils.shared;
     const accessToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
 
     if (config.data && !(config.data instanceof FormData))
-      config.data = utils.shared.convertToSnakeCase(config.data);
-    if (config.params)
-      config.params = utils.shared.convertToSnakeCase(config.params);
+      config.data = convertToSnakeCase(config.data);
+    if (config.params) config.params = convertToSnakeCase(config.params);
     if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
     return config;
   },
@@ -29,15 +29,16 @@ httpService.interceptors.request.use(
 
 httpService.interceptors.response.use(
   (response: AxiosResponse<TSuccessResponse>) => {
-    if (response.data)
-      response.data = utils.shared.convertToCamelCase(response.data);
+    const { convertToCamelCase } = utils.shared;
+
+    if (response.data) response.data = convertToCamelCase(response.data);
     return response;
   },
   (error: AxiosError<TFailureResponse>) => {
+    const { handleUnauthorizedError } = utils.http;
     const status = error.response?.status;
 
-    if (status === HttpStatusCode.Unauthorized)
-      utils.http.handleUnauthorizedError(error);
+    if (status === HttpStatusCode.Unauthorized) handleUnauthorizedError(error);
 
     return Promise.reject(error);
   },
