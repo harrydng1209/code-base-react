@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface ILoadingStore {
+interface IState {
   actions: {
     hideLoading: () => void;
     showLoading: () => void;
@@ -8,7 +8,7 @@ interface ILoadingStore {
   isLoading: boolean;
 }
 
-const loadingStore = create<ILoadingStore>((set) => ({
+export const loadingStore = create<IState>((set) => ({
   actions: {
     hideLoading: () => set({ isLoading: false }),
     showLoading: () => set({ isLoading: true }),

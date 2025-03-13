@@ -3,7 +3,7 @@ import { create } from 'zustand';
 
 const { AUTH } = constants.routePages;
 
-interface IAuthStore {
+interface IState {
   accessToken?: string;
   actions: {
     initialize: () => Promise<void>;
@@ -16,7 +16,7 @@ interface IAuthStore {
   userInfo?: IUserInfo;
 }
 
-const authStore = create<IAuthStore>((set, get) => ({
+const authStore = create<IState>((set, get) => ({
   accessToken: undefined,
 
   actions: {
