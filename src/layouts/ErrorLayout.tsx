@@ -1,4 +1,4 @@
-import BaseButton from '@/components/base/BaseButton';
+import BaseButton from '@/components/shared/BaseButton';
 
 const { HOME } = constants.routePages;
 

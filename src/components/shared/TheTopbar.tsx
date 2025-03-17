@@ -5,7 +5,7 @@ import IconLightMode from '@/assets/icons/shared/IconLightMode.svg?react';
 import IconNotification from '@/assets/icons/shared/IconNotification.svg?react';
 import IconVietnamese from '@/assets/icons/shared/IconVietnamese.svg?react';
 import styles from '@/assets/styles/components/the-topbar.module.scss';
-import BaseDropdown from '@/components/base/BaseDropdown';
+import BaseDropdown from '@/components/shared/BaseDropdown';
 import TheBreadcrumb from '@/components/shared/TheBreadcrumb';
 import useLanguage from '@/hooks/shared/use-language';
 import useTheme from '@/hooks/shared/use-theme';
