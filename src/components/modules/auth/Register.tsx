@@ -1,9 +1,12 @@
+import { register } from '@/apis/auth.api';
 import IconEye from '@/assets/icons/modules/auth/IconEye.svg?react';
 import IconEyeClosed from '@/assets/icons/modules/auth/IconEyeClosed.svg?react';
 import IconRequired from '@/assets/icons/shared/IconRequired.svg?react';
 import styles from '@/assets/styles/components/auth/register.module.scss';
 import BaseButton from '@/components/shared/BaseButton';
 import BaseInput from '@/components/shared/BaseInput';
+import { AUTH } from '@/constants/route-pages.const';
+import { REGEXES, SELECTORS } from '@/constants/shared.const';
 import { IRegister } from '@/models/interfaces/auth.interface';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'antd';
@@ -11,9 +14,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { FormItem } from 'react-hook-form-antd';
 import { Link } from 'react-router';
 import { object as yupObject, ref as yupRef, string as yupString } from 'yup';
-
-const { AUTH } = constants.routePages;
-const { REGEXES, SELECTORS } = constants.shared;
 
 const Register: React.FC = () => {
   const schema = yupObject({
@@ -68,7 +68,7 @@ const Register: React.FC = () => {
 
   const onSubmit: SubmitHandler<IRegister> = async (values) => {
     try {
-      await apis.auth.register(values);
+      await register(values);
       await navigate(AUTH.LOGIN);
     } catch (error) {
       const errorData = handleCatchError<{ fields: (keyof IRegister)[] }>(

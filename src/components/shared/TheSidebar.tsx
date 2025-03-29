@@ -3,32 +3,33 @@ import IconFolderShared from '@/assets/icons/shared/IconFolderShared.svg?react';
 import IconLogo from '@/assets/icons/shared/IconLogo.svg?react';
 import IconSettings from '@/assets/icons/shared/IconSettings.svg?react';
 import styles from '@/assets/styles/components/the-sidebar.module.scss';
+import { BASE_COMPONENTS, HOME } from '@/constants/route-pages.const';
+import { AUTH } from '@/constants/route-pages.const';
 import useTheme from '@/hooks/shared/use-theme';
+import useThemeColor from '@/hooks/shared/use-theme-color';
 import { Menu } from 'antd';
 import { Link } from 'react-router';
 
-const { AUTH, BASE_COMPONENTS, HOME } = constants.routePages;
-const { themeColors } = constants;
-
 const TheSidebar: React.FC = () => {
   const { t } = useTranslation();
-  const { isDark, theme } = useTheme();
+  const { isDark } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
+  const { getThemeColor } = useThemeColor();
 
   const menuItems = [
     {
-      icon: <IconDashboard fill={themeColors[theme].ICON_SVG} />,
+      icon: <IconDashboard fill={getThemeColor('ICON_SVG')} />,
       key: AUTH.LOGIN,
       label: t('shared.navigator.login'),
     },
     {
-      icon: <IconSettings fill={themeColors[theme].ICON_SVG} />,
+      icon: <IconSettings fill={getThemeColor('ICON_SVG')} />,
       key: AUTH.REGISTER,
       label: t('shared.navigator.register'),
     },
     {
-      icon: <IconFolderShared fill={themeColors[theme].ICON_SVG} />,
+      icon: <IconFolderShared fill={getThemeColor('ICON_SVG')} />,
       key: BASE_COMPONENTS,
       label: t('shared.navigator.base-components'),
     },

@@ -1,8 +1,7 @@
 import Home from '@/components/modules/Home.tsx';
+import { HOME } from '@/constants/route-pages.const';
 import DefaultLayout from '@/layouts/DefaultLayout';
 import { ERole } from '@/models/enums/auth.enum';
-
-const { HOME } = constants.routePages;
 
 export default {
   children: [

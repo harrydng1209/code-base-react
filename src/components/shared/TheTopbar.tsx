@@ -7,21 +7,21 @@ import IconVietnamese from '@/assets/icons/shared/IconVietnamese.svg?react';
 import styles from '@/assets/styles/components/the-topbar.module.scss';
 import BaseDropdown from '@/components/shared/BaseDropdown';
 import TheBreadcrumb from '@/components/shared/TheBreadcrumb';
+import { AUTH } from '@/constants/route-pages.const';
 import useLanguage from '@/hooks/shared/use-language';
 import useTheme from '@/hooks/shared/use-theme';
+import useThemeColor from '@/hooks/shared/use-theme-color';
 import { notifications } from '@/mocks/the-topbar.mock';
 import { ELanguageCode } from '@/models/enums/shared.enum';
 import useAuthStore from '@/stores/auth.store';
 import { Avatar, Badge, MenuProps } from 'antd';
 
-const { AUTH } = constants.routePages;
-const { themeColors } = constants;
-
 const TheTopBar: React.FC = () => {
-  const { changeTheme, isDark, theme } = useTheme();
+  const { changeTheme, isDark } = useTheme();
   const { language, setLanguage } = useLanguage();
   const authStore = useAuthStore();
   const navigate = useNavigate();
+  const { getThemeColor } = useThemeColor();
 
   const i18nOptions = Object.entries(ELanguageCode).map(([key, value]) => ({
     label: key,
@@ -76,7 +76,7 @@ const TheTopBar: React.FC = () => {
   const renderIcon = () => {
     const IconComponent = isDark ? IconLightMode : IconDarkMode;
     return (
-      <IconComponent fill={themeColors[theme].ICON_SVG} onClick={changeTheme} />
+      <IconComponent fill={getThemeColor('ICON_SVG')} onClick={changeTheme} />
     );
   };
 
@@ -95,7 +95,7 @@ const TheTopBar: React.FC = () => {
 
         <BaseDropdown menu={notificationMenu}>
           <Badge count={notifications.length}>
-            <IconNotification fill={themeColors[theme].ICON_SVG} />
+            <IconNotification fill={getThemeColor('ICON_SVG')} />
           </Badge>
         </BaseDropdown>
 

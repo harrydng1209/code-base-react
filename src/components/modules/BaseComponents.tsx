@@ -1,3 +1,4 @@
+import { healthCheck } from '@/apis/shared.api';
 import IconDashboard from '@/assets/icons/shared/IconDashboard.svg?react';
 import IconDelete from '@/assets/icons/shared/IconDelete.svg?react';
 import IconFolderShared from '@/assets/icons/shared/IconFolderShared.svg?react';
@@ -18,7 +19,9 @@ import BaseSelect from '@/components/shared/BaseSelect';
 import BaseSwitch from '@/components/shared/BaseSwitch';
 import BaseTable from '@/components/shared/BaseTable';
 import BaseTimePicker from '@/components/shared/BaseTimePicker';
-import useTheme from '@/hooks/shared/use-theme';
+import { REGEXES, SELECTORS } from '@/constants/shared.const';
+import { DEFAULT } from '@/constants/theme-colors.const';
+import useThemeColor from '@/hooks/shared/use-theme-color';
 import {
   baseCheckboxOptions,
   baseSelectOptions,
@@ -28,6 +31,7 @@ import {
 } from '@/mocks/base-components.mock';
 import { EToast } from '@/models/enums/shared.enum';
 import useLoadingStore from '@/stores/loading.store';
+import { showToast, sleep } from '@/utils/shared.util';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
   CheckboxProps,
@@ -48,11 +52,6 @@ import {
   ref as yupRef,
   string as yupString,
 } from 'yup';
-
-const { REGEXES, SELECTORS } = constants.shared;
-const { themeColors } = constants;
-const { DEFAULT } = constants.themeColors;
-const { showToast, sleep } = utils.shared;
 
 interface IForm {
   email: string;
@@ -104,8 +103,8 @@ const BaseComponents: React.FC = () => {
     resolver: yupResolver<IForm>(schema),
   });
   const { t } = useTranslation();
-  const { theme } = useTheme();
   const loadingStore = useLoadingStore();
+  const { getThemeColor } = useThemeColor();
 
   const [baseCheckbox, setBaseCheckbox] = useState<boolean>(false);
   const [baseCheckboxAll, setBaseCheckboxAll] = useState<boolean>(false);
@@ -128,7 +127,7 @@ const BaseComponents: React.FC = () => {
   const [svgIcons, setSvgIcons] = useState<Record<string, React.FC>>({});
 
   const handleGetHealthCheck = useDebounceCallback(async () => {
-    await apis.shared.healthCheck();
+    await healthCheck();
   }, 200);
 
   const handleClickIconSvg = useDebounceCallback(() => {
@@ -382,7 +381,7 @@ const BaseComponents: React.FC = () => {
             color="default"
             icon={
               <IconNotification
-                fill={themeColors[theme].ICON_SVG}
+                fill={getThemeColor('ICON_SVG')}
                 height="14"
                 width="14"
               />

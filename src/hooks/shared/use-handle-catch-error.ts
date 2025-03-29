@@ -1,7 +1,6 @@
 import { EToast } from '@/models/enums/shared.enum';
 import { TFailureResponse } from '@/models/types/auth.type';
-
-const { isFailureResponse, showToast } = utils.shared;
+import { isFailureResponse, showToast } from '@/utils/shared.util';
 
 const useHandleCatchError = () => {
   const { t } = useTranslation();

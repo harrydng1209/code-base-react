@@ -21,7 +21,12 @@ export default defineConfig({
     svgr(),
 
     autoImport({
-      dirs: ['src/hooks/shared/**'],
+      dirs: [
+        'src/apis/**',
+        'src/constants/**',
+        'src/hooks/shared/**',
+        'src/utils/**',
+      ],
       dts: 'src/@types/auto-imports.d.ts',
 
       eslintrc: {
@@ -30,16 +35,7 @@ export default defineConfig({
         globalsPropValue: true,
       },
 
-      imports: [
-        'react',
-        'react-router',
-        'react-i18next',
-        {
-          '@/apis': [['default', 'apis']],
-          '@/constants': [['default', 'constants']],
-          '@/utils': [['default', 'utils']],
-        },
-      ],
+      imports: ['react', 'react-router', 'react-i18next'],
     }),
   ],
 

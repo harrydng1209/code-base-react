@@ -1,7 +1,7 @@
+import { profile, refreshToken as refreshTokenApi } from '@/apis/auth.api';
+import { AUTH } from '@/constants/route-pages.const';
 import { IUserInfo } from '@/models/interfaces/auth.interface';
 import { create } from 'zustand';
-
-const { AUTH } = constants.routePages;
 
 interface IState {
   accessToken?: string;
@@ -28,7 +28,7 @@ const authStore = create<IState>((set, get) => ({
       if (!isLoggedIn) return;
 
       try {
-        const response = await apis.auth.profile();
+        const response = await profile();
         actions.setUser(response.data);
       } catch (error) {
         console.error(error);
@@ -47,7 +47,7 @@ const authStore = create<IState>((set, get) => ({
       const navigate = useNavigate();
 
       try {
-        const response = await apis.auth.refreshToken();
+        const response = await refreshTokenApi();
         set({ accessToken: response.data.accessToken });
       } catch (error) {
         result = false;

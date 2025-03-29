@@ -1,15 +1,15 @@
+import { DEFAULT } from '@/constants/theme-colors.const';
 import useTheme from '@/hooks/shared/use-theme';
+import useThemeColor from '@/hooks/shared/use-theme-color';
 import { theme as antTheme, ConfigProvider, type ThemeConfig } from 'antd';
-
-const { DEFAULT } = constants.themeColors;
-const { themeColors } = constants;
 
 interface IProps extends React.PropsWithChildren {}
 
 const AntConfigProvider: React.FC<IProps> = (props) => {
   const { children } = props;
 
-  const { isDark, theme } = useTheme();
+  const { isDark } = useTheme();
+  const { getThemeColor } = useThemeColor();
 
   const config: ThemeConfig = {
     algorithm: isDark ? antTheme.darkAlgorithm : antTheme.defaultAlgorithm,
@@ -24,18 +24,18 @@ const AntConfigProvider: React.FC<IProps> = (props) => {
         darkItemBg: '#111c2d',
       },
       Table: {
-        borderColor: themeColors[theme].BORDER,
+        borderColor: getThemeColor('BORDER'),
       },
     },
     cssVar: false,
     hashed: false,
     token: {
-      colorBgContainer: themeColors[theme].BACKGROUND_CONTAINER,
-      colorBgElevated: themeColors[theme].BACKGROUND_ELEVATED,
-      colorBorder: themeColors[theme].BORDER,
+      colorBgContainer: getThemeColor('BACKGROUND_CONTAINER'),
+      colorBgElevated: getThemeColor('BACKGROUND_ELEVATED'),
+      colorBorder: getThemeColor('BORDER'),
       colorPrimary: DEFAULT.PRIMARY,
-      colorText: themeColors[theme].TEXT,
-      colorTextPlaceholder: themeColors[theme].TEXT_PLACEHOLDER,
+      colorText: getThemeColor('TEXT'),
+      colorTextPlaceholder: getThemeColor('TEXT_PLACEHOLDER'),
     },
   };
 

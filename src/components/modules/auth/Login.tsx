@@ -1,9 +1,12 @@
+import { login } from '@/apis/auth.api';
 import IconEye from '@/assets/icons/modules/auth/IconEye.svg?react';
 import IconEyeClosed from '@/assets/icons/modules/auth/IconEyeClosed.svg?react';
 import IconRequired from '@/assets/icons/shared/IconRequired.svg?react';
 import styles from '@/assets/styles/components/auth/login.module.scss';
 import BaseButton from '@/components/shared/BaseButton';
 import BaseInput from '@/components/shared/BaseInput';
+import { AUTH, HOME } from '@/constants/route-pages.const';
+import { REGEXES, SELECTORS } from '@/constants/shared.const';
 import { ILoginRequest } from '@/models/interfaces/auth.interface';
 import useAuthStore from '@/stores/auth.store';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -12,9 +15,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { FormItem } from 'react-hook-form-antd';
 import { Link } from 'react-router';
 import { object as yupObject, string as yupString } from 'yup';
-
-const { AUTH, HOME } = constants.routePages;
-const { REGEXES, SELECTORS } = constants.shared;
 
 const Login: React.FC = () => {
   const schema = yupObject({
@@ -47,7 +47,7 @@ const Login: React.FC = () => {
 
   const onSubmit: SubmitHandler<ILoginRequest> = async (values) => {
     try {
-      const response = await apis.auth.login(values);
+      const response = await login(values);
       authStore.actions.setToken(response.data.accessToken);
       await navigate(HOME);
     } catch (error) {

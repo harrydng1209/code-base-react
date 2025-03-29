@@ -1,5 +1,7 @@
 import type { HttpStatusCode } from 'axios';
 
+import { ERROR_CODES } from '@/constants/shared.const';
+
 import type { EResponseStatus } from '../enums/auth.enum';
 
 export type TActions =
@@ -10,8 +12,7 @@ export type TActions =
   | 'read'
   | 'update';
 
-export type TErrorCodes =
-  (typeof constants.shared.ERROR_CODES)[keyof typeof constants.shared.ERROR_CODES];
+export type TErrorCodes = (typeof ERROR_CODES)[keyof typeof ERROR_CODES];
 
 export type TFailureResponse<D = unknown> = {
   error: {

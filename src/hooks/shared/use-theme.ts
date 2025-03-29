@@ -1,6 +1,5 @@
+import { STORAGE_KEYS } from '@/constants/shared.const';
 import { useLocalStorage } from 'usehooks-ts';
-
-const { STORAGE_KEYS } = constants.shared;
 
 type TTheme = 'DARK' | 'LIGHT';
 

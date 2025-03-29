@@ -1,11 +1,12 @@
+import { STORAGE_KEYS } from '@/constants/shared.const';
 import { TFailureResponse, TSuccessResponse } from '@/models/types/auth.type';
+import { handleUnauthorizedError } from '@/utils/api.util';
+import { convertToCamelCase, convertToSnakeCase } from '@/utils/shared.util';
 import axios, { AxiosError, AxiosResponse, HttpStatusCode } from 'axios';
 import qs from 'qs';
 
-const { STORAGE_KEYS } = constants.shared;
-
-const httpService = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+const apiConfig = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080',
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -13,9 +14,8 @@ const httpService = axios.create({
   paramsSerializer: (params) => qs.stringify(params, { indices: true }),
 });
 
-httpService.interceptors.request.use(
+apiConfig.interceptors.request.use(
   (config) => {
-    const { convertToSnakeCase } = utils.shared;
     const accessToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
 
     if (config.data && !(config.data instanceof FormData))
@@ -27,21 +27,19 @@ httpService.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
-httpService.interceptors.response.use(
+apiConfig.interceptors.response.use(
   (response: AxiosResponse<TSuccessResponse>) => {
-    const { convertToCamelCase } = utils.shared;
-
     if (response.data) response.data = convertToCamelCase(response.data);
     return response;
   },
   (error: AxiosError<TFailureResponse>) => {
-    const { handleUnauthorizedError } = utils.http;
-    const status = error.response?.status;
+    const statusCode = error.response?.status;
 
-    if (status === HttpStatusCode.Unauthorized) handleUnauthorizedError(error);
+    if (statusCode === HttpStatusCode.Unauthorized)
+      handleUnauthorizedError(error);
 
     return Promise.reject(error);
   },
 );
 
-export default httpService;
+export default apiConfig;

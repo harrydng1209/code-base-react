@@ -1,8 +1,7 @@
 import Login from '@/components/modules/auth/Login';
 import Register from '@/components/modules/auth/Register';
+import { AUTH } from '@/constants/route-pages.const';
 import GuestLayout from '@/layouts/GuestLayout';
-
-const { AUTH } = constants.routePages;
 
 export default {
   children: [
