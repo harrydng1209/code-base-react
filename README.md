@@ -1,11 +1,11 @@
 # code-base-react
 
-This template should help you get started developing with React in Vite
+This template will help you get started with React in Vite
 
 ## Overview
 
 - **Name**: code-base-react
-- **Description**: This template should help you get started developing with React in Vite
+- **Description**: This template will help you get started with React in Vite
 - **Version**: 0.1.0
 - **License**: MIT
 - **Type**: Module
@@ -19,7 +19,7 @@ This template should help you get started developing with React in Vite
 
 ## Requirements
 
-- **Node.js**: >= 22
+- **Node**: >= 22
 - **pnpm**: >= 10
 - **npm**: please-use-pnpm
 - **yarn**: please-use-pnpm

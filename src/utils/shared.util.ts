@@ -6,7 +6,7 @@ import { notification } from 'antd';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { capitalize } from 'lodash-es';
-import qs from 'qs';
+import { stringify } from 'qs';
 import stringTemplate from 'string-template';
 import { create, StateCreator } from 'zustand';
 
@@ -86,7 +86,7 @@ export const formatQueryString = (
   const queryString =
     typeof query === 'string'
       ? query
-      : qs.stringify(query, { arrayFormat: 'brackets' });
+      : stringify(query, { arrayFormat: 'brackets' });
   return `${baseUrl}?${queryString}`;
 };
 

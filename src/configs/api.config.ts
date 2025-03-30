@@ -3,7 +3,7 @@ import { TFailureResponse, TSuccessResponse } from '@/models/types/auth.type';
 import { handleUnauthorizedError } from '@/utils/api.util';
 import { convertToCamelCase, convertToSnakeCase } from '@/utils/shared.util';
 import axios, { AxiosError, AxiosResponse, HttpStatusCode } from 'axios';
-import qs from 'qs';
+import { stringify } from 'qs';
 
 const apiConfig = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080',
@@ -11,7 +11,7 @@ const apiConfig = axios.create({
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
-  paramsSerializer: (params) => qs.stringify(params, { indices: true }),
+  paramsSerializer: (params) => stringify(params, { indices: true }),
 });
 
 apiConfig.interceptors.request.use(
@@ -22,6 +22,7 @@ apiConfig.interceptors.request.use(
       config.data = convertToSnakeCase(config.data);
     if (config.params) config.params = convertToSnakeCase(config.params);
     if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
+
     return config;
   },
   (error) => Promise.reject(error),
