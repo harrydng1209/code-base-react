@@ -1,5 +1,5 @@
 import { profile, refreshToken as refreshTokenApi } from '@/apis/auth.api';
-import { AUTH } from '@/constants/route-pages.const';
+import { AUTH_PAGES } from '@/constants/route-pages.const';
 import { IUserInfo } from '@/models/interfaces/auth.interface';
 import { create } from 'zustand';
 
@@ -52,7 +52,7 @@ const authStore = create<IState>((set, get) => ({
       } catch (error) {
         result = false;
         console.error(error);
-        await navigate(AUTH.LOGIN);
+        await navigate(AUTH_PAGES.LOGIN);
       }
       return result;
     },

@@ -2,7 +2,7 @@ import { ERole } from '@/models/enums/auth.enum';
 import useAuthStore from '@/stores/auth.store';
 import { Navigate, Route, RouteObject, Routes } from 'react-router';
 
-import { AUTH, FORBIDDEN } from './constants/route-pages.const';
+import { AUTH_PAGES, FORBIDDEN } from './constants/route-pages.const';
 
 type TModules = Record<string, { default: TRouteObject }>;
 
@@ -26,7 +26,7 @@ const ProtectedRoute: React.FC<{ route: TRouteObject }> = ({ route }) => {
         await authStore.actions.initialize();
 
         if (!authStore.isAuthenticated) {
-          setElement(<Navigate replace to={AUTH.LOGIN} />);
+          setElement(<Navigate replace to={AUTH_PAGES.LOGIN} />);
           return;
         }
 

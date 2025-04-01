@@ -5,7 +5,7 @@ import IconRequired from '@/assets/icons/shared/IconRequired.svg?react';
 import styles from '@/assets/styles/components/auth/login.module.scss';
 import BaseButton from '@/components/shared/BaseButton';
 import BaseInput from '@/components/shared/BaseInput';
-import { AUTH, HOME } from '@/constants/route-pages.const';
+import { AUTH_PAGES, HOME } from '@/constants/route-pages.const';
 import { REGEXES, SELECTORS } from '@/constants/shared.const';
 import { ILoginRequest } from '@/models/interfaces/auth.interface';
 import useAuthStore from '@/stores/auth.store';
@@ -103,7 +103,7 @@ const Login: React.FC = () => {
 
         <div className={styles['container__register-now']}>
           <p>{t('auth.noAccount')}</p>
-          <Link to={AUTH.REGISTER}>{t('auth.registerNow')}</Link>
+          <Link to={AUTH_PAGES.REGISTER}>{t('auth.registerNow')}</Link>
         </div>
       </section>
     </div>

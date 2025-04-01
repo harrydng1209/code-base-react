@@ -1,17 +1,17 @@
 import Login from '@/components/modules/auth/Login';
 import Register from '@/components/modules/auth/Register';
-import { AUTH } from '@/constants/route-pages.const';
+import { AUTH_PAGES } from '@/constants/route-pages.const';
 import GuestLayout from '@/layouts/GuestLayout';
 
 export default {
   children: [
     {
       element: <Login />,
-      path: AUTH.LOGIN,
+      path: AUTH_PAGES.LOGIN,
     },
     {
       element: <Register />,
-      path: AUTH.REGISTER,
+      path: AUTH_PAGES.REGISTER,
     },
   ],
   element: <GuestLayout />,
@@ -20,5 +20,5 @@ export default {
     roles: [],
     title: 'Authentication',
   },
-  path: AUTH.ROOT,
+  path: AUTH_PAGES.ROOT,
 };

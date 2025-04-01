@@ -7,7 +7,7 @@ import IconVietnamese from '@/assets/icons/shared/IconVietnamese.svg?react';
 import styles from '@/assets/styles/components/the-topbar.module.scss';
 import BaseDropdown from '@/components/shared/BaseDropdown';
 import TheBreadcrumb from '@/components/shared/TheBreadcrumb';
-import { AUTH } from '@/constants/route-pages.const';
+import { AUTH_PAGES } from '@/constants/route-pages.const';
 import useLanguage from '@/hooks/shared/use-language';
 import useTheme from '@/hooks/shared/use-theme';
 import useThemeColor from '@/hooks/shared/use-theme-color';
@@ -70,7 +70,7 @@ const TheTopBar: React.FC = () => {
 
   const handleLogout = async () => {
     authStore.actions.logout();
-    await navigate(AUTH.LOGIN);
+    await navigate(AUTH_PAGES.LOGIN);
   };
 
   const renderIcon = () => {

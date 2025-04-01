@@ -5,7 +5,7 @@ import IconRequired from '@/assets/icons/shared/IconRequired.svg?react';
 import styles from '@/assets/styles/components/auth/register.module.scss';
 import BaseButton from '@/components/shared/BaseButton';
 import BaseInput from '@/components/shared/BaseInput';
-import { AUTH } from '@/constants/route-pages.const';
+import { AUTH_PAGES } from '@/constants/route-pages.const';
 import { REGEXES, SELECTORS } from '@/constants/shared.const';
 import { IRegister } from '@/models/interfaces/auth.interface';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -69,7 +69,7 @@ const Register: React.FC = () => {
   const onSubmit: SubmitHandler<IRegister> = async (values) => {
     try {
       await register(values);
-      await navigate(AUTH.LOGIN);
+      await navigate(AUTH_PAGES.LOGIN);
     } catch (error) {
       const errorData = handleCatchError<{ fields: (keyof IRegister)[] }>(
         error,
@@ -175,7 +175,7 @@ const Register: React.FC = () => {
 
         <div className={styles['container__login-now']}>
           <p>{t('auth.hasAccount')}</p>
-          <Link to={AUTH.LOGIN}>{t('auth.loginNow')}</Link>
+          <Link to={AUTH_PAGES.LOGIN}>{t('auth.loginNow')}</Link>
         </div>
       </section>
     </div>

@@ -4,7 +4,7 @@ import IconLogo from '@/assets/icons/shared/IconLogo.svg?react';
 import IconSettings from '@/assets/icons/shared/IconSettings.svg?react';
 import styles from '@/assets/styles/components/the-sidebar.module.scss';
 import { BASE_COMPONENTS, HOME } from '@/constants/route-pages.const';
-import { AUTH } from '@/constants/route-pages.const';
+import { AUTH_PAGES } from '@/constants/route-pages.const';
 import useTheme from '@/hooks/shared/use-theme';
 import useThemeColor from '@/hooks/shared/use-theme-color';
 import { Menu } from 'antd';
@@ -20,12 +20,12 @@ const TheSidebar: React.FC = () => {
   const menuItems = [
     {
       icon: <IconDashboard fill={getThemeColor('ICON_SVG')} />,
-      key: AUTH.LOGIN,
+      key: AUTH_PAGES.LOGIN,
       label: t('shared.navigator.login'),
     },
     {
       icon: <IconSettings fill={getThemeColor('ICON_SVG')} />,
-      key: AUTH.REGISTER,
+      key: AUTH_PAGES.REGISTER,
       label: t('shared.navigator.register'),
     },
     {

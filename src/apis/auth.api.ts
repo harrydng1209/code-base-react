@@ -5,28 +5,28 @@ import type {
   IUserInfo,
 } from '@/models/interfaces/auth.interface';
 
-import { AUTH } from '@/constants/route-apis.const';
+import { AUTH_APIS } from '@/constants/route-apis.const';
 import { get, post } from '@/utils/api.util';
 
 export const login = async (data: ILoginRequest) => {
-  const url = AUTH.LOGIN;
+  const url = AUTH_APIS.LOGIN;
   return await post<ILoginResponse>(url, data, { withCredentials: true });
 };
 
 export const profile = async () => {
-  const url = AUTH.PROFILE;
+  const url = AUTH_APIS.PROFILE;
   return await get<IUserInfo>(url);
 };
 
 export const refreshToken = async () => {
-  const url = AUTH.REFRESH_TOKEN;
+  const url = AUTH_APIS.REFRESH_TOKEN;
   return await post<ILoginResponse>(url, undefined, {
     withCredentials: true,
   });
 };
 
 export const register = async (data: IRegister) => {
-  const url = AUTH.REGISTER;
+  const url = AUTH_APIS.REGISTER;
   return await post<unknown>(
     url,
     data,

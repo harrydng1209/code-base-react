@@ -1,6 +1,7 @@
 import type { TLoadingTargets } from '@/models/types/shared.type';
 
 import apiConfig from '@/configs/api.config';
+import { AUTH_PAGES } from '@/constants/route-pages.const';
 import { EResponseStatus } from '@/models/enums/auth.enum';
 import { TFailureResponse, TSuccessResponse } from '@/models/types/auth.type';
 import useAuthStore from '@/stores/auth.store';
@@ -114,7 +115,7 @@ export const handleUnauthorizedError = async (
 
   if (!isTokenRefreshed) {
     authStore.actions.logout();
-    window.location.href = AUTH.LOGIN;
+    window.location.href = AUTH_PAGES.LOGIN;
     return;
   }
 
