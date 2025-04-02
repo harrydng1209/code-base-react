@@ -7,7 +7,7 @@ interface IProps extends InputProps {
 
 const { Password, Search, TextArea } = Input;
 
-const BaseInput = forwardRef<InputRef, IProps>((props, ref) => {
+export const BaseInput = forwardRef<InputRef, IProps>((props, ref) => {
   const { children, type, ...otherProps } = props;
 
   if (type === 'password') {
@@ -36,5 +36,3 @@ const BaseInput = forwardRef<InputRef, IProps>((props, ref) => {
     </Input>
   );
 });
-
-export default BaseInput;

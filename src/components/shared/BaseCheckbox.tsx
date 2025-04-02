@@ -2,7 +2,7 @@ import { Checkbox, CheckboxProps, CheckboxRef } from 'antd';
 
 interface IProps extends CheckboxProps {}
 
-const BaseCheckbox = forwardRef<CheckboxRef, IProps>((props, ref) => {
+export const BaseCheckbox = forwardRef<CheckboxRef, IProps>((props, ref) => {
   const { children, ...otherProps } = props;
 
   return (
@@ -11,5 +11,3 @@ const BaseCheckbox = forwardRef<CheckboxRef, IProps>((props, ref) => {
     </Checkbox>
   );
 });
-
-export default BaseCheckbox;

@@ -9,7 +9,7 @@ interface IProps extends Omit<CheckboxGroupProps, 'options'> {
 
 const { Group } = Checkbox;
 
-const CheckboxGroup: React.FC<IProps> = (props) => {
+export const BaseCheckboxGroup: React.FC<IProps> = (props) => {
   const { options, ...otherProps } = props;
 
   return (
@@ -22,5 +22,3 @@ const CheckboxGroup: React.FC<IProps> = (props) => {
     </Group>
   );
 };
-
-export default CheckboxGroup;

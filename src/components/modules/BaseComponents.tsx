@@ -6,22 +6,22 @@ import IconNotification from '@/assets/icons/shared/IconNotification.svg?react';
 import IconSearch from '@/assets/icons/shared/IconSearch.svg?react';
 import IconSettings from '@/assets/icons/shared/IconSettings.svg?react';
 import styles from '@/assets/styles/components/base-components.module.scss';
-import BaseAutocomplete from '@/components/shared/BaseAutocomplete';
-import BaseButton from '@/components/shared/BaseButton';
-import BaseCheckbox from '@/components/shared/BaseCheckbox';
-import BaseCheckboxGroup from '@/components/shared/BaseCheckboxGroup';
-import BaseDatePicker from '@/components/shared/BaseDatePicker';
-import BaseInput from '@/components/shared/BaseInput';
-import BaseInputNumber from '@/components/shared/BaseInputNumber';
-import BaseModal from '@/components/shared/BaseModal';
-import BasePagination from '@/components/shared/BasePagination';
-import BaseSelect from '@/components/shared/BaseSelect';
-import BaseSwitch from '@/components/shared/BaseSwitch';
-import BaseTable from '@/components/shared/BaseTable';
-import BaseTimePicker from '@/components/shared/BaseTimePicker';
+import { BaseAutocomplete } from '@/components/shared/BaseAutocomplete';
+import { BaseButton } from '@/components/shared/BaseButton';
+import { BaseCheckbox } from '@/components/shared/BaseCheckbox';
+import { BaseCheckboxGroup } from '@/components/shared/BaseCheckboxGroup';
+import { BaseDatePicker } from '@/components/shared/BaseDatePicker';
+import { BaseInput } from '@/components/shared/BaseInput';
+import { BaseInputNumber } from '@/components/shared/BaseInputNumber';
+import { BaseModal } from '@/components/shared/BaseModal';
+import { BasePagination } from '@/components/shared/BasePagination';
+import { BaseSelect } from '@/components/shared/BaseSelect';
+import { BaseSwitch } from '@/components/shared/BaseSwitch';
+import { BaseTable } from '@/components/shared/BaseTable';
+import { BaseTimePicker } from '@/components/shared/BaseTimePicker';
 import { REGEXES, SELECTORS } from '@/constants/shared.const';
 import { DEFAULT } from '@/constants/theme-colors.const';
-import useThemeColor from '@/hooks/shared/use-theme-color';
+import { useThemeColor } from '@/hooks/shared/use-theme-color';
 import {
   baseCheckboxOptions,
   baseSelectOptions,
@@ -30,7 +30,7 @@ import {
   tableData,
 } from '@/mocks/base-components.mock';
 import { EToast } from '@/models/enums/shared.enum';
-import useLoadingStore from '@/stores/loading.store';
+import { useLoadingStore } from '@/stores/loading.store';
 import { showToast, sleep } from '@/utils/shared.util';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
@@ -67,7 +67,7 @@ type TIcons = Record<
   { default: React.FC<React.SVGProps<SVGSVGElement>> }
 >;
 
-const BaseComponents: React.FC = () => {
+export const BaseComponents: React.FC = () => {
   const schema = yupObject({
     email: yupString()
       .required('Email is required')
@@ -614,5 +614,3 @@ const BaseComponents: React.FC = () => {
     </div>
   );
 };
-
-export default BaseComponents;

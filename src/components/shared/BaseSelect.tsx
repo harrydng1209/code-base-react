@@ -7,7 +7,7 @@ interface IProps extends Omit<SelectProps, 'options'> {
 
 const { Option } = Select;
 
-const BaseSelect = forwardRef<RefSelectProps, IProps>((props, ref) => {
+export const BaseSelect = forwardRef<RefSelectProps, IProps>((props, ref) => {
   const { children, options, ...otherProps } = props;
 
   return (
@@ -21,5 +21,3 @@ const BaseSelect = forwardRef<RefSelectProps, IProps>((props, ref) => {
     </Select>
   );
 });
-
-export default BaseSelect;

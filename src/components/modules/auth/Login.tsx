@@ -3,12 +3,12 @@ import IconEye from '@/assets/icons/modules/auth/IconEye.svg?react';
 import IconEyeClosed from '@/assets/icons/modules/auth/IconEyeClosed.svg?react';
 import IconRequired from '@/assets/icons/shared/IconRequired.svg?react';
 import styles from '@/assets/styles/components/auth/login.module.scss';
-import BaseButton from '@/components/shared/BaseButton';
-import BaseInput from '@/components/shared/BaseInput';
+import { BaseButton } from '@/components/shared/BaseButton';
+import { BaseInput } from '@/components/shared/BaseInput';
 import { AUTH_PAGES, HOME } from '@/constants/route-pages.const';
 import { REGEXES, SELECTORS } from '@/constants/shared.const';
 import { ILoginRequest } from '@/models/interfaces/auth.interface';
-import useAuthStore from '@/stores/auth.store';
+import { useAuthStore } from '@/stores/auth.store';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'antd';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -16,7 +16,7 @@ import { FormItem } from 'react-hook-form-antd';
 import { Link } from 'react-router';
 import { object as yupObject, string as yupString } from 'yup';
 
-const Login: React.FC = () => {
+export const Login: React.FC = () => {
   const schema = yupObject({
     email: yupString()
       .required('Email is required')
@@ -109,5 +109,3 @@ const Login: React.FC = () => {
     </div>
   );
 };
-
-export default Login;

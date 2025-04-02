@@ -1,5 +1,5 @@
 import { FORBIDDEN } from '@/constants/route-pages.const';
-import ErrorLayout from '@/layouts/ErrorLayout';
+import { ErrorLayout } from '@/layouts/ErrorLayout';
 
 export default {
   element: <ErrorLayout />,

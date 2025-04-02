@@ -3,7 +3,7 @@ import { useLocalStorage } from 'usehooks-ts';
 
 type TTheme = 'DARK' | 'LIGHT';
 
-const useTheme = () => {
+export const useTheme = () => {
   const [isDark, setIsDark] = useLocalStorage<boolean>(
     STORAGE_KEYS.THEME,
     false,
@@ -29,5 +29,3 @@ const useTheme = () => {
     theme,
   };
 };
-
-export default useTheme;

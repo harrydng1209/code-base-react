@@ -1,11 +1,11 @@
 import { DEFAULT } from '@/constants/theme-colors.const';
-import useTheme from '@/hooks/shared/use-theme';
-import useThemeColor from '@/hooks/shared/use-theme-color';
+import { useTheme } from '@/hooks/shared/use-theme';
+import { useThemeColor } from '@/hooks/shared/use-theme-color';
 import { theme as antTheme, ConfigProvider, type ThemeConfig } from 'antd';
 
 interface IProps extends React.PropsWithChildren {}
 
-const AntConfigProvider: React.FC<IProps> = (props) => {
+export const AntConfigProvider: React.FC<IProps> = (props) => {
   const { children } = props;
 
   const { isDark } = useTheme();
@@ -41,5 +41,3 @@ const AntConfigProvider: React.FC<IProps> = (props) => {
 
   return <ConfigProvider theme={config}>{children}</ConfigProvider>;
 };
-
-export default AntConfigProvider;

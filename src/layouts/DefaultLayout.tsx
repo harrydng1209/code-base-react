@@ -1,13 +1,13 @@
 import styles from '@/assets/styles/components/default-layout.module.scss';
-import TheSidebar from '@/components/shared/TheSidebar';
-import TheTopbar from '@/components/shared/TheTopbar';
-import useWindowScroll from '@/hooks/shared/use-window-scroll';
+import { TheSidebar } from '@/components/shared/TheSidebar';
+import { TheTopbar } from '@/components/shared/TheTopbar';
+import { useWindowScroll } from '@/hooks/shared/use-window-scroll';
 import { Layout } from 'antd';
 import { Outlet } from 'react-router';
 
 const { Content, Header, Sider } = Layout;
 
-const DefaultLayout: React.FC = () => {
+export const DefaultLayout: React.FC = () => {
   const { y } = useWindowScroll();
 
   const headerStyle = {
@@ -36,5 +36,3 @@ const DefaultLayout: React.FC = () => {
     </Layout>
   );
 };
-
-export default DefaultLayout;

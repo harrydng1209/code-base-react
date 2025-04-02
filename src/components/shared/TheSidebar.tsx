@@ -5,12 +5,12 @@ import IconSettings from '@/assets/icons/shared/IconSettings.svg?react';
 import styles from '@/assets/styles/components/the-sidebar.module.scss';
 import { BASE_COMPONENTS, HOME } from '@/constants/route-pages.const';
 import { AUTH_PAGES } from '@/constants/route-pages.const';
-import useTheme from '@/hooks/shared/use-theme';
-import useThemeColor from '@/hooks/shared/use-theme-color';
+import { useTheme } from '@/hooks/shared/use-theme';
+import { useThemeColor } from '@/hooks/shared/use-theme-color';
 import { Menu } from 'antd';
 import { Link } from 'react-router';
 
-const TheSidebar: React.FC = () => {
+export const TheSidebar: React.FC = () => {
   const { t } = useTranslation();
   const { isDark } = useTheme();
   const navigate = useNavigate();
@@ -59,5 +59,3 @@ const TheSidebar: React.FC = () => {
     </div>
   );
 };
-
-export default TheSidebar;

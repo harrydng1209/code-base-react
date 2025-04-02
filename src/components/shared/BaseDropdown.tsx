@@ -2,7 +2,7 @@ import { Dropdown, DropdownProps } from 'antd';
 
 interface IProps extends DropdownProps {}
 
-const BaseDropdown: React.FC<IProps> = (props) => {
+export const BaseDropdown: React.FC<IProps> = (props) => {
   const { children, ...otherProps } = props;
 
   return (
@@ -11,5 +11,3 @@ const BaseDropdown: React.FC<IProps> = (props) => {
     </Dropdown>
   );
 };
-
-export default BaseDropdown;

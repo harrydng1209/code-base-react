@@ -1,7 +1,7 @@
-import BaseButton from '@/components/shared/BaseButton';
+import { BaseButton } from '@/components/shared/BaseButton';
 import { HOME } from '@/constants/route-pages.const';
 
-const ErrorLayout: React.FC = () => {
+export const ErrorLayout: React.FC = () => {
   const navigate = useNavigate();
 
   return (
@@ -11,5 +11,3 @@ const ErrorLayout: React.FC = () => {
     </div>
   );
 };
-
-export default ErrorLayout;

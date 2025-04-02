@@ -2,7 +2,7 @@ import { HOME } from '@/constants/route-pages.const';
 import { Breadcrumb } from 'antd';
 import { Link } from 'react-router';
 
-const TheBreadcrumb: React.FC = () => {
+export const TheBreadcrumb: React.FC = () => {
   const { t } = useTranslation();
   const location = useLocation();
 
@@ -30,5 +30,3 @@ const TheBreadcrumb: React.FC = () => {
 
   return <Breadcrumb items={items} />;
 };
-
-export default TheBreadcrumb;

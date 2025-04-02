@@ -16,12 +16,10 @@ export const loadingStore = create<IState>((set) => ({
   isLoading: false,
 }));
 
-const useLoadingStore = () => {
+export const useLoadingStore = () => {
   const actions = loadingStore((state) => state.actions);
 
   const isLoading = loadingStore((state) => state.isLoading);
 
   return { actions, isLoading };
 };
-
-export default useLoadingStore;

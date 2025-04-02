@@ -5,7 +5,7 @@ interface IProps extends TableProps {
   data: Record<string, unknown>[];
 }
 
-const BaseTable: React.FC<IProps> = (props) => {
+export const BaseTable: React.FC<IProps> = (props) => {
   const { columns, data, ...otherProps } = props;
 
   return (
@@ -18,5 +18,3 @@ const BaseTable: React.FC<IProps> = (props) => {
     />
   );
 };
-
-export default BaseTable;

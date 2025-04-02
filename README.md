@@ -1,10 +1,10 @@
-# code-base-react
+# codebase-react
 
 This template will help you get started with React in Vite
 
 ## Overview
 
-- **Name**: code-base-react
+- **Name**: codebase-react
 - **Description**: This template will help you get started with React in Vite
 - **Version**: 0.1.0
 - **License**: MIT
@@ -45,7 +45,7 @@ This project includes several scripts to assist with development:
 To get started with this template, clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/harrydng1209/code-base-react.git
-cd code-base-react
+git clone https://github.com/harrydng1209/codebase-react.git
+cd codebase-react
 pnpm install
 ```

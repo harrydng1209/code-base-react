@@ -1,5 +1,5 @@
 import { ERole } from '@/models/enums/auth.enum';
-import useAuthStore from '@/stores/auth.store';
+import { useAuthStore } from '@/stores/auth.store';
 import { Navigate, Route, RouteObject, Routes } from 'react-router';
 
 import { AUTH_PAGES, FORBIDDEN } from './constants/route-pages.const';
@@ -80,7 +80,7 @@ const renderRoutes = (routes: Array<TRouteObject>) => {
   });
 };
 
-const AppRoutes: React.FC = () => {
+export const AppRoutes: React.FC = () => {
   const modules: TModules = import.meta.glob('@/routes/*.tsx', {
     eager: true,
   });
@@ -90,5 +90,3 @@ const AppRoutes: React.FC = () => {
 
   return <Routes>{renderRoutes(routes)}</Routes>;
 };
-
-export default AppRoutes;

@@ -1,4 +1,4 @@
-import ErrorLayout from '@/layouts/ErrorLayout';
+import { ErrorLayout } from '@/layouts/ErrorLayout';
 
 export default {
   element: <ErrorLayout />,

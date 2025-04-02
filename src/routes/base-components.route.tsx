@@ -1,8 +1,8 @@
-import BaseComponents from '@/components/modules/BaseComponents.tsx';
+import { BaseComponents } from '@/components/modules/BaseComponents';
 import { BASE_COMPONENTS } from '@/constants/route-pages.const';
 import { NODE_ENVS } from '@/constants/shared.const';
-import DefaultLayout from '@/layouts/DefaultLayout.tsx';
-import ErrorLayout from '@/layouts/ErrorLayout.tsx';
+import { DefaultLayout } from '@/layouts/DefaultLayout';
+import { ErrorLayout } from '@/layouts/ErrorLayout';
 
 const isDevelop = import.meta.env.VITE_NODE_ENV === NODE_ENVS.DEVELOP;
 

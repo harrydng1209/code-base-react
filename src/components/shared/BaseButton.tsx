@@ -11,7 +11,7 @@ interface IProps extends Omit<ButtonProps, 'color' | 'type'> {
   variant?: ButtonVariantType;
 }
 
-const BaseButton: React.FC<IProps> = (props) => {
+export const BaseButton: React.FC<IProps> = (props) => {
   const {
     children,
     color = 'primary',
@@ -26,5 +26,3 @@ const BaseButton: React.FC<IProps> = (props) => {
     </Button>
   );
 };
-
-export default BaseButton;

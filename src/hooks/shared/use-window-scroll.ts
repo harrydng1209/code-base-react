@@ -1,4 +1,4 @@
-const useWindowScroll = () => {
+export const useWindowScroll = () => {
   const { addEventListener, removeEventListener, scrollX, scrollY } = window;
 
   const [scroll, setScroll] = useState({
@@ -17,5 +17,3 @@ const useWindowScroll = () => {
 
   return scroll;
 };
-
-export default useWindowScroll;

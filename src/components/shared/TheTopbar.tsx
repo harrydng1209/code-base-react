@@ -5,18 +5,19 @@ import IconLightMode from '@/assets/icons/shared/IconLightMode.svg?react';
 import IconNotification from '@/assets/icons/shared/IconNotification.svg?react';
 import IconVietnamese from '@/assets/icons/shared/IconVietnamese.svg?react';
 import styles from '@/assets/styles/components/the-topbar.module.scss';
-import BaseDropdown from '@/components/shared/BaseDropdown';
-import TheBreadcrumb from '@/components/shared/TheBreadcrumb';
+import { BaseDropdown } from '@/components/shared/BaseDropdown';
+import { TheBreadcrumb } from '@/components/shared/TheBreadcrumb';
 import { AUTH_PAGES } from '@/constants/route-pages.const';
-import useLanguage from '@/hooks/shared/use-language';
-import useTheme from '@/hooks/shared/use-theme';
-import useThemeColor from '@/hooks/shared/use-theme-color';
+import { useLanguage } from '@/hooks/shared/use-language';
+import { useTheme } from '@/hooks/shared/use-theme';
+import { useThemeColor } from '@/hooks/shared/use-theme-color';
 import { notifications } from '@/mocks/the-topbar.mock';
 import { ELanguageCode } from '@/models/enums/shared.enum';
-import useAuthStore from '@/stores/auth.store';
+import { useAuthStore } from '@/stores/auth.store';
 import { Avatar, Badge, MenuProps } from 'antd';
+import { useNavigate } from 'react-router';
 
-const TheTopBar: React.FC = () => {
+export const TheTopbar: React.FC = () => {
   const { changeTheme, isDark } = useTheme();
   const { language, setLanguage } = useLanguage();
   const authStore = useAuthStore();
@@ -115,5 +116,3 @@ const TheTopBar: React.FC = () => {
     </div>
   );
 };
-
-export default TheTopBar;

@@ -1,12 +1,12 @@
-import Home from '@/components/modules/Home.tsx';
+import { Home as HomePage } from '@/components/modules/Home';
 import { HOME } from '@/constants/route-pages.const';
-import DefaultLayout from '@/layouts/DefaultLayout';
+import { DefaultLayout } from '@/layouts/DefaultLayout';
 import { ERole } from '@/models/enums/auth.enum';
 
 export default {
   children: [
     {
-      element: <Home />,
+      element: <HomePage />,
       index: true,
     },
   ],
