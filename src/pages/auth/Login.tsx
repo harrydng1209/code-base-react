@@ -48,7 +48,7 @@ export const Login: React.FC = () => {
   const onSubmit: SubmitHandler<ILoginRequest> = async (values) => {
     try {
       const response = await login(values);
-      authStore.actions.setToken(response.data.accessToken);
+      authStore.setToken(response.data.accessToken);
       await navigate(HOME);
     } catch (error) {
       handleCatchError(error);

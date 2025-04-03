@@ -70,7 +70,7 @@ export const TheTopbar: React.FC = () => {
   };
 
   const handleLogout = async () => {
-    authStore.actions.logout();
+    authStore.logout();
     await navigate(AUTH_PAGES.LOGIN);
   };
 

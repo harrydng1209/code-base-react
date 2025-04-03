@@ -13,7 +13,6 @@ export type TActions =
   | 'update';
 
 export type TErrorCodes = (typeof ERROR_CODES)[keyof typeof ERROR_CODES];
-
 export type TFailureResponse<D = unknown> = {
   error: {
     code: TErrorCodes;
@@ -24,6 +23,7 @@ export type TFailureResponse<D = unknown> = {
   statusCode: HttpStatusCode;
 };
 
+export type TStorageKeys = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];
 export type TSubjects = 'all' | 'Article' | 'Comment' | 'User';
 
 export type TSuccessResponse<D = unknown, M = unknown> = {

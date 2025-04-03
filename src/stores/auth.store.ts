@@ -1,10 +1,16 @@
 import { profile, refreshToken as refreshTokenApi } from '@/apis/auth.api';
-import { AUTH_PAGES } from '@/constants/route-pages.const';
+import { STORAGE_KEYS } from '@/constants/shared.const';
 import { IUserInfo } from '@/models/interfaces/auth.interface';
+import {
+  getLocalStorage,
+  removeLocalStorage,
+  setLocalStorage,
+} from '@/utils/storage.util';
 import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 
 interface IState {
-  accessToken?: string;
+  accessToken: null | string;
   actions: {
     initialize: () => Promise<void>;
     logout: () => void;
@@ -12,67 +18,87 @@ interface IState {
     setToken: (token: string) => void;
     setUser: (data: IUserInfo) => void;
   };
+  getters: {
+    getIsAuthenticated: () => boolean;
+    getUserInfo: () => IUserInfo | undefined;
+    getUserRole: () => string | undefined;
+  };
   isAuthenticated: boolean;
   userInfo?: IUserInfo;
 }
 
-const authStore = create<IState>((set, get) => ({
-  accessToken: undefined,
+export const authStore = create<IState>()(
+  devtools((set, get) => ({
+    accessToken: getLocalStorage<string>(STORAGE_KEYS.ACCESS_TOKEN),
 
-  actions: {
-    initialize: async () => {
-      const { accessToken, actions, isAuthenticated } = get();
-      if (isAuthenticated) return;
+    actions: {
+      initialize: async () => {
+        if (get().isAuthenticated) return;
 
-      const isLoggedIn = Boolean(accessToken);
-      if (!isLoggedIn) return;
+        const accessToken = get().accessToken;
+        const isLoggedIn = Boolean(accessToken);
+        if (!isLoggedIn) return;
 
-      try {
-        const response = await profile();
-        actions.setUser(response.data);
-      } catch (error) {
-        console.error(error);
-      }
+        try {
+          const response = await profile();
+          get().actions.setUser(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+      },
+
+      logout: () => {
+        set({
+          accessToken: null,
+          isAuthenticated: false,
+          userInfo: undefined,
+        });
+        removeLocalStorage(STORAGE_KEYS.ACCESS_TOKEN);
+      },
+
+      refreshToken: async (): Promise<boolean> => {
+        let result = true;
+        try {
+          const response = await refreshTokenApi();
+          get().actions.setToken(response.data.accessToken);
+        } catch (error) {
+          result = false;
+          console.error(error);
+        }
+        return result;
+      },
+
+      setToken: (token: string) => {
+        if (token === null) {
+          removeLocalStorage(STORAGE_KEYS.ACCESS_TOKEN);
+          set({ accessToken: null });
+          return;
+        }
+        setLocalStorage(STORAGE_KEYS.ACCESS_TOKEN, token);
+        set({ accessToken: token });
+      },
+
+      setUser: (data: IUserInfo) =>
+        set({ isAuthenticated: true, userInfo: data }),
     },
 
-    logout: () =>
-      set({
-        accessToken: undefined,
-        isAuthenticated: false,
-        userInfo: undefined,
-      }),
-
-    refreshToken: async (): Promise<boolean> => {
-      let result = true;
-      const navigate = useNavigate();
-
-      try {
-        const response = await refreshTokenApi();
-        set({ accessToken: response.data.accessToken });
-      } catch (error) {
-        result = false;
-        console.error(error);
-        await navigate(AUTH_PAGES.LOGIN);
-      }
-      return result;
+    getters: {
+      getIsAuthenticated: () => get().isAuthenticated,
+      getUserInfo: () => get().userInfo,
+      getUserRole: () => get().userInfo?.role,
     },
 
-    setToken: (token: string) => set({ accessToken: token }),
-
-    setUser: (data: IUserInfo) =>
-      set({ isAuthenticated: true, userInfo: data }),
-  },
-
-  isAuthenticated: false,
-  userInfo: undefined,
-}));
+    isAuthenticated: false,
+    userInfo: undefined,
+  })),
+);
 
 export const useAuthStore = () => {
   const actions = authStore((state) => state.actions);
+  const getters = authStore((state) => state.getters);
 
-  const isAuthenticated = authStore((state) => state.isAuthenticated);
-  const userInfo = authStore((state) => state.userInfo);
-  const accessToken = authStore((state) => state.accessToken);
-
-  return { accessToken, actions, isAuthenticated, userInfo };
+  return {
+    ...getters,
+    ...actions,
+  };
 };

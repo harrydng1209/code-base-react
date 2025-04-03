@@ -2,6 +2,7 @@ import { STORAGE_KEYS } from '@/constants/shared.const';
 import { TFailureResponse, TSuccessResponse } from '@/models/types/auth.type';
 import { handleUnauthorizedError } from '@/utils/api.util';
 import { convertToCamelCase, convertToSnakeCase } from '@/utils/shared.util';
+import { getLocalStorage } from '@/utils/storage.util';
 import axios, { AxiosError, AxiosResponse, HttpStatusCode } from 'axios';
 import { stringify } from 'qs';
 
@@ -16,7 +17,7 @@ export const apiConfig = axios.create({
 
 apiConfig.interceptors.request.use(
   (config) => {
-    const accessToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
+    const accessToken = getLocalStorage<string>(STORAGE_KEYS.ACCESS_TOKEN);
 
     if (config.data && !(config.data instanceof FormData))
       config.data = convertToSnakeCase(config.data);

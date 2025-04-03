@@ -1,7 +1,7 @@
-import { Login } from '@/components/modules/auth/Login';
-import { Register } from '@/components/modules/auth/Register';
 import { AUTH_PAGES } from '@/constants/route-pages.const';
 import { GuestLayout } from '@/layouts/GuestLayout';
+import { Login } from '@/pages/auth/Login';
+import { Register } from '@/pages/auth/Register';
 
 export default {
   children: [

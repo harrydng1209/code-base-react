@@ -1,7 +1,7 @@
-import { Home as HomePage } from '@/components/modules/Home';
 import { HOME } from '@/constants/route-pages.const';
 import { DefaultLayout } from '@/layouts/DefaultLayout';
 import { ERole } from '@/models/enums/auth.enum';
+import { Home as HomePage } from '@/pages/Home';
 
 export default {
   children: [

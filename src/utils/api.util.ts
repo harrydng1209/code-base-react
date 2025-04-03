@@ -4,7 +4,7 @@ import { apiConfig } from '@/configs/api.config';
 import { AUTH_PAGES } from '@/constants/route-pages.const';
 import { EResponseStatus } from '@/models/enums/auth.enum';
 import { TFailureResponse, TSuccessResponse } from '@/models/types/auth.type';
-import { useAuthStore } from '@/stores/auth.store';
+import { authStore } from '@/stores/auth.store';
 import { loadingStore } from '@/stores/loading.store';
 import {
   AxiosError,
@@ -14,6 +14,7 @@ import {
 } from 'axios';
 
 import { showToast } from './shared.util';
+import { getLocalStorage } from './storage.util';
 
 interface IAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
@@ -110,16 +111,15 @@ export const get = async <T = unknown, M = unknown>(
 export const handleUnauthorizedError = async (
   error: AxiosError<TFailureResponse>,
 ) => {
-  const authStore = useAuthStore();
-  const isTokenRefreshed = await authStore.actions.refreshToken();
+  const isTokenRefreshed = await authStore.getState().actions.refreshToken();
 
   if (!isTokenRefreshed) {
-    authStore.actions.logout();
+    authStore.getState().actions.logout();
     window.location.href = AUTH_PAGES.LOGIN;
     return;
   }
 
-  const accessToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
+  const accessToken = getLocalStorage(STORAGE_KEYS.ACCESS_TOKEN);
   const originalRequest = error.config as IAxiosRequestConfig;
 
   if (originalRequest) {

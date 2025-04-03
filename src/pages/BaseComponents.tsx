@@ -217,9 +217,9 @@ export const BaseComponents: React.FC = () => {
   };
 
   const handleLoadingFullscreen = async () => {
-    loadingStore.actions.showLoading();
+    loadingStore.showLoading();
     await sleep(3);
-    loadingStore.actions.hideLoading();
+    loadingStore.hideLoading();
   };
 
   const loadSvgIcons = async () => {
